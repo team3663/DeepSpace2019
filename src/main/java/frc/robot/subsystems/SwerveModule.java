@@ -115,7 +115,7 @@ public class SwerveModule extends Subsystem {
     }
 
 
-    //distance stuff needs to be changed
+    //distance stuff needs to be changedW
     public double getDriveDistance() {
         int ticks = mDriveMotor.getSelectedSensorPosition(0);
         if (driveInverted)

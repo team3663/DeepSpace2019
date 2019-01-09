@@ -137,7 +137,6 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
         return mSwerveModules[i];
     }
 
-    @Override
     public void holonomicDrive(double forward, double strafe, double rotation, boolean fieldOriented) {
         forward *= getSpeedMultiplier();
         strafe *= getSpeedMultiplier();
@@ -206,13 +205,5 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
         return mSwerveModules;
     }
 
-    @Override
-    public double getMaxAcceleration() {
-        return 5.5;
-    }
 
-    @Override
-    public double getMaxVelocity() {
-        return 10;
-    }
 }

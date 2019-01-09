@@ -1,30 +1,61 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.commands.C_HolonomicDrive;
 
-public abstract class SS_HolonomicDrivetrain extends SS_Drivetrain {
+public class SS_HolonomicDrivetrain extends Subsystem {
 
 	private double mAdjustmentAngle = 0;
 	private boolean mFieldOriented = true;
 
+	private final double width;
+	private final double length;
+	private double speedMultiplier = 1;
+
 	public SS_HolonomicDrivetrain(double width, double length) {
-		super(width, length);
+		this.width = width;
+		this.length = length;
 	}
+
+
+
+	public final double getWidth() {
+		return width;
+	}
+
+	public final double getLength() {
+		return length;
+	}
+
+	public double getSpeedMultiplier() {
+		return speedMultiplier;
+	}
+
+    public double getMaxAcceleration() {
+        return 5.5;
+    }
+
+    public double getMaxVelocity() {
+        return 10;
+    }
 
 
 	public double getAdjustmentAngle() {
 		return mAdjustmentAngle;
 	}
 
-	public abstract double getGyroAngle();
-
-	public abstract double getRawGyroAngle();
-
-	public void holonomicDrive(double forward, double strafe, double rotation) {
-		holonomicDrive(forward, strafe, rotation, isFieldOriented());
+	public double getGyroAngle(){
+		return Robot.getSwerve().getGyroAngle();
 	}
 
-	public abstract void holonomicDrive(double forward, double strafe, double rotation, boolean fieldOriented);
+	public double getRawGyroAngle(){
+		return Robot.getSwerve().getRawGyroAngle();
+	}
+
+	public void holonomicDrive(double forward, double strafe, double rotation) {
+		Robot.getSwerve().holonomicDrive(forward, strafe, rotation, isFieldOriented());
+	}
 
 	@Override
 	protected void initDefaultCommand() {
@@ -45,7 +76,9 @@ public abstract class SS_HolonomicDrivetrain extends SS_Drivetrain {
 		mFieldOriented = fieldOriented;
 	}
 
-	public abstract void stopDriveMotors();
+	public void stopDriveMotors(){
+
+	}
 
 	public void zeroGyro() {
 		setAdjustmentAngle(getRawGyroAngle());

@@ -20,34 +20,39 @@ public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = true;
 
   private static SS_Swerve ss_Swerve;
+  private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
   public static OI m_oi;
 
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-	public static OI getOI() {
-		return m_oi;
-  }
-
-  public SS_Swerve getDrivetrain() {
-		return ss_Swerve;
-	}
   
+
   @Override
   public void robotInit() {
     m_oi = new OI(this);
 
 
     ss_Swerve = new SS_Swerve();
+    ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain(14.5, 14.5);
 
     
 
 		m_oi.registerControls();
 
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    
 
     
+  }
+
+  public static OI getOI() {
+		return m_oi;
+  }
+
+  public static SS_Swerve getSwerve() {
+		return ss_Swerve;
+  }
+  
+  public static SS_HolonomicDrivetrain getDrivetrain() {
+		return ss_Swerve;///
   }
 
   /**
@@ -98,19 +103,8 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
+    
+  
   }
 
   /**
