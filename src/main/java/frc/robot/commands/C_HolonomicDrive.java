@@ -3,15 +3,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
 public class C_HolonomicDrive extends Command {
-	private final SS_HolonomicDrivetrain mDrivetrain;
+	
 
-	public C_HolonomicDrive(SS_HolonomicDrivetrain drivetrain) {
-		mDrivetrain = drivetrain;
-
-		requires(drivetrain);
+	public C_HolonomicDrive() {
+		requires(Robot.ss_holonomicdrivetrain);
 	}
 
 	private double deadband(double input) {
@@ -20,10 +17,22 @@ public class C_HolonomicDrive extends Command {
 	}
 
 	@Override
+	protected void initialize() {
+		System.out.println("eggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggeggegg");
+
+	}
+
+	@Override
 	protected void execute() {
-		double forward = -Robot.getOI().getPrimaryController().getLeftYValue();
-		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();
-		double rotation = Robot.getOI().getPrimaryController().getRightXValue();
+
+		System.out.println("egg");
+		// double forward = -Robot.getOI().getPrimaryController().getLeftYValue();
+		// double strafe = Robot.getOI().getPrimaryController().getLeftXValue();
+		// double rotation = Robot.getOI().getPrimaryController().getRightXValue();
+
+		double rotation =1;
+		double strafe = 1;
+		double forward = 1;
 
 		forward *= Math.abs(forward);
 		strafe *= Math.abs(strafe);
@@ -37,17 +46,17 @@ public class C_HolonomicDrive extends Command {
 		SmartDashboard.putNumber("Strafe", strafe);
 		SmartDashboard.putNumber("Rotation", rotation);
 
-		mDrivetrain.holonomicDrive(forward, strafe, rotation);
+		Robot.ss_holonomicdrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
 
 	@Override
 	protected void end() {
-		mDrivetrain.stopDriveMotors();
+		Robot.ss_holonomicdrivetrain.stopDriveMotors();
 	}
 
 	@Override
 	protected void interrupted() {
-		end();
+		//end();
 	}
 
 	@Override

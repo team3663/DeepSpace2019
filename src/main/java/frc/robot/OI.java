@@ -1,8 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.input.IGamepad;
-import frc.robot.input.XboxGamepad;
+
 
 
 /**
@@ -11,22 +10,20 @@ import frc.robot.input.XboxGamepad;
  */
 public class OI {
 
-    private IGamepad primaryController = new XboxGamepad(0);
-
-    private Robot mRobot;
-
-    public OI(Robot robot) {
-        mRobot = robot;
-    }
+    // private IGamepad primaryController = new XboxGamepad(0);
 
     public void registerControls() {
-        primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(mRobot.getDrivetrain(), false));
-        primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
-        primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
+        
+
+        // primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(mRobot.getDrivetrain(), false));
+        // primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
+        // primaryController.getStartButton().whenPressed(new C_HolonomicDrive());
+        // primaryController.getAButton().whenPressed(new C_Test());
+        
     }
 
-    public IGamepad getPrimaryController() {
-        return primaryController;
-    }
+    // public IGamepad getPrimaryController() {
+    //     return primaryController;
+    // }
 
 }

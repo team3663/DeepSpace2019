@@ -6,12 +6,10 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.commands.C_SwerveModuleCommand;
 
-public class SwerveModule extends Subsystem {
+public class SwerveModule  {
     private static final long STALL_TIMEOUT = 2000;
 
     private long mStallTimeBegin = Long.MAX_VALUE;
@@ -91,10 +89,7 @@ public class SwerveModule extends Subsystem {
         }
     }
 
-    @Override
-    protected void initDefaultCommand() {
-        setDefaultCommand(new C_SwerveModuleCommand(this));
-    }
+
 
     public TalonSRX getAngleMotor() {
         return mAngleMotor;
@@ -117,7 +112,7 @@ public class SwerveModule extends Subsystem {
 
     //distance stuff needs to be changedW
     public double getDriveDistance() {
-        int ticks = mDriveMotor.getSelectedSensorPosition(0);
+        int ticks = 0; //mDriveMotor.getSelectedSensorPosition(0);
         if (driveInverted)
             ticks = -ticks;
 
