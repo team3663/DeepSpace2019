@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
 import frc.robot.subsystems.SS_Test;
 
 
@@ -23,14 +22,13 @@ public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = true;
 
 public static SS_Test ss_test;
-public static SS_HolonomicDrivetrain ss_holonomicdrivetrain;
   
 
   @Override
   public void robotInit() {
 
+    System.out.println("FF INIT CHECK");
     ss_test = new SS_Test();
-    //ss_holonomicdrivetrain = new SS_HolonomicDrivetrain();
 
 
     // chooser.addOption("My Auto", new MyAutoCommand());

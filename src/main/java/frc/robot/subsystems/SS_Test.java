@@ -20,8 +20,7 @@ public class SS_Test extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    System.out.println("DEFAULT COMMAND CHECK");
     setDefaultCommand(new C_Test());
   }
 }

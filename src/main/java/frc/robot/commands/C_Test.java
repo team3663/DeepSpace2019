@@ -17,7 +17,7 @@ public class C_Test extends Command {
 
   @Override
   protected void initialize() {
-    System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+    System.out.println("COMMAND CHEKC MOST IMPORTANT REEEEEEEEEEEEEEEEE");
   }
 
   @Override
