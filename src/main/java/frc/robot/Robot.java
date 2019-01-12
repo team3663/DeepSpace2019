@@ -89,6 +89,10 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
   }
+  @Override
+  public void teleopPeriodic() {
+    Scheduler.getInstance().run();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select

@@ -20,10 +20,10 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
 
     
 	/*
-	 * 0 is Front Right
-	 * 1 is Front Left
-	 * 2 is Back Left
-	 * 3 is Back Right
+	 * 0 is Front Left
+	 * 1 is Front Right
+	 * 2 is Back Right
+	 * 3 is Back Left
 	 */
 	private SwerveModule[] mSwerveModules;
 
@@ -35,7 +35,7 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
 
         double FR = 92;
         double FL = 80;
-        double BR = 148;
+        double BR = 105;
         double BL = 105;
         SmartDashboard.putNumber("Front Right", FR);
         SmartDashboard.putNumber("Front Left", FL);
@@ -44,14 +44,13 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
 
         if (Robot.PRACTICE_BOT) {
             mSwerveModules = new SwerveModule[]  {
-                    new SwerveModule(0, new TalonSRX(6), new TalonSRX(5), FL),
-                    new SwerveModule(1, new TalonSRX(2), new TalonSRX(1), FR),
-                    new SwerveModule(2, new TalonSRX(3), new TalonSRX(4), BL),
-                    new SwerveModule(3, new TalonSRX(7), new TalonSRX(8), BR),
+                    new SwerveModule(0, new TalonSRX(2), new TalonSRX(1), FL),
+                    new SwerveModule(1, new TalonSRX(6), new TalonSRX(5), FR),
+                    new SwerveModule(2, new TalonSRX(7), new TalonSRX(8), BL),
+                    new SwerveModule(3, new TalonSRX(3), new TalonSRX(4), BR),
             };
 
-            mSwerveModules[0].setDriveInverted(true);
-            mSwerveModules[3].setDriveInverted(true);
+            mSwerveModules[1].setDriveInverted(true);
         } else {
             mSwerveModules = new SwerveModule[] {
                     new SwerveModule(0,
