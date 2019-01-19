@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
-import frc.robot.subsystems.SS_Swerve;
+import frc.robot.subsystems.*;
 
 
 public class Robot extends TimedRobot {
@@ -21,6 +20,14 @@ public class Robot extends TimedRobot {
 
   private static SS_Swerve ss_Swerve;
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
+
+  private static SS_CargoManip ss_CargoManip;
+  private static SS_Climber ss_Climber;
+  private static SS_Elevator ss_Elevator;
+  private static SS_HatchManip ss_HatchManip;
+  private static SS_Vision ss_Vision;
+
+
   public static OI m_oi;
 
   
@@ -32,6 +39,13 @@ public class Robot extends TimedRobot {
 
     ss_Swerve = new SS_Swerve();
     ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain(14.5, 14.5);
+
+    ss_CargoManip = new SS_CargoManip();
+    ss_Climber = new SS_Climber();
+    ss_Elevator = new SS_Elevator();
+    ss_HatchManip = new SS_HatchManip();
+    ss_Vision = new SS_Vision();
+
 
     
 
@@ -52,7 +66,27 @@ public class Robot extends TimedRobot {
   }
   
   public static SS_HolonomicDrivetrain getDrivetrain() {
-		return ss_Swerve;///
+		return ss_HolonomicDrivetrain;
+  }
+
+  public static SS_CargoManip getSSCargo() {
+    return ss_CargoManip;
+  }
+
+  public static SS_Climber getSSClimber() {
+    return ss_Climber;
+  }
+
+  public static SS_Elevator getElevator() {
+    return ss_Elevator;
+  }
+
+  public static SS_HatchManip getHatchManip() {
+    return ss_HatchManip;
+  }
+
+  public static SS_Vision getVision() {
+    return ss_Vision;
   }
 
   /**
