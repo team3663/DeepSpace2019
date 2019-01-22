@@ -7,18 +7,33 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class SS_CargoManip extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  private CANSparkMax cargoMotor;
+
+  private double cargoMotorSpeedMultiplier;
+
+  public SS_CargoManip() {
+    cargoMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
+  }
+
+  public void setCargoMotorSpeed(double speed) {
+    cargoMotor.set(speed * cargoMotorSpeedMultiplier);
+  }
+
+  public void setCargoMotorSpeedMultiplier(double speedMultiplier) {
+    cargoMotorSpeedMultiplier = speedMultiplier;
+  }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 }

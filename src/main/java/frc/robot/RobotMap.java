@@ -12,6 +12,8 @@ package frc.robot;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * The zeros for the motor controller CAN identities are placeholders. (duh)
  */
 public class RobotMap {
  
@@ -23,6 +25,15 @@ public class RobotMap {
   public static final int DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR = 24;
   public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR = 33;
   public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 31;
+
+  public static final int CLIMBER_FRONT_MOTOR_ONE = 0;
+  public static final int CLIMBER_FRONT_MOTOR_TWO = 0;
+
+  public static final int CLIMBER_REAR_MOTOR_ONE = 0;
+  public static final int CLIMBER_REAR_MOTOR_TWO = 0;
+
+  public static final int CARGO_MOTOR = 0;
+  public static final int HATCH_MOTOR = 0;
 
 
   public static final int ELEVATOR_MASTER_MOTOR = 28;

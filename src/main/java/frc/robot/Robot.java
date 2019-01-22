@@ -22,9 +22,10 @@ public class Robot extends TimedRobot {
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
 
   private static SS_CargoManip ss_CargoManip;
-  private static SS_Climber ss_Climber;
+  private static SS_FrontClimber ss_FrontClimber;
   private static SS_Elevator ss_Elevator;
   private static SS_HatchManip ss_HatchManip;
+  private static SS_RearClimber ss_RearClimber;
   private static SS_Vision ss_Vision;
 
 
@@ -41,9 +42,10 @@ public class Robot extends TimedRobot {
     ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain(14.5, 14.5);
 
     ss_CargoManip = new SS_CargoManip();
-    ss_Climber = new SS_Climber();
+    ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
     ss_HatchManip = new SS_HatchManip();
+    ss_RearClimber = new SS_RearClimber();
     ss_Vision = new SS_Vision();
 
 
@@ -73,8 +75,8 @@ public class Robot extends TimedRobot {
     return ss_CargoManip;
   }
 
-  public static SS_Climber getSSClimber() {
-    return ss_Climber;
+  public static SS_FrontClimber getFrontClimber() {
+    return ss_FrontClimber;
   }
 
   public static SS_Elevator getElevator() {
@@ -83,6 +85,10 @@ public class Robot extends TimedRobot {
 
   public static SS_HatchManip getHatchManip() {
     return ss_HatchManip;
+  }
+
+  public static SS_RearClimber getRearClimber() {
+    return ss_RearClimber;
   }
 
   public static SS_Vision getVision() {

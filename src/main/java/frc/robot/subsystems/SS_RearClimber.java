@@ -7,31 +7,35 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class SS_HatchManip extends Subsystem {
+public class SS_RearClimber extends Subsystem {
 
-  private CANSparkMax hatchMotor;
+  private CANSparkMax rearClimberMotorOne;
+  private CANSparkMax rearClimberMotorTwo;
 
-  private double hatchMotorSpeedMultiplier = 1;
+  private double speedMultiplier = 1;
 
-  public SS_HatchManip() {
-    hatchMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
+  public SS_RearClimber() {
+    rearClimberMotorOne = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR_ONE, MotorType.kBrushless);
+    rearClimberMotorTwo = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR_TWO, MotorType.kBrushless);
+    rearClimberMotorTwo.follow(rearClimberMotorOne);
   }
 
-  public void setHatchMotorSpeed(double speed) {
-    hatchMotor.set(speed * hatchMotorSpeedMultiplier);
+  public void setClimberRearMotorsSpeed(double speed) {
+    rearClimberMotorOne.set(speed * speedMultiplier);
   }
 
-  public void setHatchMotorSpeedMultiplier(double speedMultipler) {
-    hatchMotorSpeedMultiplier = speedMultipler;
+  public void setClimberRearMotorsSpeedMultiplier(double speedMultiplier) {
+    this.speedMultiplier = speedMultiplier;
   }
 
   @Override

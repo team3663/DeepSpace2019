@@ -11,30 +11,33 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.commands.C_ClimberPos;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class SS_Climber extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  private CANSparkMax frontMotor;
-  private CANSparkMax backMotor;
+public class SS_FrontClimber extends Subsystem {
 
-  public SS_Climber(){
-    frontMotor = new CANSparkMax(0, MotorType.kBrushless);
-    backMotor = new CANSparkMax(1, MotorType.kBrushless);
+  private CANSparkMax frontNeoOne;
+  private CANSparkMax frontNeoTwo;
+
+  private double speedMultiplier = 1;
+
+  public SS_FrontClimber(){
+    frontNeoOne = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR_ONE, MotorType.kBrushless);
+    frontNeoTwo = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR_TWO, MotorType.kBrushless);
+    frontNeoTwo.follow(frontNeoOne);
   }
 
-  public void climb(double rightVal, double leftVal){
-    frontMotor.set(rightVal);
-    backMotor.set(-leftVal);
+  public void setClimberFrontMotorsSpeed(double speed) {
+    frontNeoOne.set(speed * speedMultiplier);
+  }
+
+  public void setClimberFrontMotorsSpeedMultiplier(double speedMultiplier) {
+    this.speedMultiplier = speedMultiplier;
   }
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    setDefaultCommand(new C_ClimberPos());
   }
 }
