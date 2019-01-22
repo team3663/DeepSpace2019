@@ -16,14 +16,24 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class SS_HatchManip extends Subsystem {
-
+public class SS_Griffon extends Subsystem {
+  private CANSparkMax cargoMotor;
   private CANSparkMax hatchMotor;
 
+  private double cargoMotorSpeedMultiplier;
   private double hatchMotorSpeedMultiplier = 1;
 
-  public SS_HatchManip() {
+  public SS_Griffon() {
+    cargoMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
     hatchMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
+  }
+
+  public void setCargoMotorSpeed(double speed) {
+    cargoMotor.set(speed * cargoMotorSpeedMultiplier);
+  }
+
+  public void setCargoMotorSpeedMultiplier(double speedMultiplier) {
+    cargoMotorSpeedMultiplier = speedMultiplier;
   }
 
   public void setHatchMotorSpeed(double speed) {
