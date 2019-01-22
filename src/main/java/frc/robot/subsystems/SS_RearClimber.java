@@ -13,21 +13,22 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
+import frc.robot.util.PIDCont;
 
 /**
  * Add your docs here.
  */
 public class SS_RearClimber extends Subsystem {
 
-  private CANSparkMax rearClimberMotorOne;
-  private CANSparkMax rearClimberMotorTwo;
+  private CANSparkMax rearClimberMotor;
 
   private double speedMultiplier = 1;
 
+  private PIDCont PID;
+
   public SS_RearClimber() {
-    rearClimberMotorOne = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR_ONE, MotorType.kBrushless);
-    rearClimberMotorTwo = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR_TWO, MotorType.kBrushless);
-    rearClimberMotorTwo.follow(rearClimberMotorOne);
+    rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR_ONE, MotorType.kBrushless);
+    PID = new PIDCont(1, 10, .1, 10);//TODO pid contoller tweaks
   }
 
   public void setClimberRearMotorsSpeed(double speed) {
@@ -37,6 +38,8 @@ public class SS_RearClimber extends Subsystem {
   public void setClimberRearMotorsSpeedMultiplier(double speedMultiplier) {
     this.speedMultiplier = speedMultiplier;
   }
+
+  public double 
 
   @Override
   public void initDefaultCommand() {

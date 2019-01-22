@@ -22,6 +22,7 @@ public class SS_FrontClimber extends Subsystem {
   private CANSparkMax frontNeoTwo;
 
   private double speedMultiplier = 1;
+  private double TICKS_PER_DEGREE = 0;
 
   public SS_FrontClimber(){
     frontNeoOne = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR_ONE, MotorType.kBrushless);
@@ -31,6 +32,14 @@ public class SS_FrontClimber extends Subsystem {
 
   public void setClimberFrontMotorsSpeed(double speed) {
     frontNeoOne.set(speed * speedMultiplier);
+  }
+
+  public double degreeToTicks(int degree){
+    return degree*TICKS_PER_DEGREE;
+  }
+
+  public double ticksToDegrees(int ticks){
+    return ticks/TICKS_PER_DEGREE;
   }
 
   public void setClimberFrontMotorsSpeedMultiplier(double speedMultiplier) {
