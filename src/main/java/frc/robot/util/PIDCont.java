@@ -8,7 +8,7 @@ package frc.robot.util;
  * @see <a href="https://github.com/CPCRobotics/ftc/blob/ftc_2017/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/util/PIDTuner.java">
  *         Github CPCRobotics/ftc PIDTuner.java</a>
  */
-public final class PIDController {
+public final class PIDCont {
     // K-values
     private final double kP;
     private final double kI;
@@ -34,7 +34,7 @@ public final class PIDController {
         return val;
     }
 
-    public PIDController(double speed, double kP, double kI, double kD) {
+    public PIDCont(double speed, double kP, double kI, double kD) {
         this.speed = speed;
         this.kP = kP;
         this.kI = kI;

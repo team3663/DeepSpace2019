@@ -51,29 +51,7 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
             };
 
             mSwerveModules[1].setDriveInverted(true);
-        } else {
-            mSwerveModules = new SwerveModule[] {
-                    new SwerveModule(0,
-                            new TalonSRX(DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR),
-                            new TalonSRX(DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR),
-                            87.890),
-                    new SwerveModule(1,
-                            new TalonSRX(DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR),
-                            new TalonSRX(DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR),
-                            235.195),
-                    new SwerveModule(2,
-                            new TalonSRX(DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR),
-                            new TalonSRX(DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR),
-                            320.976),
-                    new SwerveModule(3,
-                            new TalonSRX(DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR),
-                            new TalonSRX(DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR),
-                            245.742),
-            };
-
-            mSwerveModules[0].setDriveInverted(true);
-            mSwerveModules[3].setDriveInverted(true);
-        }
+        } 
 
         for (SwerveModule module : mSwerveModules) {
             module.setTargetAngle(0);

@@ -28,18 +28,20 @@ public class SS_Elevator extends Subsystem {
 
   private PIDCont PID;
 
-  private PIDCont[] Profiles; 
+  private PIDCont[] profiles; 
 
   public SS_Elevator() {
     masterMotor = new CANSparkMax(RobotMap.ELEVATOR_MASTER_MOTOR, MotorType.kBrushless);
     slaveMotor = new CANSparkMax(RobotMap.ELEVATOR_SLAVE_MOTOR, MotorType.kBrushless);
 
     //default PID profile
-    PID = new PIDCont(speedMultiplier, 10, .01, 30);
-    Profiles[] = {
+    
+    profiles = new PIDCont[] {
       new PIDCont(speedMultiplier, 10, .01, 30),
-      new PIDCont(speedMultiplier, 10, .01, 30)
+      new PIDCont(speedMultiplier, 10, .01, 30) //TODO adjust PID values
     };
+
+    PID = profiles[0];
 
     slaveMotor.follow(masterMotor);
   }
@@ -49,15 +51,33 @@ public class SS_Elevator extends Subsystem {
   }
 
   public void changePIDProfile(int profile){
-    
+    PID = profiles[profile];
   }
   
   public void setElevatorSpeed(double speed) {
     masterMotor.set(speed * speedMultiplier);
   }
 
-  public void goToPos(){
+  public void goToPos(int pos){
+    //TODO: implement PID
+  }
 
+  public void goToLevel(int level){
+
+    //TODO: find position of levels
+    if(level == 1){
+      
+    }
+    else if (level == 2){
+
+    }
+    else if (level ==3){
+
+    }
+  }
+
+  public double getEncoder(){
+    return masterMotor.getEncoder().getPosition();
   }
 
   @Override

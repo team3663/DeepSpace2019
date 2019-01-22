@@ -27,6 +27,7 @@ public class SS_FrontClimber extends Subsystem {
   private TalonSRX frontTalon;
 
   private double TICKS_PER_DEGREE = 0;
+  private double fakeEncoder = 0;
 
   public SS_FrontClimber(){
     frontNeoOne = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR_ONE, MotorType.kBrushless);
@@ -55,13 +56,30 @@ public class SS_FrontClimber extends Subsystem {
     return ticks/TICKS_PER_DEGREE;
   }
 
-  public double getEncoder(){
+  public double getRawEncoder(){
     return frontNeoOne.getEncoder().getPosition();
   }
 
 
   public double getAngle(){
-    return ticksToDegrees(getEncoder());
+
+    fakeEncoder = getRawEncoder();
+    Math.abs(fakeEncoder);
+
+    double angle = 0;
+    double currentAngleMod = ticksToDegrees(fakeEncoder) % 360;
+    if (currentAngleMod < 0){
+      angle = currentAngleMod*360;
+    } 
+    
+
+    return angle;
+  }
+
+
+
+  public void goToDegree(int degree){
+
   }
 
 

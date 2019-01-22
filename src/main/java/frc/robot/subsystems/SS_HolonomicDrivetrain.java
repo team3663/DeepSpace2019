@@ -59,7 +59,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		System.out.println("you got AT LEANT THIS FAR");
 		setDefaultCommand(new C_HolonomicDrive(this));
 	}
 
