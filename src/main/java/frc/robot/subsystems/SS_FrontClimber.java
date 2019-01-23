@@ -41,7 +41,7 @@ public class SS_FrontClimber extends Subsystem {
     PID.setD(3);
     PID.setOutputRange(-1, 1);
 
-    frontTalon = new TalonSRX(0); //TODO put in robomap
+    frontTalon = new TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
     }
 
   public void setClimberFrontMotorsSpeed(double speed) {

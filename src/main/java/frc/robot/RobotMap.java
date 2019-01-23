@@ -28,9 +28,9 @@ public class RobotMap {
 
   public static final int CLIMBER_FRONT_MOTOR_ONE = 0;
   public static final int CLIMBER_FRONT_MOTOR_TWO = 0;
+  public static final int CLIMBER_FRONT_TALON = 0;
 
-  public static final int CLIMBER_REAR_MOTOR_ONE = 0;
-  public static final int CLIMBER_REAR_MOTOR_TWO = 0;
+  public static final int CLIMBER_REAR_MOTOR = 0;
 
   public static final int CARGO_MOTOR = 0;
   public static final int HATCH_MOTOR = 0;

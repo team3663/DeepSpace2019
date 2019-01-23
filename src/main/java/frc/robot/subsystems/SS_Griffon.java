@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -17,19 +19,19 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class SS_Griffon extends Subsystem {
-  private CANSparkMax cargoMotor;
+  private TalonSRX cargoMotor;
   private CANSparkMax hatchMotor;
 
   private double cargoMotorSpeedMultiplier;
   private double hatchMotorSpeedMultiplier = 1;
 
   public SS_Griffon() {
-    cargoMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
+    cargoMotor = new TalonSRX(RobotMap.CARGO_MOTOR);
     hatchMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
   }
 
   public void setCargoMotorSpeed(double speed) {
-    cargoMotor.set(speed * cargoMotorSpeedMultiplier);
+    cargoMotor.set(ControlMode.PercentOutput, speed * cargoMotorSpeedMultiplier);
   }
 
   public void setCargoMotorSpeedMultiplier(double speedMultiplier) {

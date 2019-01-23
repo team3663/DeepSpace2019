@@ -30,7 +30,7 @@ public class SS_RearClimber extends Subsystem {
   private double TICKS_PER_DEGREE = 0; 
 
   public SS_RearClimber() {
-    rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR_ONE, MotorType.kBrushless);
+    rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
     PID = new CANPIDController(rearClimberMotor);
     PID.setP(1);
     PID.setI(.01);
