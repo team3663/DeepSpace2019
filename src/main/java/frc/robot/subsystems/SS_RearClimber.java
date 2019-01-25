@@ -25,7 +25,7 @@ public class SS_RearClimber extends Subsystem {
   private CANSparkMax rearClimberMotor;
   private CANPIDController PID;
 
-
+  private double fakeEncoder = 0;
   private double speedMultiplier = 1;
   private double TICKS_PER_DEGREE = 0; 
 
@@ -50,6 +50,12 @@ public class SS_RearClimber extends Subsystem {
     return rearClimberMotor.getEncoder().getPosition();
   }
 
+  public double getAngle(){
+    fakeEncoder = Math.round(getEncoder() - 0.5);
+    Math.abs(fakeEncoder);
+
+    return (getEncoder() - fakeEncoder) * 360;
+  }
   public void goToPos(int pos){
     rearClimberMotor.getPIDController().setReference(pos, ControlType.kPosition);
   }
