@@ -26,7 +26,7 @@ public class SS_FrontClimber extends Subsystem {
   private CANPIDController PID;
   private TalonSRX frontTalon;
 
-  private double TICKS_PER_DEGREE = 0;
+  private double TICKS_PER_DEGREE = 1/360;
   private double fakeEncoder = 0;
 
   public SS_FrontClimber(){
@@ -60,20 +60,11 @@ public class SS_FrontClimber extends Subsystem {
     return frontNeoOne.getEncoder().getPosition();
   }
 
-
   public double getAngle(){
-
-    fakeEncoder = getRawEncoder();
+    fakeEncoder = Math.round(getRawEncoder() - 0.5);
     Math.abs(fakeEncoder);
-
-    double angle = 0;
-    double currentAngleMod = ticksToDegrees(fakeEncoder) % 360;
-    if (currentAngleMod < 0){
-      angle = currentAngleMod*360;
-    } 
     
-
-    return angle;
+    return (getRawEncoder() - fakeEncoder) * 360;
   }
 
 
