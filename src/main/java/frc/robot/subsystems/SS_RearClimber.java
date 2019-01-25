@@ -51,7 +51,7 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public double getAngle(){
-    fakeEncoder = Math.abs(Math.round(getEncoder() - 0.5));
+    fakeEncoder = Math.round(Math.abs(getEncoder() - 0.5));
 
     return (getEncoder() - fakeEncoder) * 360;
   }
