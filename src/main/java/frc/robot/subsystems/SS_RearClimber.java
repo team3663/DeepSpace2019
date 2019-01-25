@@ -53,7 +53,7 @@ public class SS_RearClimber extends Subsystem {
   public double getAngle(){
     fakeEncoder = Math.round(Math.abs(getEncoder() - 0.5));
 
-    return (getEncoder() - fakeEncoder) * 360;
+    return (Math.abs(getEncoder()) - fakeEncoder) * 360;
   }
   public void goToPos(int pos){
     rearClimberMotor.getPIDController().setReference(pos, ControlType.kPosition);

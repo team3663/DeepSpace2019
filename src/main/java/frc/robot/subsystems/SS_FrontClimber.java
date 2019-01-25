@@ -63,7 +63,7 @@ public class SS_FrontClimber extends Subsystem {
   public double getAngle(){
     fakeEncoder = Math.round(Math.abs(getRawEncoder() - 0.5));
     
-    return (getRawEncoder() - fakeEncoder) * 360;
+    return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
   }
 
 
