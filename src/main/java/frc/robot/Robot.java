@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private static SS_Swerve ss_Swerve;
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
 
-  private static SS_Griffon ss_Griffon;
+  private static SS_EndEffector ss_Griffon;
   private static SS_FrontClimber ss_FrontClimber;
   private static SS_Elevator ss_Elevator;
   private static SS_RearClimber ss_RearClimber;
@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     ss_Swerve = new SS_Swerve();
     ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain(14.5, 14.5);
 
-    ss_Griffon = new SS_Griffon();
+    ss_Griffon = new SS_EndEffector();
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
     ss_RearClimber = new SS_RearClimber();
@@ -69,7 +69,7 @@ public class Robot extends TimedRobot {
 		return ss_HolonomicDrivetrain;
   }
 
-  public static SS_Griffon getSSCargo() {
+  public static SS_EndEffector getSSCargo() {
     return ss_Griffon;
   }
 
