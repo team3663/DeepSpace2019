@@ -18,14 +18,14 @@ import frc.robot.RobotMap;
 /**
  * Add your docs here.
  */
-public class SS_Griffon extends Subsystem {
+public class SS_EndEffector extends Subsystem {
   private TalonSRX cargoMotor;
   private CANSparkMax hatchMotor;
 
   private double cargoMotorSpeedMultiplier;
   private double hatchMotorSpeedMultiplier = 1;
 
-  public SS_Griffon() {
+  public SS_EndEffector() {
     cargoMotor = new TalonSRX(RobotMap.CARGO_MOTOR);
     hatchMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
   }
