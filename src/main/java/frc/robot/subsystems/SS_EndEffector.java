@@ -29,7 +29,6 @@ public class SS_EndEffector extends Subsystem {
 
   private double cargoIntakeMotorSpeedMultiplier;
   private double endEffectorAngleMotorMultiplier;
-  private double hatchMotorSpeedMultiplier = 1;
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
@@ -52,10 +51,6 @@ public class SS_EndEffector extends Subsystem {
     }else{
       hatchIntakeMotor.set(DoubleSolenoid.Value.kReverse);
     }
-  }
-
-  public void setHatchMotorSpeedMultiplier(double speedMultipler) {
-    hatchMotorSpeedMultiplier = speedMultipler;
   }
 
   public void setEndEffectorAngleMotor(double speed){
