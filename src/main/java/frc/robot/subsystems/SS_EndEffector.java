@@ -9,9 +9,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.sun.jdi.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -21,7 +24,7 @@ import frc.robot.RobotMap;
  */
 public class SS_EndEffector extends Subsystem {
   private CANSparkMax cargoIntakeMotor;
-  private CANSparkMax hatchIntakeMotor;
+  private DoubleSolenoid hatchIntakeMotor;
   private CANSparkMax endEffectorAngleMotor;
 
   private double cargoIntakeMotorSpeedMultiplier;
@@ -30,7 +33,7 @@ public class SS_EndEffector extends Subsystem {
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    hatchIntakeMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
+    hatchIntakeMotor = new DoubleSolenoid(RobotMap.HATCH_FORWARD_CHANNEL, RobotMap.HATCH_REVERSE_CHANNEL);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
   }
 
@@ -43,8 +46,12 @@ public class SS_EndEffector extends Subsystem {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
-  public void setHatchMotorSpeed(double speed) {
-    hatchIntakeMotor.set(speed * hatchMotorSpeedMultiplier);
+  public void grabHatch(Boolean state) {
+    if(state){
+      hatchIntakeMotor.set(DoubleSolenoid.Value.kForward);
+    }else{
+      hatchIntakeMotor.set(DoubleSolenoid.Value.kReverse);
+    }
   }
 
   public void setHatchMotorSpeedMultiplier(double speedMultipler) {
