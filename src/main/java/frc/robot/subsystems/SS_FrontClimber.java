@@ -21,43 +21,39 @@ import frc.robot.RobotMap;
  */
 public class SS_FrontClimber extends Subsystem {
 
-  private CANSparkMax frontNeoOne;
-  private CANSparkMax frontNeoTwo;
+  private CANSparkMax frontClimberMotor;
+  private CANSparkMax cargoIntake;
   private CANPIDController PID;
-  private TalonSRX frontTalon;
 
   private double TICKS_PER_DEGREE = 1/360;
   private double fakeEncoder = 0;
 
-  public SS_FrontClimber(){
-    frontNeoOne = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR_ONE, MotorType.kBrushless);
-    frontNeoTwo = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR_TWO, MotorType.kBrushless);
-    frontNeoTwo.follow(frontNeoOne);
+  public SS_FrontClimber() {
+    frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
+    cargoIntake = new CANSparkMax(RobotMap.CARGO_INTAKE, MotorType.kBrushless);
 
     //TODO: tweak PID values
-    PID = new CANPIDController(frontNeoOne);
+    PID = new CANPIDController(frontClimberMotor);
     PID.setP(1);
     PID.setI(.01);
     PID.setD(3);
     PID.setOutputRange(-1, 1);
-
-    frontTalon = new TalonSRX(RobotMap.CLIMBER_FRONT_TALON);
-    }
-
-  public void setClimberFrontMotorsSpeed(double speed) {
-    frontTalon.set(ControlMode.PercentOutput, speed);
   }
 
-  public double degreeToTicks(int degree){
+  public void setCargoIntakeSpeed(double speed) {
+    cargoIntake.set(speed);
+  }
+
+  public double degreeToTicks(int degree) {
     return degree*TICKS_PER_DEGREE;
   }
 
-  public double ticksToDegrees(double ticks){
+  public double ticksToDegrees(double ticks) {
     return ticks/TICKS_PER_DEGREE;
   }
 
-  public double getRawEncoder(){
-    return frontNeoOne.getEncoder().getPosition();
+  public double getRawEncoder() {
+    return frontClimberMotor.getEncoder().getPosition();
   }
 
   public double getAngle(){
@@ -66,12 +62,7 @@ public class SS_FrontClimber extends Subsystem {
     return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
   }
 
-
-
-  public void goToDegree(int degree){
-
-  }
-
+  public void goToDegree(int degree) {}
 
   @Override
   public void initDefaultCommand() {
