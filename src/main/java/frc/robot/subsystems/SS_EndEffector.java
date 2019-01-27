@@ -13,39 +13,51 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class SS_EndEffector extends Subsystem {
-  private TalonSRX cargoMotor;
-  private CANSparkMax hatchMotor;
+  private CANSparkMax cargoIntakeMotor;
+  private CANSparkMax hatchIntakeMotor;
+  private CANSparkMax endEffectorAngleMotor;
 
-  private double cargoMotorSpeedMultiplier;
+  private double cargoIntakeMotorSpeedMultiplier;
+  private double endEffectorAngleMotorMultiplier;
   private double hatchMotorSpeedMultiplier = 1;
 
   public SS_EndEffector() {
-    cargoMotor = new TalonSRX(RobotMap.CARGO_MOTOR);
-    hatchMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
+    cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
+    hatchIntakeMotor = new CANSparkMax(RobotMap.HATCH_MOTOR, MotorType.kBrushless);
+    endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
   }
 
-  public void setCargoMotorSpeed(double speed) {
-    cargoMotor.set(ControlMode.PercentOutput, speed * cargoMotorSpeedMultiplier);
+  public void setcargoIntakeMotorSpeed(double speed) {
+    cargoIntakeMotor.set(speed * cargoIntakeMotorSpeedMultiplier);
+
   }
 
-  public void setCargoMotorSpeedMultiplier(double speedMultiplier) {
-    cargoMotorSpeedMultiplier = speedMultiplier;
+  public void setcargoIntakeMotorSpeedMultiplier(double speedMultiplier) {
+    cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
   public void setHatchMotorSpeed(double speed) {
-    hatchMotor.set(speed * hatchMotorSpeedMultiplier);
+    hatchIntakeMotor.set(speed * hatchMotorSpeedMultiplier);
   }
 
   public void setHatchMotorSpeedMultiplier(double speedMultipler) {
     hatchMotorSpeedMultiplier = speedMultipler;
   }
 
+  public void setEndEffectorAngleMotor(double speed){
+    endEffectorAngleMotor.set(speed * endEffectorAngleMotorMultiplier);
+  }
+
+  public void setEndEffectorAngleMotorMultiplier(double speedMultipler){
+    endEffectorAngleMotorMultiplier = speedMultipler;
+  }
   @Override
   public void initDefaultCommand() {
   }
