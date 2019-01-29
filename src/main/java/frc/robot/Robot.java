@@ -22,7 +22,6 @@ public class Robot extends TimedRobot {
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
 
   private static SS_EndEffector ss_EndEffector;
-
   private static SS_FrontClimber ss_FrontClimber;
   private static SS_Elevator ss_Elevator;
   private static SS_RearClimber ss_RearClimber;
@@ -70,7 +69,7 @@ public class Robot extends TimedRobot {
 		return ss_HolonomicDrivetrain;
   }
 
-  public static SS_EndEffector getSSCargo() {
+  public static SS_EndEffector getEndEffector() {
     return ss_EndEffector;
   }
 
