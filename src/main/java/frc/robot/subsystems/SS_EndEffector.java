@@ -46,7 +46,7 @@ public class SS_EndEffector extends Subsystem {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
-  public void hatchSetOpen(Boolean state) {
+  public void setHatchOpen(Boolean state) {
     if(state){
       hatchIntakeMotor.set(DoubleSolenoid.Value.kForward);
     }else{
