@@ -12,6 +12,7 @@ import frc.robot.input.XboxGamepad;
 public class OI {
 
     private IGamepad primaryController = new XboxGamepad(0);
+    private IGamepad elevatorController = new XboxGamepad(1);
 
     private Robot mRobot;
 
@@ -25,6 +26,9 @@ public class OI {
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
     }
 
+    public IGamepad getElevatorController(){
+        return elevatorController;
+    }
     public IGamepad getPrimaryController() {
         return primaryController;
     }

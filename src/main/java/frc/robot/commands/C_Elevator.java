@@ -31,7 +31,7 @@ public class C_Elevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getPrimaryController().getLeftYValue();
+    double speed = Robot.getOI().getElevatorController().getLeftYValue();
     Robot.getElevator().setElevatorSpeed(ignorDeadBand(speed));
   }
 
