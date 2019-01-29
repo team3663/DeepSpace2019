@@ -38,11 +38,11 @@ public class SS_RearClimber extends Subsystem {
     PID.setOutputRange(-1, 1);
   }
 
-  private void setCimberMotorSpeed(double speed){
+  public void setCimberMotorSpeed(double speed){
     rearClimberMotor.set(speed * speedMultiplier);
   }
 
-  private void setSpeedMultiplier(double speedMultiplier){
+  public void setSpeedMultiplier(double speedMultiplier){
     this.speedMultiplier = speedMultiplier;
   }
 
