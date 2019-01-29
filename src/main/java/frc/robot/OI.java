@@ -12,7 +12,7 @@ import frc.robot.input.XboxGamepad;
 public class OI {
 
     private IGamepad primaryController = new XboxGamepad(0);
-    private IGamepad elevatorController = new XboxGamepad(1);
+    private IGamepad secondaryController = new XboxGamepad(1);
 
     private Robot mRobot;
 
@@ -27,9 +27,9 @@ public class OI {
     }
 
     public IGamepad getElevatorController(){
-        return elevatorController;
+        return secondaryController;
     }
-    public IGamepad getPrimaryController() {
+    public IGamepad getSecondaryController() {
         return primaryController;
     }
 

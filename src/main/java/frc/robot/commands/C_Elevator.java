@@ -22,7 +22,7 @@ public class C_Elevator extends Command {
   protected void initialize() {
   }
 
-  private double ignorDeadBand(double input){
+  private double ignoreDeadBand(double input){
     if(Math.abs(input) < DEAD_BAND){
       return 0;
     }
@@ -31,8 +31,8 @@ public class C_Elevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getElevatorController().getLeftYValue();
-    Robot.getElevator().setElevatorSpeed(ignorDeadBand(speed));
+    double speed = Robot.getOI().getSecondaryController().getLeftYValue();
+    Robot.getElevator().setElevatorSpeed(ignoreDeadBand(speed));
   }
 
   // Make this return true when this Command no longer needs to run execute()
