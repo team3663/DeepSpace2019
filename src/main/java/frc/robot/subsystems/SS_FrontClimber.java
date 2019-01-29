@@ -28,6 +28,8 @@ public class SS_FrontClimber extends Subsystem {
   private double TICKS_PER_DEGREE = 1/360;
   private double fakeEncoder = 0;
 
+  private double frontClimberSpeedMultiplier;
+  private double cargoIntakeSpeedMultiplier;
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
     cargoIntake = new CANSparkMax(RobotMap.CARGO_INTAKE, MotorType.kBrushless);
@@ -41,7 +43,19 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void setCargoIntakeSpeed(double speed) {
-    cargoIntake.set(speed);
+    cargoIntake.set(speed * cargoIntakeSpeedMultiplier);
+  }
+
+  public void setClimberMotorSpeed(double speed){
+    frontClimberMotor.set(speed * frontClimberSpeedMultiplier);
+  }
+
+  public void setCargoSpeedIntakeSpeedMultiplier(double speedMuliplier){
+    cargoIntakeSpeedMultiplier = speedMuliplier;
+  }
+
+  public void setClimberSpeedMulitplier(double speedMuliplier){
+    frontClimberSpeedMultiplier = speedMuliplier;
   }
 
   public double degreeToTicks(int degree) {

@@ -13,6 +13,7 @@ import com.sun.jdi.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
+import edu.wpi.first.hal.sim.SimHooks;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -60,6 +61,7 @@ public class SS_EndEffector extends Subsystem {
   public void setEndEffectorAngleMotorMultiplier(double speedMultipler){
     endEffectorAngleMotorMultiplier = speedMultipler;
   }
+
   @Override
   public void initDefaultCommand() {
   }
