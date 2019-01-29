@@ -28,8 +28,8 @@ public class SS_EndEffector extends Subsystem {
   private DoubleSolenoid hatchIntakeMotor;
   private CANSparkMax endEffectorAngleMotor;
 
-  private double cargoIntakeMotorSpeedMultiplier;
-  private double endEffectorAngleMotorMultiplier;
+  private double cargoIntakeMotorSpeedMultiplier = 0.3;
+  private double endEffectorAngleMotorMultiplier = 0.3;
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
