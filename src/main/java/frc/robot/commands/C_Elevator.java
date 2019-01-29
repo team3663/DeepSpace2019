@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_Elevator extends Command {
+  private static final double DEAD_BAND = 0.05;
+
   public C_Elevator() {
     requires(Robot.getElevator());
   }
@@ -20,9 +22,17 @@ public class C_Elevator extends Command {
   protected void initialize() {
   }
 
+  private double deadband(double input){
+    if(Math.abs(input) < DEAD_BAND){
+      return 0;
+    }
+    return input;
+  }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double speed = Robot.getOI().getPrimaryController().getLeftYValue();
+    Robot.getElevator().setElevatorSpeed(deadband(speed));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -34,5 +44,6 @@ public class C_Elevator extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

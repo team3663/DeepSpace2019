@@ -24,7 +24,7 @@ public class SS_Elevator extends Subsystem {
   private CANSparkMax masterMotor;
   private CANSparkMax slaveMotor;
 
-  public double speedMultiplier = 1;
+  public double speedMultiplier = 0.3;
 
   private PIDCont PID;
 
