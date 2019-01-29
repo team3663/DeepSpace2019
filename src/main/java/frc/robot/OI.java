@@ -24,6 +24,20 @@ public class OI {
         primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(mRobot.getDrivetrain(), false));
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
+
+        // grabbing/releasing hatches
+        secondaryController.getRightBumperButton().whenPressed(new C_EndEffectorHatchGrab(true));
+        secondaryController.getLeftBumperButton().whenPressed(new C_EndEffectorHatchGrab(false));
+
+        // collecting cargo
+        secondaryController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));
+        secondaryController.getYButton().whenReleased(new C_SetCargoIntakeSpeed(0));
+
+        // releasing cargo
+        secondaryController.getXButton().whenPressed(new C_SetCargoIntakeSpeed(1));
+        secondaryController.getXButton().whenReleased(new C_SetCargoIntakeSpeed(0));
+        
+
     }
 
     public IGamepad getSecondaryController(){
