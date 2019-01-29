@@ -14,7 +14,7 @@ public class C_SetCargoIntakeSpeed extends Command {
   private double speed = 0;
 
   public C_SetCargoIntakeSpeed(double speed) {
-    requires(Robot.getSSCargo());
+    requires(Robot.getEndEffector());
     this.speed = speed;
   }
 
@@ -26,7 +26,7 @@ public class C_SetCargoIntakeSpeed extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getSSCargo().setcargoIntakeMotorSpeed(speed);
+    Robot.getEndEffector().setcargoIntakeMotorSpeed(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
