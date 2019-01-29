@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.I2C.Port;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -46,5 +48,5 @@ public class RobotMap {
   public static final int CAMERA_MODE = 0;
   public static final int CAMERA_LIGHT_MODE = 3;
   public static final int CAMERA_PIPELINE = 0;
-  
+
 }

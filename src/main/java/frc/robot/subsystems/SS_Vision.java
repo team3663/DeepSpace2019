@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.hal.sim.mockdata.I2CDataJNI;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,8 +16,7 @@ import frc.robot.commands.C_InitCamera;
 
 public class SS_Vision extends Subsystem {
   private NetworkTable limelightNetworkTable;
-  
-  
+
   private NetworkTableEntry x;
   private NetworkTableEntry y;
   private NetworkTableEntry targetArea;

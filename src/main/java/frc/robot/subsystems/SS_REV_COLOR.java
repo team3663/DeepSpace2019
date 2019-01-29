@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class SS_REV_COLOR extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+  private I2C revColor;
 
-  //private I2C revColor= new I2C(, 0x39);
-
+  public SS_REV_COLOR(){
+    revColor = new I2C(I2C.Port.kOnboard, 0x39);
+  }
 
   @Override
   public void initDefaultCommand() {
