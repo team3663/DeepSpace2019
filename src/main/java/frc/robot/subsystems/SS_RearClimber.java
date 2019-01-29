@@ -26,7 +26,7 @@ public class SS_RearClimber extends Subsystem {
   private CANPIDController PID;
 
   private double fakeEncoder = 0;
-  private double speedMultiplier = 1;
+  private double speedMultiplier = 0.3;
   private double TICKS_PER_DEGREE = 0; 
 
   public SS_RearClimber() {
@@ -36,6 +36,14 @@ public class SS_RearClimber extends Subsystem {
     PID.setI(.01);
     PID.setD(3);
     PID.setOutputRange(-1, 1);
+  }
+
+  private void setCimberMotorSpeed(double speed){
+    rearClimberMotor.set(speed * speedMultiplier);
+  }
+
+  private void setSpeedMultiplier(double speedMultiplier){
+    this.speedMultiplier = speedMultiplier;
   }
 
   public double degreeToTicks(int degree){
