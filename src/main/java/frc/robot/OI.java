@@ -26,10 +26,10 @@ public class OI {
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
     }
 
-    public IGamepad getElevatorController(){
+    public IGamepad getSecondaryController(){
         return secondaryController;
     }
-    public IGamepad getSecondaryController() {
+    public IGamepad getPrimaryController() {
         return primaryController;
     }
 
