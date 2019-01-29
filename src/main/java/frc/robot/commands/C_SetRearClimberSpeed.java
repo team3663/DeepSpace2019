@@ -10,11 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_Elevator extends Command {
-  private static final double DEAD_BAND = 0.05;
+public class C_SetRearClimberSpeed extends Command {
+  private double speed;
 
-  public C_Elevator() {
-    requires(Robot.getElevator());
+  public C_SetRearClimberSpeed(double speed) {
+    requires(Robot.getRearClimber());
+    this.speed = speed;
   }
 
   // Called just before this Command runs the first time
@@ -22,17 +23,10 @@ public class C_Elevator extends Command {
   protected void initialize() {
   }
 
-  private double ignorDeadBand(double input){
-    if(Math.abs(input) < DEAD_BAND){
-      return 0;
-    }
-    return input;
-  }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getPrimaryController().getLeftYValue();
-    Robot.getElevator().setElevatorSpeed(ignorDeadBand(speed));
+    Robot.getRearClimber().setCimberMotorSpeed(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,6 +34,12 @@ public class C_Elevator extends Command {
   protected boolean isFinished() {
     return false;
   }
+
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+  }
+
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
