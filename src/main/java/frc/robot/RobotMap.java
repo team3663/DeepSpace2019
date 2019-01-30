@@ -49,4 +49,5 @@ public class RobotMap {
   public static final int CAMERA_LIGHT_MODE = 3;
   public static final int CAMERA_PIPELINE = 0;
 
+  public static final int PRESSURE_SENSOR = 0;
 }
