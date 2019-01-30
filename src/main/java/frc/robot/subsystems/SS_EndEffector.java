@@ -37,12 +37,12 @@ public class SS_EndEffector extends Subsystem {
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
   }
 
-  public void setcargoIntakeMotorSpeed(double speed) {
+  public void setcargoIntakeSpeed(double speed) {
     cargoIntakeMotor.set(speed * cargoIntakeMotorSpeedMultiplier);
 
   }
 
-  public void setcargoIntakeMotorSpeedMultiplier(double speedMultiplier) {
+  public void setcargoIntakeSpeedMultiplier(double speedMultiplier) {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 

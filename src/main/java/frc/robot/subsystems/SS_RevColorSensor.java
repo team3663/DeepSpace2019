@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class SS_RevColorSensor extends Subsystem {
   private I2C revColor;
+
 
   public SS_RevColorSensor(){
     revColor = new I2C(I2C.Port.kOnboard, 0x39);
