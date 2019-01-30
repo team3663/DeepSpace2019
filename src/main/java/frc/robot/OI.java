@@ -42,6 +42,7 @@ public class OI {
         secondaryController.getBButton().whenPressed(new C_SetFrontClimberIntake(1));
         secondaryController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
 
+
     }
     
     public IGamepad getTestController(){
