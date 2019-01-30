@@ -11,16 +11,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_SetRearClimberSpeed extends Command {
-  private double speed;
 
-  public C_SetRearClimberSpeed(double speed) {
+  public C_SetRearClimberSpeed() {
     requires(Robot.getRearClimber());
-    this.speed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.getRearClimber().setCimberMotorSpeed(speed);
+    Robot.getRearClimber().setCimberMotorSpeed(Robot.getOI().getSecondaryController().getLeftTriggerValue());
   }
 
   @Override
