@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Add your docs here.
  */
-public class SS_REV_COLOR extends Subsystem {
+public class SS_RevColorSensor extends Subsystem {
   private I2C revColor;
 
-  public SS_REV_COLOR(){
+  public SS_RevColorSensor(){
     revColor = new I2C(I2C.Port.kOnboard, 0x39);
   }
 
