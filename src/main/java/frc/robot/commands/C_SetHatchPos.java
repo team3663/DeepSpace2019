@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.SS_EndEffector;
 
 public class C_SetHatchPos extends Command {
 
@@ -26,7 +25,7 @@ public class C_SetHatchPos extends Command {
 
   @Override
   protected void execute() {
-    Robot.getEndEffector().setHatchOpen(isClosed);
+    Robot.getEndEffector().setHatch(isClosed);
   }
 
   @Override

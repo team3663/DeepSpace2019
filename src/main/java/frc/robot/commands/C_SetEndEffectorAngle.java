@@ -31,7 +31,7 @@ public class C_SetEndEffectorAngle extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getSecondaryController().getRightXValue();
-    Robot.getEndEffector().setEndEffectorAngleMotor(ignoreDeadBand(speed));
+    Robot.getEndEffector().setAngleSpeed(ignoreDeadBand(speed));
   }
 
   // Make this return true when this Command no longer needs to run execute()

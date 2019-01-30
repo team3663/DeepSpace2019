@@ -33,11 +33,11 @@ public class RobotMap {
 
   public static final int CLIMBER_REAR_MOTOR = 0;
 
-  public static final int CARGO_MOTOR = 0;
+  public static final int CARGO_INTAKE_MOTOR = 0;
   public static final int HATCH_MOTOR = 0;
   public static final int ENDEFFECTOR_ANGLE_MOTOR = 0;
-  public static final int HATCH_FORWARD_CHANNEL = 0;
-  public static final int HATCH_REVERSE_CHANNEL = 0;
+  public static final int HATCH_FORWARD = 0;
+  public static final int HATCH_REVERSE = 0;
 
   public static final int ELEVATOR_MASTER_MOTOR = 28;
   public static final int ELEVATOR_SLAVE_MOTOR = 27;

@@ -5,27 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class C_SetCargoIntakeSpeed extends Command {
-  private double speed = 0;
+/**
+ * Add your docs here.
+ */
+public class SS_ColorSensor extends Subsystem {
+  private I2C revColor;
 
-  public C_SetCargoIntakeSpeed(double speed) {
-    requires(Robot.getEndEffector());
-    this.speed = speed;
+  public SS_ColorSensor(){
+    revColor = new I2C(I2C.Port.kOnboard, 0x39);
   }
 
   @Override
-  protected void execute() {
-    Robot.getEndEffector().setIntakeSpeed(speed);
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
 
-  @Override
-  protected boolean isFinished() {
-    return true;
+  public void getColor() {
+
   }
 
 }
