@@ -11,16 +11,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_SetFrontClimberSpeed extends Command {
-  private double speed;
-
-  public C_SetFrontClimberSpeed(double speed) {
+  public final double DEAD_BAND = 0.05;
+  public C_SetFrontClimberSpeed() {
     requires(Robot.getFrontClimber());
-    this.speed = speed;
   }
 
+  public double ignoreDeadBand(double input){
+    if(input < DEAD_BAND){
+      return 0;
+    }
+    return input;
+  }
   @Override
   protected void execute() {
-    Robot.getFrontClimber().setClimberMotorSpeed(speed);
+    double speed = Robot.getOI().getSecondaryController().getLeftYValue();
+    Robot.getFrontClimber().setClimberMotorSpeed(ignoreDeadBand(speed));
   }
 
   @Override
