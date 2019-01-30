@@ -20,7 +20,7 @@ public class C_SetCargoIntakeSpeed extends Command {
 
   @Override
   protected void execute() {
-    Robot.getEndEffector().setcargoIntakeMotorSpeed(speed);
+    Robot.getEndEffector().setIntakeSpeed(speed);
   }
 
   @Override

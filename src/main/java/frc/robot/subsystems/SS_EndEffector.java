@@ -25,41 +25,42 @@ import frc.robot.RobotMap;
  */
 public class SS_EndEffector extends Subsystem {
   private CANSparkMax cargoIntakeMotor;
-  private DoubleSolenoid hatchIntakeMotor;
+  private DoubleSolenoid hatchManipulatorPneumatic;
   private CANSparkMax endEffectorAngleMotor;
 
   private double cargoIntakeMotorSpeedMultiplier = 0.3;
-  private double endEffectorAngleMotorMultiplier = 0.3;
+  private double endEffectorAngleSpeedMultiplier = 0.3;
 
   public SS_EndEffector() {
-    cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    hatchIntakeMotor = new DoubleSolenoid(RobotMap.HATCH_FORWARD_CHANNEL, RobotMap.HATCH_REVERSE_CHANNEL);
+    cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_INTAKE_MOTOR, MotorType.kBrushless);
+    hatchManipulatorPneumatic = new DoubleSolenoid(RobotMap.HATCH_FORWARD, RobotMap.HATCH_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
   }
 
-  public void setcargoIntakeMotorSpeed(double speed) {
+  public void setIntakeSpeed(double speed) {
     cargoIntakeMotor.set(speed * cargoIntakeMotorSpeedMultiplier);
-
   }
 
-  public void setcargoIntakeMotorSpeedMultiplier(double speedMultiplier) {
+  public void setIntakeSpeedMultiplier(double speedMultiplier) {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
-  public void setHatchOpen(Boolean state) {
-    if(state){
-      hatchIntakeMotor.set(DoubleSolenoid.Value.kForward);
-    }else{
-      hatchIntakeMotor.set(DoubleSolenoid.Value.kReverse);
+  public void setHatch(Boolean isOpen) {
+    if(isOpen){
+      hatchManipulatorPneumatic.set(DoubleSolenoid.Value.kForward);
+    }
+    else{
+      hatchManipulatorPneumatic.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
-  public void setEndEffectorAngleMotor(double speed){
-    endEffectorAngleMotor.set(speed * endEffectorAngleMotorMultiplier);
+  //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
+  public void setAngleSpeed(double speed){
+    endEffectorAngleMotor.set(speed * endEffectorAngleSpeedMultiplier);
   }
 
-  public void setEndEffectorAngleMotorMultiplier(double speedMultipler){
-    endEffectorAngleMotorMultiplier = speedMultipler;
+  public void setAngleSpeedMultiplier(double speedMultipler){
+    endEffectorAngleSpeedMultiplier = speedMultipler;
   }
 
   @Override

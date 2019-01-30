@@ -25,6 +25,7 @@ public class SS_Elevator extends Subsystem {
   private CANSparkMax slaveMotor;
 
   public double speedMultiplier = 0.3;
+  private int selectedLevel = 1;
 
   private PIDCont PID;
 
@@ -62,21 +63,26 @@ public class SS_Elevator extends Subsystem {
     //TODO: implement PID
   }
 
-  public void goToLevel(int level){
+  public void goToLevel(){
 
     //TODO: find position of levels
-    if(level == 1){
+    if(selectedLevel == 1){
       
     }
-    else if (level == 2){
+    else if (selectedLevel == 2){
 
     }
-    else if (level ==3){
+    else if (selectedLevel == 3){
 
     }
   }
 
+  public void setSelectedLevel(int level){
+    selectedLevel = level;
+  }
+
   public double getEncoder(){
+    //TODO: compare both encoders or replace with better encoders
     return masterMotor.getEncoder().getPosition();
   }
 
