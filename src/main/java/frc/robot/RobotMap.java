@@ -19,33 +19,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class RobotMap {
  
-<<<<<<< Updated upstream
-  public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 25;
-  public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 23;
-  public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR = 34;
-  public static final int DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR = 32;
-  public static final int DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR = 26;
-  public static final int DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR = 24;
-  public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR = 33;
-  public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 31;
 
-  public static final int CLIMBER_FRONT_MOTOR = 0;
-  public static final int CARGO_INTAKE = 0;
-
-  public static final int CLIMBER_REAR_MOTOR = 0;
-
-  public static final int CARGO_INTAKE_MOTOR = 0;
-  public static final int HATCH_MOTOR = 0;
-  public static final int ENDEFFECTOR_ANGLE_MOTOR = 0;
-  public static final int HATCH_FORWARD = 0;
-  public static final int HATCH_REVERSE = 0;
-
-  public static final int ELEVATOR_MASTER_MOTOR = 28;
-  public static final int ELEVATOR_SLAVE_MOTOR = 27;
-
-  public static final int CARRIAGE_LEFT_MOTOR = 21;
-  public static final int CARRIAGE_RIGHT_MOTOR = 22;
-=======
   public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 12;
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 10;
   public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR = 2;
@@ -68,7 +42,6 @@ public class RobotMap {
 
   public static final int ELEVATOR_MASTER_MOTOR = 4;
   public static final int ELEVATOR_SLAVE_MOTOR = 13;
->>>>>>> Stashed changes
 
   public static final int CAMERA_MODE = 0;
   public static final int CAMERA_LIGHT_MODE = 3;
