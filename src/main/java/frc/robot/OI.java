@@ -26,8 +26,8 @@ public class OI {
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
         // grabbing/releasing hatches
-        secondaryController.getRightBumperButton().whenPressed(new C_EndEffectorHatchGrab(true));
-        secondaryController.getLeftBumperButton().whenPressed(new C_EndEffectorHatchGrab(false));
+        secondaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
+        secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
 
         // collecting cargo
         secondaryController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));

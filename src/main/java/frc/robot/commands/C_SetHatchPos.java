@@ -11,38 +11,27 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_EndEffector;
 
-public class C_EndEffectorHatchGrab extends Command {
+public class C_SetHatchPos extends Command {
 
-  boolean grab;
+  private boolean isClosed;
 
   /**
    * Makes the end effector grab or release the hatch
    * @param grab if true, grab the hatch. If false, release it.
    */
-  public C_EndEffectorHatchGrab(boolean grab) {
+  public C_SetHatchPos(boolean isClosed) {
     requires(Robot.getEndEffector());
-    this.grab = grab;
-  }
-
-  @Override
-  protected void initialize() {
+    this.isClosed = isClosed;
   }
 
   @Override
   protected void execute() {
-    Robot.getEndEffector().setHatchOpen(grab);
+    Robot.getEndEffector().setHatchOpen(isClosed);
   }
 
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
-  @Override
-  protected void end() {
-  }
-
-  @Override
-  protected void interrupted() {
-  }
 }

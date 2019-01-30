@@ -17,33 +17,21 @@ public class C_Elevator extends Command {
     requires(Robot.getElevator());
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
-
   private double ignoreDeadBand(double input){
     if(Math.abs(input) < DEAD_BAND){
       return 0;
     }
     return input;
   }
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     double speed = Robot.getOI().getSecondaryController().getLeftYValue();
     Robot.getElevator().setElevatorSpeed(ignoreDeadBand(speed));
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
-  }
+
 }
