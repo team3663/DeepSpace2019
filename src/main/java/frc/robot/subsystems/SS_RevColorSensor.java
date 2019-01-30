@@ -47,6 +47,7 @@ package frc.robot.subsystems;
 
 // }
 
+
 import edu.wpi.first.wpilibj.I2C;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -77,7 +78,6 @@ public class SS_RevColorSensor {
 
 
   private I2C revColor;
-
 
   private ByteBuffer buffer = ByteBuffer.allocate(8);
 
