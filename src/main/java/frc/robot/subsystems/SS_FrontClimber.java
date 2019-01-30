@@ -32,7 +32,7 @@ public class SS_FrontClimber extends Subsystem {
   private double cargoIntakeSpeedMultiplier = 0.3;
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
-    cargoIntake = new CANSparkMax(RobotMap.CARGO_INTAKE, MotorType.kBrushless);
+    cargoIntake = new CANSparkMax(RobotMap.CLIMBER_FRONT_CARGO_INTAKE, MotorType.kBrushless);
 
     //TODO: tweak PID values
     PID = new CANPIDController(frontClimberMotor);

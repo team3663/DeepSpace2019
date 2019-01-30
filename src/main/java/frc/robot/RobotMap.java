@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class RobotMap {
  
+<<<<<<< Updated upstream
   public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 25;
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 23;
   public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR = 34;
@@ -44,6 +45,30 @@ public class RobotMap {
 
   public static final int CARRIAGE_LEFT_MOTOR = 21;
   public static final int CARRIAGE_RIGHT_MOTOR = 22;
+=======
+  public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 12;
+  public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 10;
+  public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR = 2;
+  public static final int DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR = 1;
+  public static final int DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR = 9;
+  public static final int DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR = 14;
+  public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR = 5;
+  public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 3;
+
+  public static final int CLIMBER_FRONT_MOTOR = 11;
+  public static final int CLIMBER_FRONT_CARGO_INTAKE = 0;
+
+  public static final int CLIMBER_REAR_MOTOR = 6;
+
+  public static final int CARGO_MOTOR = 7;
+  public static final int ENDEFFECTOR_ANGLE_MOTOR = 8;
+
+  public static final int HATCH_SOLENOID_FORWARD_CHANNEL = 0;
+  public static final int HATCH_SOLENOID_REVERSE_CHANNEL = 1;
+
+  public static final int ELEVATOR_MASTER_MOTOR = 4;
+  public static final int ELEVATOR_SLAVE_MOTOR = 13;
+>>>>>>> Stashed changes
 
   public static final int CAMERA_MODE = 0;
   public static final int CAMERA_LIGHT_MODE = 3;
