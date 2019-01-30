@@ -45,12 +45,14 @@ public class SS_EndEffector extends Subsystem {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
-  public void setHatchOpen(boolean state) {
-    if(state){
+  public void setHatch(Boolean isOpen) {
+    if(isOpen){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
-    }else{
+    }
+    else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
+
   }
 
   //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
