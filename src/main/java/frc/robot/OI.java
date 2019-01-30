@@ -37,6 +37,9 @@ public class OI {
         secondaryController.getXButton().whenPressed(new C_SetCargoIntakeSpeed(1));
         secondaryController.getXButton().whenReleased(new C_SetCargoIntakeSpeed(0));
         
+        //climber intake
+        secondaryController.getBButton().whenPressed(new C_SetFrontClimberIntake(1));
+        secondaryController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
 
     }
 
