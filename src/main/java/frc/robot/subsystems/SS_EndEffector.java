@@ -25,7 +25,7 @@ import frc.robot.RobotMap;
  */
 public class SS_EndEffector extends Subsystem {
   private CANSparkMax cargoIntakeMotor;
-  private DoubleSolenoid hatchIntakeMotor;
+  private DoubleSolenoid hatchIntakeSolenoid;
   private CANSparkMax endEffectorAngleMotor;
 
   private double cargoIntakeMotorSpeedMultiplier = 0.3;
@@ -33,7 +33,7 @@ public class SS_EndEffector extends Subsystem {
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    hatchIntakeMotor = new DoubleSolenoid(RobotMap.HATCH_FORWARD_CHANNEL, RobotMap.HATCH_REVERSE_CHANNEL);
+    hatchIntakeSolenoid = new DoubleSolenoid(RobotMap.HATCH_FORWARD_CHANNEL, RobotMap.HATCH_REVERSE_CHANNEL);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
   }
 
@@ -48,9 +48,9 @@ public class SS_EndEffector extends Subsystem {
 
   public void setHatchOpen(Boolean state) {
     if(state){
-      hatchIntakeMotor.set(DoubleSolenoid.Value.kForward);
+      hatchIntakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }else{
-      hatchIntakeMotor.set(DoubleSolenoid.Value.kReverse);
+      hatchIntakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
 

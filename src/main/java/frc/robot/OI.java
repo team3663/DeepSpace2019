@@ -13,6 +13,7 @@ public class OI {
 
     private IGamepad primaryController = new XboxGamepad(0);
     private IGamepad secondaryController = new XboxGamepad(1);
+    private IGamepad testingController = new XboxGamepad(2);
 
     private Robot mRobot;
 
@@ -42,7 +43,10 @@ public class OI {
         secondaryController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
 
     }
-
+    
+    public IGamepad getTestController(){
+        return testingController;
+    }
     public IGamepad getSecondaryController(){
         return secondaryController;
     }
