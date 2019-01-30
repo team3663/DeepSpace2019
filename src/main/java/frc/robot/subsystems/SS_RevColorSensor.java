@@ -76,7 +76,7 @@ public class SS_RevColorSensor {
 
   private final double integrationTime = 10;
 
-
+ 
   private I2C revColor;
 
   private ByteBuffer buffer = ByteBuffer.allocate(8);
@@ -94,34 +94,58 @@ public class SS_RevColorSensor {
       
   }
 
-  public void read() {
-    buffer.clear();
-      revColor.read(CMD | MULTI_BYTE_BIT | RDATA_REGISTER, 8, buffer);
-      
-      red = buffer.getShort(0);
-      if(red < 0) { 
-        red += 0b10000000000000000; 
-      }
-      
-      green = buffer.getShort(2);
-      if(green < 0) { 
-        green += 0b10000000000000000; 
-      }
-      
-      blue = buffer.getShort(4); 
-      if(blue < 0) {
-         blue += 0b10000000000000000; 
-      }
-      
-      prox = buffer.getShort(6); 
-      if(prox < 0) { 
-        prox += 0b10000000000000000; 
-      }
-  }
-
   public int status() {
     buffer.clear();
     revColor.read(CMD | 0x13, 1, buffer);
     return buffer.get(0);
+  }
+
+  private void read() {
+    buffer.clear();
+    revColor.read(CMD | MULTI_BYTE_BIT | RDATA_REGISTER, 8, buffer);
+  }
+
+  public double getRed() {
+    read();
+    red = buffer.getShort(0);
+    if(red < 0) { 
+      red += 0b10000000000000000; 
+    }
+
+    return red;
+  }
+
+  public double getGreen() {
+    read();
+    green = buffer.getShort(2);
+    if(green < 0) { 
+      green += 0b10000000000000000; 
+    }
+
+    return green;
+  }
+
+  public double getBlue() {
+    read();
+    blue = buffer.getShort(4); 
+    if(blue < 0) {
+        blue += 0b10000000000000000; 
+    }
+
+    return blue;
+  }
+
+  public double getProximity() {
+    read();
+    prox = buffer.getShort(6); 
+    if(prox < 0) { 
+      prox += 0b10000000000000000; 
+    }
+    return prox;
+  }
+
+  public double getWhite() {
+    double avarage = getRed() + getGreen() + getBlue();
+    return avarage / 3;
   }
 }
