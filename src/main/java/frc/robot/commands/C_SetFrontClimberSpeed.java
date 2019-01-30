@@ -11,16 +11,14 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_SetFrontClimberSpeed extends Command {
-  private double speed;
 
-  public C_SetFrontClimberSpeed(double speed) {
+  public C_SetFrontClimberSpeed() {
     requires(Robot.getFrontClimber());
-    this.speed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.getFrontClimber().setClimberMotorSpeed(speed);
+    Robot.getFrontClimber().setClimberMotorSpeed(Robot.getOI().getSecondaryController().getRightTriggerValue());
   }
 
   @Override
