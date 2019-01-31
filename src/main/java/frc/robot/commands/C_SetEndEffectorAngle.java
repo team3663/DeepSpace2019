@@ -19,6 +19,7 @@ public class C_SetEndEffectorAngle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getEndEffector().setAngleSpeedMultiplier(.2);
   }
 
   public double ignoreDeadBand(double input){

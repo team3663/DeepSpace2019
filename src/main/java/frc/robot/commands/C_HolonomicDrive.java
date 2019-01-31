@@ -8,10 +8,10 @@ import frc.robot.subsystems.SS_HolonomicDrivetrain;
 public class C_HolonomicDrive extends Command {
 	private final SS_HolonomicDrivetrain mDrivetrain;
 
-	public C_HolonomicDrive(SS_HolonomicDrivetrain drivetrain) {
-		mDrivetrain = drivetrain;
+	public C_HolonomicDrive() {
+		mDrivetrain = Robot.getDrivetrain();
 
-		requires(drivetrain);
+		requires(mDrivetrain);
 	}
 
 	private double deadband(double input) {

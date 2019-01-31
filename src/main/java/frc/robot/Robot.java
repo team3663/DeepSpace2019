@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI(this);
 
-
+    //some subsystems commented out
     ss_Swerve = new SS_Swerve();
     ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain(14.5, 14.5);
 
@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
     ss_RearClimber = new SS_RearClimber();
-    ss_Vision = new SS_Vision();
+    //ss_Vision = new SS_Vision();
 
 
     

@@ -19,6 +19,20 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public class RobotMap {
  
+  public final int getDriveMotors(int module){
+    int motors[] = {
+      12,2,
+      9,3
+    };
+    return motors[module];
+  }
+  public final int getAngleMotors(int module){
+    int motors[] = {
+      12,10,
+      1,8
+    };
+    return motors[module];
+  }
 
   public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 12;
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 10;
