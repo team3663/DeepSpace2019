@@ -10,19 +10,20 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetEndEffectorAngle extends Command {
+public class C_EndEffectorDirect extends Command {
   private static final double DEAD_BAND = 0.05;
-  public C_SetEndEffectorAngle() {
+  public C_EndEffectorDirect() {
     requires(Robot.getEndEffector());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getEndEffector().setAngleSpeedMultiplier(.2);
   }
 
   public double ignoreDeadBand(double input){
-    if(input < DEAD_BAND){
+    if(Math.abs(input) < DEAD_BAND){
       return 0;
     }
     return input;
@@ -30,7 +31,7 @@ public class C_SetEndEffectorAngle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getSecondaryController().getRightXValue();
+    double speed = Robot.getOI().getTestController().getLeftYValue();
     Robot.getEndEffector().setAngleSpeed(ignoreDeadBand(speed));
   }
 

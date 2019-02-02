@@ -10,13 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetRearClimberSpeed extends Command {
-  private final double DEAD_BAND = 0.05;
-  public C_SetRearClimberSpeed() {
-    requires(Robot.getRearClimber());
+/**
+ * ONLY FOR TESTING, LIMITS NOT SET
+ */
+public class C_FrontClimberDirect extends Command {
+  public final double DEAD_BAND = 0.1;
+  public C_FrontClimberDirect() {
+    requires(Robot.getFrontClimber());
   }
 
-  private double ignoreDeadBand(double input){
+  public double ignoreDeadBand(double input){
     if(Math.abs(input) < DEAD_BAND){
       return 0;
     }
@@ -24,13 +27,13 @@ public class C_SetRearClimberSpeed extends Command {
   }
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getSecondaryController().getRightYValue();
-    Robot.getRearClimber().setCimberMotorSpeed(ignoreDeadBand(speed));
+    double speed = Robot.getOI().getSecondaryController().getLeftYValue();
+    Robot.getFrontClimber().setClimberMotorSpeed(ignoreDeadBand(speed));
   }
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
 }

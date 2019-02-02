@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
@@ -24,7 +25,7 @@ public class SS_Elevator extends Subsystem {
   private CANSparkMax masterMotor;
   private CANSparkMax slaveMotor;
 
-  public double speedMultiplier = 0.3;
+  public double speedMultiplier = 0.5;
   private int selectedLevel = 1;
 
   private PIDCont PID;
@@ -35,6 +36,8 @@ public class SS_Elevator extends Subsystem {
     masterMotor = new CANSparkMax(RobotMap.ELEVATOR_MASTER_MOTOR, MotorType.kBrushless);
     slaveMotor = new CANSparkMax(RobotMap.ELEVATOR_SLAVE_MOTOR, MotorType.kBrushless);
 
+    masterMotor.setInverted(true);
+    masterMotor.setIdleMode(IdleMode.kBrake);
     //default PID profile
     
     profiles = new PIDCont[] {
@@ -44,7 +47,7 @@ public class SS_Elevator extends Subsystem {
 
     PID = profiles[0];
 
-    slaveMotor.follow(masterMotor);
+    slaveMotor.follow(masterMotor, true);
   }
 
   public void setElevatorSpeedMultiplier(double speedMultiplier) {
@@ -81,9 +84,13 @@ public class SS_Elevator extends Subsystem {
     selectedLevel = level;
   }
 
-  public double getEncoder(){
-    //TODO: compare both encoders or replace with better encoders
+  public double getMasterEncoder(){
+    //TODO: compare encoders or replace with better encoders
     return masterMotor.getEncoder().getPosition();
+  }
+  public double getSlaveEncoder()
+  {
+    return slaveMotor.getEncoder().getPosition();
   }
 
   @Override

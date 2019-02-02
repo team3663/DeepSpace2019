@@ -11,10 +11,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.C_FrontClimberDirect;
 
 /**
  * Add your docs here.
@@ -22,18 +24,22 @@ import frc.robot.RobotMap;
 public class SS_FrontClimber extends Subsystem {
 
   private CANSparkMax frontClimberMotor;
-  private CANSparkMax cargoIntake;
+  private TalonSRX cargoIntake;
   private CANPIDController PID;
 
-  private double TICKS_PER_DEGREE = 1/360;
+  private final double TOP_ANGLE_LIMIT = -25;
+  private final double BOTTOM_ANGLE_LIMIT = 200;
+  private final double TICKS_PER_DEGREE = 1/147;
   private double fakeEncoder = 0;
 
-  private double frontClimberSpeedMultiplier = 0.3;
-  private double cargoIntakeSpeedMultiplier = 0.3;
+  private double frontClimberSpeedMultiplier = 0.3;//askInitDefault
+  private double cargoIntakeSpeedMultiplier = 1;
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
-    cargoIntake = new CANSparkMax(RobotMap.CLIMBER_FRONT_CARGO_INTAKE, MotorType.kBrushless);
+    cargoIntake = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
 
+
+    frontClimberMotor.setIdleMode(IdleMode.kBrake);
     //TODO: tweak PID values
     PID = new CANPIDController(frontClimberMotor);
     PID.setP(1);
@@ -43,7 +49,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void setCargoIntakeSpeed(double speed) {
-    cargoIntake.set(speed * cargoIntakeSpeedMultiplier);
+    cargoIntake.set(ControlMode.MotionProfile.PercentOutput, speed * cargoIntakeSpeedMultiplier);
   }
 
   public void setClimberMotorSpeed(double speed){
@@ -76,9 +82,12 @@ public class SS_FrontClimber extends Subsystem {
     return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
   }
 
-  public void goToDegree(int degree) {}
+  public void goToDegree(int degree) {
+
+  }
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new C_FrontClimberDirect());
   }
 }
