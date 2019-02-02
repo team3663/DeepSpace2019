@@ -10,14 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetFrontClimberAngle extends Command {
+public class C_SetRearClimberAngle extends Command {
   private double angle;
-  private static final double THE_MAGIC_NUMBER_OF_CHRISTIAN = 0.5;
+  private final double THE_MAGIC_NUMBER_OF_CHRISTIAN = 0.5;
   private double speed = 1;
-  private static final double originalSpeed = 1; 
+  private double originalSpeed = 1;
 
-  public C_SetFrontClimberAngle(double angle) {
-    requires(Robot.getFrontClimber());
+  public C_SetRearClimberAngle(double angle) {
+    requires(Robot.getRearClimber());
     this.angle = angle;
   }
 
@@ -29,13 +29,12 @@ public class C_SetFrontClimberAngle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.getFrontClimber().getAngle() < angle){
-      if(Robot.getFrontClimber().getAngle() >= angle * THE_MAGIC_NUMBER_OF_CHRISTIAN){
-        speed = originalSpeed - ((Robot.getFrontClimber().getAngle() / angle)  * 0.75);
+    if(Robot.getRearClimber().getAngle() < angle){
+      if(Robot.getRearClimber().getAngle() >= angle * THE_MAGIC_NUMBER_OF_CHRISTIAN){
+        speed = originalSpeed - ((Robot.getRearClimber().getAngle() / angle) * 0.75);
       }
-      Robot.getFrontClimber().setClimberMotorSpeed(speed);
+      Robot.getRearClimber().setCimberMotorSpeed(speed);
     }
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
