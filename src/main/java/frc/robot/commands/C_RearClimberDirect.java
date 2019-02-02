@@ -9,10 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
-public class C_SetRearClimberSpeed extends Command {
+/**
+ * ONLY FOR TESTING, LIMITS NOT SET
+ */
+public class C_RearClimberDirect extends Command {
   private final double DEAD_BAND = 0.05;
-  public C_SetRearClimberSpeed() {
+  public C_RearClimberDirect() {
     requires(Robot.getRearClimber());
   }
 
@@ -30,7 +32,7 @@ public class C_SetRearClimberSpeed extends Command {
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
 }

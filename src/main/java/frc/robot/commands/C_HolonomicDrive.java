@@ -11,7 +11,7 @@ public class C_HolonomicDrive extends Command {
 	public C_HolonomicDrive() {
 		mDrivetrain = Robot.getDrivetrain();
 
-		requires(mDrivetrain);
+		requires(Robot.getDrivetrain());
 	}
 
 	private double deadband(double input) {

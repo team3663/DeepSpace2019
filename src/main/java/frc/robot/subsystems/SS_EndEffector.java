@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.sun.jdi.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.C_EndEffectorDirect;
 
 /**
  * Add your docs here.
@@ -31,10 +33,17 @@ public class SS_EndEffector extends Subsystem {
   private double cargoIntakeMotorSpeedMultiplier = 0.3;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
+  private double TICKS_PER_ANGLE = 1/100;
+
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD_CHANNEL, RobotMap.HATCH_SOLENOID_REVERSE_CHANNEL);
+    
+    //not part of the physical robot yet
+    //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
+    
+    cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
+    endEffectorAngleMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void setIntakeSpeed(double speed) {
@@ -55,6 +64,10 @@ public class SS_EndEffector extends Subsystem {
 
   }
 
+  public double getAngleEncoder(){
+    return endEffectorAngleMotor.getEncoder().getPosition();
+  }
+
   //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
   public void setAngleSpeed(double speed){
     endEffectorAngleMotor.set(speed * endEffectorAngleSpeedMultiplier);
@@ -66,5 +79,6 @@ public class SS_EndEffector extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new C_EndEffectorDirect());
   }
 }

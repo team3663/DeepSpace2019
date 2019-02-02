@@ -103,13 +103,19 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("Module Angle " + i, ss_Swerve.getSwerveModule(i).getCurrentAngle());
       SmartDashboard.putNumber("Module Pos " + i, (ss_Swerve.getSwerveModule(i).getDriveDistance()));
       SmartDashboard.putNumber("Module Raw Angle " + i, ss_Swerve.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
-      SmartDashboard.putNumber("Module Drive Speed " + i, ss_Swerve.getSwerveModule(i).getDriveMotor().getMotorOutputPercent());
-      SmartDashboard.putNumber("Module Current Ticks " + i, ss_Swerve.getSwerveModule(i).getDriveMotor().getSelectedSensorPosition(0));
-      SmartDashboard.putNumber("Module Drive % " + i, ss_Swerve.getSwerveModule(i).getDriveMotor().getMotorOutputPercent());
-  }
+    }
 
+    SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
+    SmartDashboard.putNumber("Slave Encoder", ss_Elevator.getSlaveEncoder());
 
-SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
+    SmartDashboard.putNumber("EndEffector Encoder", ss_EndEffector.getAngleEncoder());
+
+    SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getRawEncoder());
+    SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
+    SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
+    SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
+
+    SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
   }
 
   @Override
