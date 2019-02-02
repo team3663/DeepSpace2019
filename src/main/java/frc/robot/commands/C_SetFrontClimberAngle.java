@@ -30,10 +30,10 @@ public class C_SetFrontClimberAngle extends Command {
   @Override
   protected void execute() {
     if(Robot.getFrontClimber().getAngle() < angle){
-      Robot.getFrontClimber().setClimberMotorSpeed(speed);
       if(Robot.getFrontClimber().getAngle() >= angle * DECREASE_START_NUM){
         speed = originalSpeed - ((Robot.getFrontClimber().getAngle() / angle)  * 0.75);
       }
+      Robot.getFrontClimber().setClimberMotorSpeed(speed);
     }
 
   }
