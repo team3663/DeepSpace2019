@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -24,6 +25,7 @@ public class SS_Elevator extends Subsystem {
 
   private CANSparkMax masterMotor;
   private CANSparkMax slaveMotor;
+  private DigitalInput bottomLimitSwitch;
 
   public double speedMultiplier = 0.5;
   private int selectedLevel = 1;
@@ -35,6 +37,7 @@ public class SS_Elevator extends Subsystem {
   public SS_Elevator() {
     masterMotor = new CANSparkMax(RobotMap.ELEVATOR_MASTER_MOTOR, MotorType.kBrushless);
     slaveMotor = new CANSparkMax(RobotMap.ELEVATOR_SLAVE_MOTOR, MotorType.kBrushless);
+    bottomLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_LIMIT_SWITCH);
 
     masterMotor.setInverted(true);
     masterMotor.setIdleMode(IdleMode.kBrake);
@@ -66,8 +69,8 @@ public class SS_Elevator extends Subsystem {
     //TODO: implement PID
   }
 
-  public void goToLevel(){
-
+  public void goToLevel(int selectedLevel){
+    this.selectedLevel = selectedLevel;
     //TODO: find position of levels
     if(selectedLevel == 1){
       
@@ -88,9 +91,16 @@ public class SS_Elevator extends Subsystem {
     //TODO: compare encoders or replace with better encoders
     return masterMotor.getEncoder().getPosition();
   }
-  public double getSlaveEncoder()
-  {
+  public double getSlaveEncoder(){
     return slaveMotor.getEncoder().getPosition();
+  }
+
+  public DigitalInput getBottomLimitSwitch() {
+    return bottomLimitSwitch;
+  }
+
+  public boolean getBottomLimitSwitchOutput() {
+    return bottomLimitSwitch.get();
   }
 
   @Override

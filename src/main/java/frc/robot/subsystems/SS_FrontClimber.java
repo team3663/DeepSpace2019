@@ -12,8 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.C_FrontClimberDirect;
@@ -26,10 +28,12 @@ public class SS_FrontClimber extends Subsystem {
   private CANSparkMax frontClimberMotor;
   private TalonSRX cargoIntake;
   private CANPIDController PID;
+  private DigitalInput limitSwitch;
 
   private final double TOP_ANGLE_LIMIT = -25;
   private final double BOTTOM_ANGLE_LIMIT = 200;
-  private final double TICKS_PER_DEGREE = 1/147;
+  private final double GEAR_RATIO = 1/147;
+  private final double TICKS_PER_DEGREE = 1/360;
   private double fakeEncoder = 0;
 
   private double frontClimberSpeedMultiplier = 0.3;//askInitDefault
@@ -37,6 +41,8 @@ public class SS_FrontClimber extends Subsystem {
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
     cargoIntake = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
+    limitSwitch = new DigitalInput(RobotMap.CLIMBER_FRONT_LIMIT_SWITCH);
+    
 
 
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
@@ -76,14 +82,32 @@ public class SS_FrontClimber extends Subsystem {
     return frontClimberMotor.getEncoder().getPosition();
   }
 
+  //Returns a positive between 0 and 180 degrees if climber is forward(out)
+  //Or a negative between 0 and -180 degrees if climber is backward(in the robot frame)
   public double getAngle(){
-    fakeEncoder = Math.round(Math.abs(getRawEncoder() - 0.5));
-    
-    return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
+    //fakeEncoder = Math.round(Math.abs(getRawEncoder() - 0.5));
+    //return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
+    double position = getRawEncoder() * GEAR_RATIO;
+    if(position > 1 || position < -1) {
+      position %= 360;
+    }
+    if(position > .5 || position < -.5) {
+      position = 1 - position;
+    }
+    return position * 360;
   }
 
-  public void goToDegree(int degree) {
+  public void goToDegree(double degree) {
+    //frontClimberMotor.getPIDController().setReference(degree * TICKS_PER_DEGREE * GEAR_RATIO, 
+      //ControlType.kPosition);
+  }
 
+  public DigitalInput getLimitSwitch() {
+    return limitSwitch;
+  }
+
+  public boolean limitSwitchIsPressed() {
+    return limitSwitch.get();
   }
 
   @Override

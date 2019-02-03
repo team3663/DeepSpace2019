@@ -35,6 +35,7 @@ public class RobotMap {
   }
   public static final int CLIMBER_FRONT_MOTOR = 11;
   public static final int CLIMBER_FRONT_CARGO_INTAKE = 15;
+  public static final int CLIMBER_FRONT_LIMIT_SWITCH = 1;
 
   public static final int CLIMBER_REAR_MOTOR = 6;
 
@@ -46,6 +47,7 @@ public class RobotMap {
 
   public static final int ELEVATOR_MASTER_MOTOR = 4;
   public static final int ELEVATOR_SLAVE_MOTOR = 13;
+  public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 0;
 
   public static final int CAMERA_MODE = 0;
   public static final int CAMERA_LIGHT_MODE = 3;

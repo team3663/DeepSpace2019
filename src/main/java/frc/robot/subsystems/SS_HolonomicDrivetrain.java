@@ -76,7 +76,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 	}
 
 	public void stopDriveMotors(){
-
+		Robot.getSwerve().stopDriveMotors();
 	}
 
 	public void zeroGyro() {
