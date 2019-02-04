@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.hal.sim.SimHooks;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,6 +27,11 @@ import frc.robot.commands.C_EndEffectorDirect;
  * Add your docs here.
  */
 public class SS_EndEffector extends Subsystem {
+
+  // Rev air pressure sensor variables
+  private static final double SUPPLY_VOLTAGE = 5;
+  private AnalogInput pressureSensor;
+
   private CANSparkMax cargoIntakeMotor;
   private DoubleSolenoid hatchPickupSolenoid;
   private CANSparkMax endEffectorAngleMotor;
@@ -63,6 +69,10 @@ public class SS_EndEffector extends Subsystem {
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
+  }
+
+  public double getAirPressure() {
+    return 250 * pressureSensor.getVoltage() / SUPPLY_VOLTAGE - 25;
   }
 
   public double getRawAngleEncoder(){
