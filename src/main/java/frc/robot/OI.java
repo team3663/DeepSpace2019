@@ -29,6 +29,7 @@ public class OI {
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
+        secondaryController.getRightBumperButton().whileHeld(new C_ElevatorManual());
         //
         //secondary controller
         //
