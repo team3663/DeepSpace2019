@@ -6,6 +6,7 @@ import com.kauailabs.navx.frc.AHRS.SerialDataType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,14 +20,14 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
     public static final double TRACKWIDTH = 14.5; // Swerve bot: 13.5 Comp bot: 25.5
 
     public static final double WIDTH = 21;  // Swerve bot: 20 Comp bot: 37
-    public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32
-
+    public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32    
+    
     
 	/*
-	 * 0 is Front Left
-	 * 1 is Front Right
-	 * 2 is Back Right
-	 * 3 is Back Left
+	 * 0 is Front Right
+	 * 1 is Front Left
+	 * 2 is Back Left
+	 * 3 is Back Right
 	 */
 	private SwerveModule[] mSwerveModules;
 
@@ -47,8 +48,8 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
 
         if (Robot.PRACTICE_BOT) {
             mSwerveModules = new SwerveModule[]  {
-                    new SwerveModule(0, new CANSparkMax(RobotMap.getDriveMotor(0), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(0)), FL),
-                    new SwerveModule(1, new CANSparkMax(RobotMap.getDriveMotor(1), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(1)), FR),
+                    new SwerveModule(0, new CANSparkMax(RobotMap.getDriveMotor(0), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(0)), FR),
+                    new SwerveModule(1, new CANSparkMax(RobotMap.getDriveMotor(1), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(1)), FL),
                     new SwerveModule(2, new CANSparkMax(RobotMap.getDriveMotor(2), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(2)), BL),
                     new SwerveModule(3, new CANSparkMax(RobotMap.getDriveMotor(3), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(3)), BR),
             };

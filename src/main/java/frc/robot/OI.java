@@ -37,7 +37,7 @@ public class OI {
         // secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
 
         // collecting cargo
-        testingController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));
+        testingController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-5));
         testingController.getYButton().whenReleased(new C_SetCargoIntakeSpeed(0));
 
         // releasing cargo
@@ -48,6 +48,9 @@ public class OI {
         testingController.getBButton().whenPressed(new C_SetFrontClimberIntake(-1));
         testingController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
 
+
+        testingController.getAButton().whenPressed(new C_SetFrontClimberIntake(1));
+        testingController.getAButton().whenReleased(new C_SetFrontClimberIntake(0));
         //
         //testing controller: BE CAREFUL
         //

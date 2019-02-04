@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -25,23 +27,36 @@ public class SwerveModule extends Subsystem {
     private final double mZeroOffset;
 
     private final TalonSRX mAngleMotor;
+    private final AnalogInput mAngleEncoder;
     private final CANSparkMax mDriveMotor;
 
     private boolean driveInverted = false;
     private double driveGearRatio = 1;
     private double driveWheelRadius = 2;
     private boolean angleMotorJam = false;
+    
+    /*
+	 * 0 is Front Right
+	 * 1 is Front Left
+	 * 2 is Back Left
+	 * 3 is Back Right
+	 */
 
     public SwerveModule(int moduleNumber, CANSparkMax driveMotor, TalonSRX angleMotor, double zeroOffset) {
         this.moduleNumber = moduleNumber;
 
         mAngleMotor = angleMotor;
         mDriveMotor = driveMotor;
+        mAngleEncoder = new AnalogInput(moduleNumber);
+        
 
         mZeroOffset = zeroOffset;
 
+
+        
         angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         angleMotor.setSensorPhase(true);
+
         angleMotor.config_kP(0, 30, 0);
         angleMotor.config_kI(0, 0.001, 0);
         angleMotor.config_kD(0, 200, 0);
@@ -94,13 +109,18 @@ public class SwerveModule extends Subsystem {
         return mAngleMotor;
     }
 
+    public AnalogInput getAngleEncoder(){
+        return mAngleEncoder;
+    }
+
     /**
      * Get the current angle of the swerve module
      *
      * @return An angle in the range [0, 360)
      */
     public double getCurrentAngle() {
-        double angle = mAngleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
+        mAngleMotor.setSelectedSensorPosition(mAngleEncoder.getValue());
+        double angle = mAngleMotor.getSelectedSensorPosition()* (360.0 / 4096.0);
         angle -= mZeroOffset;
         angle %= 360;
         if (angle < 0) angle += 360;
@@ -161,7 +181,8 @@ public class SwerveModule extends Subsystem {
 
         targetAngle += mZeroOffset;
 
-        double currentAngle = mAngleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
+        mAngleMotor.setSelectedSensorPosition(mAngleEncoder.getValue());
+        double currentAngle = mAngleMotor.getSelectedSensorPosition() * (360.0 / 4096.0);
         double currentAngleMod = currentAngle % 360;
         if (currentAngleMod < 0) currentAngleMod += 360;
 
@@ -203,7 +224,7 @@ public class SwerveModule extends Subsystem {
 //            mStallTimeBegin = Long.MAX_VALUE;
 //        }
         mLastError = currentError;
-        targetAngle *= 1024.0 / 360.0;
+        targetAngle *= 4096.0 / 360.0;
         mAngleMotor.set(ControlMode.Position, targetAngle);
     }
 

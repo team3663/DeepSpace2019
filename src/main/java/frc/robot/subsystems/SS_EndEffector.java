@@ -30,7 +30,7 @@ public class SS_EndEffector extends Subsystem {
   private DoubleSolenoid hatchPickupSolenoid;
   private CANSparkMax endEffectorAngleMotor;
 
-  private double cargoIntakeMotorSpeedMultiplier = 0.3;
+  private double cargoIntakeMotorSpeedMultiplier = 1;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
   private double TICKS_PER_ANGLE = 1/100;

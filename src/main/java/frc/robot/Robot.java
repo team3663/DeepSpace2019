@@ -107,6 +107,9 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
     SmartDashboard.putNumber("Slave Encoder", ss_Elevator.getSlaveEncoder());
+    SmartDashboard.putNumber("Average Encoder", ss_Elevator.getNEOEncoder());
+    SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
+
 
     SmartDashboard.putNumber("EndEffector Encoder", ss_EndEffector.getAngleEncoder());
 
@@ -116,6 +119,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
     SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
+
+    //test values
   }
 
   @Override
