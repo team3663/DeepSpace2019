@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
     SmartDashboard.putNumber("Slave Encoder", ss_Elevator.getSlaveEncoder());
 
-    SmartDashboard.putNumber("EndEffector Encoder", ss_EndEffector.getAngleEncoder());
+    SmartDashboard.putNumber("EndEffector Encoder", ss_EndEffector.getRawAngleEncoder());
 
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
