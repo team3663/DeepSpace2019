@@ -59,7 +59,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		//setDefaultCommand(new C_HolonomicDrive(this));
+		//setDefaultCommand(new C_HolonomicDrive());
 	}
 
 	public boolean isFieldOriented() {
@@ -76,7 +76,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 	}
 
 	public void stopDriveMotors(){
-
+		Robot.getSwerve().stopDriveMotors();
 	}
 
 	public void zeroGyro() {

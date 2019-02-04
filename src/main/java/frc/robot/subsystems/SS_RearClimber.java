@@ -15,6 +15,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
+import frc.robot.commands.C_RearClimberDirect;
 import frc.robot.util.PIDCont;
 
 /**
@@ -27,7 +28,8 @@ public class SS_RearClimber extends Subsystem {
 
   private double fakeEncoder = 0;
   private double speedMultiplier = 0.3;
-  private double TICKS_PER_DEGREE = 0; 
+  private double TICKS_PER_DEGREE = 1/360; 
+  private double GEAR_RATIO = 1/210;
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
@@ -39,7 +41,7 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public void setCimberMotorSpeed(double speed){
-    rearClimberMotor.set(speed * speedMultiplier);
+    rearClimberMotor.set( -speed * speedMultiplier);
   }
 
   public void setSpeedMultiplier(double speedMultiplier){
@@ -54,20 +56,31 @@ public class SS_RearClimber extends Subsystem {
     return ticks/TICKS_PER_DEGREE;
   }
 
-  public double getEncoder(){
+  public double getRawEncoder(){
     return rearClimberMotor.getEncoder().getPosition();
   }
 
+  //Returns a positive between 0 and 180 degrees if climber is forward(out)
+  //Or a negative between 0 and -180 degrees if climber is backward(in the robot frame)
   public double getAngle(){
-    fakeEncoder = Math.round(Math.abs(getEncoder() - 0.5));
-
-    return (Math.abs(getEncoder()) - fakeEncoder) * 360;
+    //fakeEncoder = Math.round(Math.abs(getRawEncoder() - 0.5));
+    //return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
+    double position = getRawEncoder() * GEAR_RATIO;
+    if(position > 1 || position < -1) {
+      position %= 360;
+    }
+    if(position > .5 || position < -.5) {
+      position = 1 - position;
+    }
+    return position * 360;
   }
-  public void goToPos(int pos){
-    rearClimberMotor.getPIDController().setReference(pos, ControlType.kPosition);
+  public void goToDegree(double degrees){
+    //rearClimberMotor.getPIDController().setReference(degrees * REAR_CLIMBER_MOTOR_GEAR_RATIO * TICKS_PER_DEGREE, 
+      //ControlType.kPosition);
   }
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new C_RearClimberDirect());
   }
 }

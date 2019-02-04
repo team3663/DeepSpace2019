@@ -3,11 +3,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 import static frc.robot.RobotMap.*;
 
@@ -32,7 +35,7 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
     public SS_Swerve() {
         super(WIDTH, LENGTH);
         zeroGyro();
-
+        
         double FR = 92;
         double FL = 80;
         double BR = 105;
@@ -44,10 +47,10 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
 
         if (Robot.PRACTICE_BOT) {
             mSwerveModules = new SwerveModule[]  {
-                    new SwerveModule(0, new TalonSRX(2), new TalonSRX(1), FL),
-                    new SwerveModule(1, new TalonSRX(6), new TalonSRX(5), FR),
-                    new SwerveModule(2, new TalonSRX(7), new TalonSRX(8), BL),
-                    new SwerveModule(3, new TalonSRX(3), new TalonSRX(4), BR),
+                    new SwerveModule(0, new CANSparkMax(RobotMap.getDriveMotor(0), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(0)), FL),
+                    new SwerveModule(1, new CANSparkMax(RobotMap.getDriveMotor(1), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(1)), FR),
+                    new SwerveModule(2, new CANSparkMax(RobotMap.getDriveMotor(2), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(2)), BL),
+                    new SwerveModule(3, new CANSparkMax(RobotMap.getDriveMotor(3), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(3)), BR),
             };
 
             mSwerveModules[1].setDriveInverted(true);
@@ -57,7 +60,6 @@ public class SS_Swerve extends SS_HolonomicDrivetrain {
             module.setTargetAngle(0);
             module.setDriveGearRatio(5.7777);
             module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
-            module.setMotionConstraints(getMaxAcceleration(), getMaxVelocity());
         }
     }
 

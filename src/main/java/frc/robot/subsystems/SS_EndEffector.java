@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.sun.jdi.Value;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.C_EndEffectorDirect;
 
 /**
  * Add your docs here.
@@ -31,10 +33,19 @@ public class SS_EndEffector extends Subsystem {
   private double cargoIntakeMotorSpeedMultiplier = 0.3;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
+  private double TICKS_PER_DEGREE = 1/360;
+
+  private double ANGLE_MOTOR_GEAR_RATIO = 1/10; //PLACEHOLDER VALUE
+
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD_CHANNEL, RobotMap.HATCH_SOLENOID_REVERSE_CHANNEL);
+    
+    //not part of the physical robot yet
+    //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
+    
+    cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
+    endEffectorAngleMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void setIntakeSpeed(double speed) {
@@ -45,14 +56,30 @@ public class SS_EndEffector extends Subsystem {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
-  public void setHatch(Boolean isOpen) {
-    if(isOpen){
+  public void setHatchOpen(boolean state) {
+    if(state){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
-    }
-    else{
+    }else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
+  }
+
+  public double getRawAngleEncoder(){
+    return endEffectorAngleMotor.getEncoder().getPosition();
+  }
+
+  //Returns a positive between 0 and 180 degrees if climber is forward(out)
+  //Or a negative between 0 and -180 degrees if climber is backward(in the robot frame)
+  public double getAngle(){
+    double position = getRawAngleEncoder() * ANGLE_MOTOR_GEAR_RATIO;
+    if(position > 1 || position < -1) {
+      position %= 360;
+    }
+    if(position > .5 || position < -.5) {
+      position = 1 - position;
+    }
+    return position * 360;
   }
 
   //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
@@ -66,5 +93,6 @@ public class SS_EndEffector extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new C_EndEffectorDirect());
   }
 }

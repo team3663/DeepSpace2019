@@ -22,25 +22,37 @@ public class OI {
     }
 
     public void registerControls() {
+        //
+        //primary controller
+        //
         primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(mRobot.getDrivetrain(), false));
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
+        //
+        //secondary controller
+        //
         // grabbing/releasing hatches
-        secondaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
-        secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
+        // secondaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
+        // secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
 
         // collecting cargo
-        secondaryController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));
-        secondaryController.getYButton().whenReleased(new C_SetCargoIntakeSpeed(0));
+        testingController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));
+        testingController.getYButton().whenReleased(new C_SetCargoIntakeSpeed(0));
 
         // releasing cargo
-        secondaryController.getXButton().whenPressed(new C_SetCargoIntakeSpeed(1));
-        secondaryController.getXButton().whenReleased(new C_SetCargoIntakeSpeed(0));
+        testingController.getXButton().whenPressed(new C_SetCargoIntakeSpeed(1));
+        testingController.getXButton().whenReleased(new C_SetCargoIntakeSpeed(0));
         
         //climber intake
-        secondaryController.getBButton().whenPressed(new C_SetFrontClimberIntake(1));
-        secondaryController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
+        testingController.getBButton().whenPressed(new C_SetFrontClimberIntake(-1));
+        testingController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
+
+        //
+        //testing controller: BE CAREFUL
+        //
+
+
 
     }
     

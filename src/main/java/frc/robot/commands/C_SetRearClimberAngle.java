@@ -10,10 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetEndEffectorAngle extends Command {
-  private static final double DEAD_BAND = 0.05;
-  public C_SetEndEffectorAngle() {
-    requires(Robot.getEndEffector());
+public class C_SetRearClimberAngle extends Command {
+  private double angle;
+  private final double THE_MAGIC_NUMBER_OF_CHRISTIAN = 0.5;
+  private double speed = 1;
+  private double originalSpeed = 1;
+
+  public C_SetRearClimberAngle(double angle) {
+    requires(Robot.getRearClimber());
+    this.angle = angle;
   }
 
   // Called just before this Command runs the first time
@@ -21,23 +26,21 @@ public class C_SetEndEffectorAngle extends Command {
   protected void initialize() {
   }
 
-  public double ignoreDeadBand(double input){
-    if(input < DEAD_BAND){
-      return 0;
-    }
-    return input;
-  }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getSecondaryController().getRightXValue();
-    Robot.getEndEffector().setAngleSpeed(ignoreDeadBand(speed));
+    if(Robot.getRearClimber().getAngle() < angle){
+      if(Robot.getRearClimber().getAngle() >= angle * THE_MAGIC_NUMBER_OF_CHRISTIAN){
+        speed = originalSpeed - ((Robot.getRearClimber().getAngle() / angle) * 0.75);
+      }
+      Robot.getRearClimber().setCimberMotorSpeed(speed);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
@@ -49,6 +52,5 @@ public class C_SetEndEffectorAngle extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
