@@ -56,4 +56,5 @@ public class RobotMap {
   public static final int CAMERA_PIPELINE = 0;
 
   public static final int PRESSURE_SENSOR = 0;
+  public static final int CARGO_OPTICAL_LIMIT = 0;
 }

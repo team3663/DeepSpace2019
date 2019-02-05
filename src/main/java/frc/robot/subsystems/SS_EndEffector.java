@@ -11,11 +11,15 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.sun.jdi.Value;
+
+import java.util.Optional;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.hal.sim.SimHooks;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,6 +35,8 @@ public class SS_EndEffector extends Subsystem {
   // Rev air pressure sensor variables
   private static final double SUPPLY_VOLTAGE = 5;
   private AnalogInput pressureSensor;
+
+  private final Optional<DigitalInput> cargoOpticalLimit = Optional.ofNullable(new DigitalInput(RobotMap.CARGO_OPTICAL_LIMIT));
 
   private CANSparkMax cargoIntakeMotor;
   private DoubleSolenoid hatchPickupSolenoid;
@@ -91,6 +97,10 @@ public class SS_EndEffector extends Subsystem {
       position = 1 - position;
     }
     return position * 360;
+  }
+
+  public boolean cargoPresent() {
+    return cargoOpticalLimit.map(DigitalInput::get).orElse(false);
   }
 
   //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
