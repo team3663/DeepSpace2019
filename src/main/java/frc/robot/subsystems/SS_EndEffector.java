@@ -36,7 +36,7 @@ public class SS_EndEffector extends Subsystem {
   private static final double SUPPLY_VOLTAGE = 5;
   private AnalogInput pressureSensor;
 
-  private final Optional<DigitalInput> cargoOpticalLimit = Optional.ofNullable(new DigitalInput(RobotMap.CARGO_OPTICAL_LIMIT));
+  private final Optional<DigitalInput> cargoOpticalLimit;
 
   private CANSparkMax cargoIntakeMotor;
   private DoubleSolenoid hatchPickupSolenoid;
@@ -51,6 +51,8 @@ public class SS_EndEffector extends Subsystem {
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
+
+    cargoOpticalLimit = Optional.ofNullable(new DigitalInput(RobotMap.CARGO_OPTICAL_LIMIT));
     
     //not part of the physical robot yet
     //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
