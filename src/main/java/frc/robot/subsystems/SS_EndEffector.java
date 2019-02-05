@@ -49,6 +49,7 @@ public class SS_EndEffector extends Subsystem {
     //not part of the physical robot yet
     //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
+    pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
     
     cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
     endEffectorAngleMotor.setIdleMode(IdleMode.kBrake);
