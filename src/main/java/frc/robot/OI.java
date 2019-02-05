@@ -36,7 +36,6 @@ public class OI {
         // grabbing/releasing hatches
         // secondaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
         // secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
-
         // collecting cargo
         testingController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));
         testingController.getYButton().whenReleased(new C_SetCargoIntakeSpeed(0));

@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import com.revrobotics.CANSparkMax;
@@ -26,6 +27,7 @@ public class SS_Elevator extends Subsystem {
   private CANSparkMax masterMotor;
   private CANSparkMax slaveMotor;
   private DigitalInput bottomLimitSwitch;
+  private DigitalInput topLimitSwitch;
 
   public double speedMultiplier = 0.3;
   private int selectedLevel = 1;
@@ -38,6 +40,7 @@ public class SS_Elevator extends Subsystem {
     masterMotor = new CANSparkMax(RobotMap.ELEVATOR_MASTER_MOTOR, MotorType.kBrushless);
     slaveMotor = new CANSparkMax(RobotMap.ELEVATOR_SLAVE_MOTOR, MotorType.kBrushless);
     bottomLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_LIMIT_SWITCH);
+    topLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_TOP_LIMIT_SWITCH);
 
     masterMotor.setInverted(true);
     masterMotor.setIdleMode(IdleMode.kBrake);
@@ -62,7 +65,11 @@ public class SS_Elevator extends Subsystem {
   }
   
   public void setElevatorSpeed(double speed) {
-    masterMotor.set(speed * speedMultiplier);
+    if(getBottomLimitSwitchOutput() || getTopLimitSwitchOutput()){
+      masterMotor.set(speed * speedMultiplier);
+    }else{
+      masterMotor.set(0);
+    }
   }
 
   public void goToPos(int pos){
@@ -73,7 +80,7 @@ public class SS_Elevator extends Subsystem {
     this.selectedLevel = selectedLevel;
     //TODO: find position of levels
     if(selectedLevel == 1){
-      
+
     }
     else if (selectedLevel == 2){
 
@@ -95,6 +102,9 @@ public class SS_Elevator extends Subsystem {
     return slaveMotor.getEncoder().getPosition();
   }
 
+  public DigitalInput getTopLimitSwitch(){
+    return topLimitSwitch;
+  }
   public DigitalInput getBottomLimitSwitch() {
     return bottomLimitSwitch;
   }
@@ -103,6 +113,9 @@ public class SS_Elevator extends Subsystem {
     return bottomLimitSwitch.get();
   }
 
+  public boolean getTopLimitSwitchOutput(){
+    return topLimitSwitch.get();
+  }
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new C_Elevator());

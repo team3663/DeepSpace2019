@@ -50,7 +50,6 @@ public class Robot extends TimedRobot {
     
 
 		m_oi.registerControls();
-
     // chooser.addOption("My Auto", new MyAutoCommand());
     
 

@@ -48,6 +48,8 @@ public class RobotMap {
   public static final int ELEVATOR_MASTER_MOTOR = 4;
   public static final int ELEVATOR_SLAVE_MOTOR = 13;
   public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 0;
+  public static final int ELEVATOR_MIDDLE_LIMIT_SWITCH = 1;
+  public static final int ELEVATOR_TOP_LIMIT_SWITCH = 2;
 
   public static final int CAMERA_MODE = 0;
   public static final int CAMERA_LIGHT_MODE = 3;

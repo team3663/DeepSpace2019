@@ -31,11 +31,16 @@ public class C_ElevatorManual extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getSecondaryController().getRightYValue();
-    if(Robot.getOI().getSecondaryController().getRightBumperButton().get()){
+    if(rightBumperIsPressed()){
       Robot.getElevator().setElevatorSpeed(ignoreDeadBand(speed));
+    }else{
+      Robot.getElevator().setElevatorSpeed(0);
     }
   }
 
+  private boolean rightBumperIsPressed(){
+    return Robot.getOI().getSecondaryController().getRightBumperButton().get();
+  }
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
