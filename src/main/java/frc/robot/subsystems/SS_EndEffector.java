@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.hal.sim.SimHooks;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,11 +27,16 @@ import frc.robot.commands.C_EndEffectorDirect;
  * Add your docs here.
  */
 public class SS_EndEffector extends Subsystem {
+
+  // Rev air pressure sensor variables
+  private static final double SUPPLY_VOLTAGE = 5;
+  private AnalogInput pressureSensor;
+
   private CANSparkMax cargoIntakeMotor;
   private DoubleSolenoid hatchPickupSolenoid;
   private CANSparkMax endEffectorAngleMotor;
 
-  private double cargoIntakeMotorSpeedMultiplier = 0.3;
+  private double cargoIntakeMotorSpeedMultiplier = 1;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
   private double TICKS_PER_DEGREE = 1/360;
@@ -43,6 +49,7 @@ public class SS_EndEffector extends Subsystem {
     //not part of the physical robot yet
     //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
+    pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
     
     cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
     endEffectorAngleMotor.setIdleMode(IdleMode.kBrake);
@@ -63,6 +70,10 @@ public class SS_EndEffector extends Subsystem {
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
+  }
+
+  public double getAirPressure() {
+    return 250 * pressureSensor.getVoltage() / SUPPLY_VOLTAGE - 25;
   }
 
   public double getRawAngleEncoder(){

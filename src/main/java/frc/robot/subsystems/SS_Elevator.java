@@ -31,6 +31,7 @@ public class SS_Elevator extends Subsystem {
 
   public double speedMultiplier = 0.3;
   private int selectedLevel = 1;
+  private double TICKS_PER_INCH = 2.6;
 
   private PIDCont PID;
 
@@ -47,7 +48,7 @@ public class SS_Elevator extends Subsystem {
     //default PID profile
     
     profiles = new PIDCont[] {
-      new PIDCont(speedMultiplier, 10, .01, 30),
+      new PIDCont(speedMultiplier, 10, .01, 30), 
       new PIDCont(speedMultiplier, 10, .01, 30) //TODO adjust PID values
     };
 
@@ -96,10 +97,16 @@ public class SS_Elevator extends Subsystem {
 
   public double getMasterEncoder(){
     //TODO: compare encoders or replace with better encoders
-    return masterMotor.getEncoder().getPosition();
+    return -masterMotor.getEncoder().getPosition();
   }
   public double getSlaveEncoder(){
     return slaveMotor.getEncoder().getPosition();
+  }
+  public double getNEOEncoder(){
+    return (getMasterEncoder()+getSlaveEncoder())/2;
+  }
+  public double getAverageInch(){
+    return getNEOEncoder()/TICKS_PER_INCH;
   }
 
   public DigitalInput getTopLimitSwitch(){

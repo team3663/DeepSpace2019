@@ -9,13 +9,15 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.C_TestPressureSensor;
 
 public class SS_RevAirPressureSensor extends Subsystem {
 
-  //set to normalized voltage = Vo / (0.004 * Po + 0.1)
-  private static double SUPPLY_VOLTAGE = 5;
+  //normalized voltage = Vo / (0.004 * Po + 0.1)
+  private static final double SUPPLY_VOLTAGE = 5;
+  private static final double NORMALIZED_VOLTAGE = 4.98;
   private AnalogInput pressureSensor;
 
   public SS_RevAirPressureSensor() {
@@ -28,7 +30,8 @@ public class SS_RevAirPressureSensor extends Subsystem {
    */
   public double getPressure() {
     double voltageOut = pressureSensor.getVoltage();
-    return 250 * voltageOut / SUPPLY_VOLTAGE - 25;
+    SmartDashboard.putNumber("Pressure voltage", pressureSensor.getVoltage());
+    return 250 * voltageOut / NORMALIZED_VOLTAGE - 25;
   }
 
   @Override

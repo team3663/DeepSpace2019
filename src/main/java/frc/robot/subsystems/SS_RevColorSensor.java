@@ -7,52 +7,20 @@ package frc.robot.subsystems;
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-// package frc.robot.subsystems;
-
-// import edu.wpi.first.wpilibj.I2C;
-// import edu.wpi.first.wpilibj.command.Subsystem;
-
-// /**
-//  * Add your docs here.
-//  */
-// public class SS_RevColorSensor extends Subsystem {
-
-//   private static final static int COMMAND_REGISTER_BIT = 0x80;
-
-//   private I2C revColor;
-
-//   private
-
-//   enum Color {
-//     BLACK, RED, GREEN, BLUE, WHITE
-//   }
-
-//   public SS_RevColorSensor(){
-//     revColor = new I2C(I2C.Port.kOnboard, 0x39);
-
-//     //power on color sensor
-//     revColor.write(COMMAND_REGISTER_BIT | 0x00, 0b00000011);
-//   }
-
-//   @Override
-//   public void initDefaultCommand() {
-
-//   }
-
-//   public boolean isWhite() {
-//     revColor.read(registerAddress, count, buffer);
-//     revColor.toString();
-//     return true;
-//   }
-
-// }
-
-
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class SS_RevColorSensor {
+public class SS_RevColorSensor extends Subsystem {
+
+  //need to be tuned
+  private static final int RED_THRESHOLD = 20;
+  private static final int GREEN_THRESHOLD = 20;
+  private static final int BLUE_THRESHOLD = 20;
+
   private static final int CMD = 0x80;
   private static final int MULTI_BYTE_BIT = 0x20;
 
@@ -81,7 +49,7 @@ public class SS_RevColorSensor {
 
   private ByteBuffer buffer = ByteBuffer.allocate(8);
 
-  public short red = 0, green = 0, blue = 0, prox = 0;
+  private short red = 0, green = 0, blue = 0, prox = 0;
 
   public SS_RevColorSensor(I2C.Port port) {
     buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -94,6 +62,9 @@ public class SS_RevColorSensor {
       
   }
 
+  @Override
+  public void initDefaultCommand() {}
+
   public int status() {
     buffer.clear();
     revColor.read(CMD | 0x13, 1, buffer);
@@ -105,7 +76,7 @@ public class SS_RevColorSensor {
     revColor.read(CMD | MULTI_BYTE_BIT | RDATA_REGISTER, 8, buffer);
   }
 
-  public double getRed() {
+  public int getRed() {
     read();
     red = buffer.getShort(0);
     if(red < 0) { 
@@ -115,7 +86,7 @@ public class SS_RevColorSensor {
     return red;
   }
 
-  public double getGreen() {
+  public int getGreen() {
     read();
     green = buffer.getShort(2);
     if(green < 0) { 
@@ -125,7 +96,7 @@ public class SS_RevColorSensor {
     return green;
   }
 
-  public double getBlue() {
+  public int getBlue() {
     read();
     blue = buffer.getShort(4); 
     if(blue < 0) {
@@ -135,7 +106,7 @@ public class SS_RevColorSensor {
     return blue;
   }
 
-  public double getProximity() {
+  public int getProximity() {
     read();
     prox = buffer.getShort(6); 
     if(prox < 0) { 
@@ -144,8 +115,24 @@ public class SS_RevColorSensor {
     return prox;
   }
 
-  public double getWhite() {
+  public int getWhite() {
     double avarage = getRed() + getGreen() + getBlue();
-    return avarage / 3;
+    return (int)avarage / 3;
+  }
+
+  public boolean isRed() {
+    return getRed() >= RED_THRESHOLD;
+  }
+
+  public boolean isGreen() {
+    return getGreen() >= GREEN_THRESHOLD;
+  }
+
+  public boolean isBlue() {
+    return getBlue() >= BLUE_THRESHOLD;
+  }
+
+  public boolean isWhite() {
+    return isRed() && isGreen() && isBlue();
   }
 }
