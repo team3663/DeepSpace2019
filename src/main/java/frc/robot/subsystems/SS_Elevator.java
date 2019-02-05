@@ -66,7 +66,7 @@ public class SS_Elevator extends Subsystem {
   }
   
   public void setElevatorSpeed(double speed) {
-    if(getBottomLimitSwitchOutput() || getTopLimitSwitchOutput()){
+    if(!getBottomLimitSwitchOutput() || !getTopLimitSwitchOutput()){
       masterMotor.set(speed * speedMultiplier);
     }else{
       masterMotor.set(0);
