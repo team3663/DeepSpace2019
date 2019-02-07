@@ -5,16 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.test_commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
-public class C_Elevator extends Command {
+public class C_ElevatorDirect extends Command {
   private static final double DEAD_BAND = 0.05;
 
-  public C_Elevator() {
+  public C_ElevatorDirect() {
     requires(Robot.getElevator());
   }
 
@@ -27,6 +27,12 @@ public class C_Elevator extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getTestController().getRightYValue();
+    if(Robot.getElevator().getAtBottom()){
+      Robot.getElevator().resetEncoders();
+      if(speed < 0){
+        speed = 0;
+      }
+    }
     Robot.getElevator().setElevatorSpeed(ignoreDeadBand(speed));
   }
 
@@ -35,4 +41,7 @@ public class C_Elevator extends Command {
     return false;
   }
 
+  @Override
+  protected void interrupted() {
+  }
 }

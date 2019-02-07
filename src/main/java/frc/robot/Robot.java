@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -18,7 +19,6 @@ import frc.robot.subsystems.*;
 public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = true;
 
-  private static SS_Swerve ss_Swerve;
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
 
   private static SS_EndEffector ss_EndEffector;
@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
   private static SS_Elevator ss_Elevator;
   private static SS_RearClimber ss_RearClimber;
   private static SS_Vision ss_Vision;
+  private static SS_RevColorSensor ss_RevColorSensor;
 
 
   public static OI m_oi;
@@ -37,13 +38,12 @@ public class Robot extends TimedRobot {
     m_oi = new OI(this);
 
     //some subsystems commented out
-    ss_Swerve = new SS_Swerve();
-    ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain(14.5, 14.5);
-
+    ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain();
     ss_EndEffector = new SS_EndEffector();
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
     ss_RearClimber = new SS_RearClimber();
+    ss_RevColorSensor = new SS_RevColorSensor(Port.kOnboard);
     //ss_Vision = new SS_Vision();
 
 
@@ -60,9 +60,7 @@ public class Robot extends TimedRobot {
 		return m_oi;
   }
 
-  public static SS_Swerve getSwerve() {
-		return ss_Swerve;
-  }
+
   
   public static SS_HolonomicDrivetrain getDrivetrain() {
 		return ss_HolonomicDrivetrain;
@@ -88,36 +86,42 @@ public class Robot extends TimedRobot {
     return ss_Vision;
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
+    //Drivetrain
     for (int i = 0; i < 4; i++) {
-      SmartDashboard.putNumber("Module Angle " + i, ss_Swerve.getSwerveModule(i).getCurrentAngle());
-      SmartDashboard.putNumber("Module Pos " + i, (ss_Swerve.getSwerveModule(i).getDriveDistance()));
-      SmartDashboard.putNumber("Module Raw Angle " + i, ss_Swerve.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
+      SmartDashboard.putNumber("Module Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getCurrentAngle());
+      SmartDashboard.putNumber("Module Distance Pos " + i, (ss_HolonomicDrivetrain.getSwerveModule(i).getDriveDistance()));
+      SmartDashboard.putNumber("Module Raw Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
     }
+    SmartDashboard.putNumber("Drivetrain Angle", ss_HolonomicDrivetrain.getGyroAngle());
 
+    //Elevator
     SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
     SmartDashboard.putNumber("Slave Encoder", ss_Elevator.getSlaveEncoder());
     SmartDashboard.putNumber("Average Encoder", ss_Elevator.getNEOEncoder());
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
+    SmartDashboard.putBoolean("Top", ss_Elevator.getTopLimitSwitchOutput());
+    SmartDashboard.putBoolean("Bottom", ss_Elevator.getBottomLimitSwitchOutput());
+    SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
-
-    SmartDashboard.putNumber("EndEffector Encoder", ss_EndEffector.getRawAngleEncoder());
-
+    //climber
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
-    SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
+    //Color sensor
+    SmartDashboard.putNumber("White", ss_RevColorSensor.getWhite());
+    SmartDashboard.putNumber("Color Proximity", ss_RevColorSensor.getProximity());
+
+    //End Effector
+    SmartDashboard.putNumber("End Effector Encoder", ss_EndEffector.getRawAngleEncoder());
+    SmartDashboard.putNumber("End Effector Angle", ss_EndEffector.getAngle());
+    SmartDashboard.putBoolean("Cargo Present", ss_EndEffector.getCargoPresent());    
+
+    //Gyro
+    //TODO: decide how to refrence the gyro properly
 
     //test values
   }
@@ -125,7 +129,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     for (int i = 0; i < 4; i++) {
-			ss_Swerve.getSwerveModule(i).robotDisabledInit();
+			ss_HolonomicDrivetrain.getSwerveModule(i).robotDisabledInit();
 		}
   }
 
@@ -170,7 +174,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    for (int i = 0; i < 4; i++)
-    ss_Swerve.getSwerveModule(i).zeroDistance();
+    for (int i = 0; i < 4; i++){
+    ss_HolonomicDrivetrain.getSwerveModule(i).zeroDistance();
+    }
   }
 }

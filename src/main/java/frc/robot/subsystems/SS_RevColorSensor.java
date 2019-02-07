@@ -116,8 +116,8 @@ public class SS_RevColorSensor extends Subsystem {
   }
 
   public int getWhite() {
-    double avarage = getRed() + getGreen() + getBlue();
-    return (int)avarage / 3;
+    double avarage = (getRed() + getGreen() + getBlue()) / 3;
+    return (int)avarage;
   }
 
   public boolean isRed() {

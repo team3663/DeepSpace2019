@@ -18,7 +18,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.C_FrontClimberDirect;
+import frc.robot.commands.test_commands.C_FrontClimberDirect;
 
 /**
  * Add your docs here.
@@ -53,6 +53,11 @@ public class SS_FrontClimber extends Subsystem {
     PID.setD(3);
     PID.setOutputRange(-1, 1);
   }
+  
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new C_FrontClimberDirect());
+  }
 
   public void setCargoIntakeSpeed(double speed) {
     cargoIntake.set(ControlMode.MotionProfile.PercentOutput, speed * cargoIntakeSpeedMultiplier);
@@ -70,6 +75,10 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberSpeedMultiplier = speedMuliplier;
   }
 
+  public void setReference(int angle){
+    frontClimberMotor.getPIDController().setReference(angle * TICKS_PER_DEGREE, ControlType.kPosition);
+  }
+
   public double degreeToTicks(int degree) {
     return degree*TICKS_PER_DEGREE;
   }
@@ -80,6 +89,10 @@ public class SS_FrontClimber extends Subsystem {
 
   public double getRawEncoder() {
     return frontClimberMotor.getEncoder().getPosition();
+  }
+
+  public double getRelativeEncoder(){
+    return getRawEncoder();
   }
 
   //Returns a positive between 0 and 180 degrees if climber is forward(out)
@@ -110,8 +123,4 @@ public class SS_FrontClimber extends Subsystem {
     return limitSwitch.get();
   }
 
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new C_FrontClimberDirect());
-  }
 }

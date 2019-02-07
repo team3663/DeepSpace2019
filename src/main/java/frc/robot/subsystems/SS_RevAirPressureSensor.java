@@ -15,6 +15,7 @@ import frc.robot.commands.C_TestPressureSensor;
 
 public class SS_RevAirPressureSensor extends Subsystem {
 
+  
   //normalized voltage = Vo / (0.004 * Po + 0.1)
   private static final double SUPPLY_VOLTAGE = 5;
   private static final double NORMALIZED_VOLTAGE = 4.98;
@@ -23,6 +24,9 @@ public class SS_RevAirPressureSensor extends Subsystem {
   public SS_RevAirPressureSensor() {
     pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
   }
+  
+  @Override
+  public void initDefaultCommand() {}
 
   /**
    * finds the pressure
@@ -34,6 +38,4 @@ public class SS_RevAirPressureSensor extends Subsystem {
     return 250 * voltageOut / NORMALIZED_VOLTAGE - 25;
   }
 
-  @Override
-  public void initDefaultCommand() {}
 }

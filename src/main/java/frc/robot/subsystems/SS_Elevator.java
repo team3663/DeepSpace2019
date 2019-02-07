@@ -7,16 +7,18 @@
 
 package frc.robot.subsystems;
 
-
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
-import frc.robot.commands.C_Elevator;
+import frc.robot.commands.C_GoToLevel;
+import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.util.PIDCont;
 
 /**
@@ -32,8 +34,13 @@ public class SS_Elevator extends Subsystem {
   public double speedMultiplier = 0.3;
   private int selectedLevel = 1;
   private double TICKS_PER_INCH = 2.6;
+  private double GEAR_RATIO = 1/10;
 
-  private PIDCont PID;
+  private final double LEVEL_1 = 12;
+  private final double LEVEL_2 = 24;
+  private final double LEVEL_3 = 36;
+
+  private CANPIDController PID;
 
   private PIDCont[] profiles; 
 
@@ -43,45 +50,49 @@ public class SS_Elevator extends Subsystem {
     bottomLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_LIMIT_SWITCH);
     topLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_TOP_LIMIT_SWITCH);
 
+
+
     masterMotor.setInverted(true);
     masterMotor.setIdleMode(IdleMode.kBrake);
     //default PID profile
-    
-    profiles = new PIDCont[] {
-      new PIDCont(speedMultiplier, 10, .01, 30), 
-      new PIDCont(speedMultiplier, 10, .01, 30) //TODO adjust PID values
-    };
+    PID = new CANPIDController(masterMotor);
 
-    PID = profiles[0];
+    PID.setP(30);
+    PID.setI(.01);
+    PID.setD(50);
+    PID.setOutputRange(-.1, .1);
+
+
 
     slaveMotor.follow(masterMotor, true);
+
+    //slaveMotor.setEncPosition(0);
+  }
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new C_ElevatorDirect());
   }
 
   public void setElevatorSpeedMultiplier(double speedMultiplier) {
     this.speedMultiplier = speedMultiplier;
   }
 
-  public void changePIDProfile(int profile){
-    PID = profiles[profile];
-  }
   
   public void setElevatorSpeed(double speed) {
-    if(!isBottomSwitchActive() || !isTopSwitchActive()){
       masterMotor.set(speed * speedMultiplier);
-    }else{
-      masterMotor.set(0);
-    }
   }
 
-  public void goToPos(int pos){
-    //TODO: implement PID
+  public void goToPos(double pos){
+    masterMotor.getPIDController().setReference(pos, ControlType.kPosition);
   }
 
   public void goToLevel(int selectedLevel){
     this.selectedLevel = selectedLevel;
     //TODO: find position of levels
     if(selectedLevel == 1){
-
+      goToPos(-LEVEL_1 * TICKS_PER_INCH * GEAR_RATIO);
+      
+      System.out.println(masterMotor.get() + ", " + slaveMotor.get());
     }
     else if (selectedLevel == 2){
 
@@ -91,22 +102,30 @@ public class SS_Elevator extends Subsystem {
     }
   }
 
+  public CANPIDController elevatorPID(){
+    return masterMotor.getPIDController();
+  }
+
   public void setSelectedLevel(int level){
     selectedLevel = level;
   }
 
   public double getMasterEncoder(){
     //TODO: compare encoders or replace with better encoders
-    return -masterMotor.getEncoder().getPosition();
+    return masterMotor.getEncoder().getPosition();
   }
   public double getSlaveEncoder(){
     return slaveMotor.getEncoder().getPosition();
+  }
+  public void resetEncoders(){
+    masterMotor.getEncoder().setPosition(0);
+    slaveMotor.getEncoder().setPosition(0);
   }
   public double getNEOEncoder(){
     return (getMasterEncoder()+getSlaveEncoder())/2;
   }
   public double getAverageInch(){
-    return getNEOEncoder()/TICKS_PER_INCH;
+    return getMasterEncoder()/TICKS_PER_INCH;
   }
 
   public DigitalInput getTopLimitSwitch(){
@@ -116,15 +135,16 @@ public class SS_Elevator extends Subsystem {
     return bottomLimitSwitch;
   }
 
-  public boolean isBottomSwitchActive() {
-    return bottomLimitSwitch.get();
+  public boolean getBottomLimitSwitchOutput() {
+    return !bottomLimitSwitch.get();
   }
 
-  public boolean isTopSwitchActive(){
-    return topLimitSwitch.get();
+  public boolean getTopLimitSwitchOutput() {
+    return !topLimitSwitch.get();
   }
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new C_Elevator());
+
+  public boolean getAtBottom(){
+    return getTopLimitSwitchOutput() && getBottomLimitSwitchOutput();
   }
+
 }

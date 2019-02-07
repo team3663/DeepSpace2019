@@ -15,7 +15,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
-import frc.robot.commands.C_RearClimberDirect;
+import frc.robot.commands.test_commands.C_RearClimberDirect;
 import frc.robot.util.PIDCont;
 
 /**
@@ -28,11 +28,16 @@ public class SS_RearClimber extends Subsystem {
 
   private double fakeEncoder = 0;
   private double speedMultiplier = 0.3;
-  private double TICKS_PER_DEGREE = 1/360; 
+
   private double GEAR_RATIO = 1/210;
+  private double TICKS_PER_DEGREE = GEAR_RATIO/360; 
+
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
+
+    rearClimberMotor.getEncoder().setPosition(0);
+
     PID = new CANPIDController(rearClimberMotor);
     PID.setP(1);
     PID.setI(.01);
@@ -40,6 +45,11 @@ public class SS_RearClimber extends Subsystem {
     PID.setOutputRange(-1, 1);
   }
 
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new C_RearClimberDirect());
+  }
+  
   public void setCimberMotorSpeed(double speed){
     rearClimberMotor.set( -speed * speedMultiplier);
   }
@@ -79,8 +89,5 @@ public class SS_RearClimber extends Subsystem {
       //ControlType.kPosition);
   }
 
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new C_RearClimberDirect());
-  }
+
 }

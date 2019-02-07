@@ -25,7 +25,7 @@ public class C_SetHatchPos extends Command {
 
   @Override
   protected void execute() {
-    Robot.getEndEffector().setHatchOpen(isClosed);
+    Robot.getEndEffector().setHatchClose(isClosed);
   }
 
   @Override

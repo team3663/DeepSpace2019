@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXPIDSetConfiguration;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 
@@ -13,10 +14,10 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.commands.C_SwerveModuleCommand;
 
 public class SwerveModule extends Subsystem {
     private static final long STALL_TIMEOUT = 2000;
+    private final double ANALOG_TICKS_PER_DEGREE = 360/4096;
 
     private long mStallTimeBegin = Long.MAX_VALUE;
 
@@ -53,26 +54,27 @@ public class SwerveModule extends Subsystem {
         mZeroOffset = zeroOffset;
 
 
-        
+        //ANGLE MOTORS
         angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         angleMotor.setSensorPhase(true);
 
-        angleMotor.config_kP(0, 30, 0);
-        angleMotor.config_kI(0, 0.001, 0);
-        angleMotor.config_kD(0, 200, 0);
+        angleMotor.config_kP(0, 30, 50);     //30
+        angleMotor.config_kI(0, .0006, 50);  //.001
+        angleMotor.config_kD(0, 200, 50);    //200
+        angleMotor.config_kF(0, .2);
         angleMotor.setNeutralMode(NeutralMode.Brake);
         angleMotor.set(ControlMode.Position, 0);
 
-
+        //DRIVE MOTORS
         driveMotor.setControlFramePeriod(10);
         driveMotor.setIdleMode(IdleMode.kBrake);
-        driveMotor.setRampRate(1);
 
-        driveMotor.getPIDController().setP(15);
-        driveMotor.getPIDController().setI(.01);
-        driveMotor.getPIDController().setD(.1);
-        driveMotor.getPIDController().setFF(.2);
+        driveMotor.getPIDController().setP(0);     //15
+        driveMotor.getPIDController().setI(.00);    //.01
+        driveMotor.getPIDController().setD(0);     //.1
+        driveMotor.getPIDController().setFF(0);    //.2
 
+        
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
         angleMotor.configPeakCurrentLimit(30, 0);
@@ -82,6 +84,10 @@ public class SwerveModule extends Subsystem {
         driveMotor.setSmartCurrentLimit(25);
         
     	SmartDashboard.putBoolean("Motor Jammed" + moduleNumber, angleMotorJam);
+    }
+    
+    @Override
+    protected void initDefaultCommand() {
     }
 
     private double encoderTicksToInches(double ticks) {
@@ -100,10 +106,7 @@ public class SwerveModule extends Subsystem {
         }
     }
 
-    @Override
-    protected void initDefaultCommand() {
-        setDefaultCommand(new C_SwerveModuleCommand(this));
-    }
+
 
     public TalonSRX getAngleMotor() {
         return mAngleMotor;
@@ -129,7 +132,7 @@ public class SwerveModule extends Subsystem {
     }
 
 
-    //distance stuff needs to be changedW
+    //distance stuff needs to be changed
     public double getDriveDistance() {
         double ticks = mDriveMotor.getEncoder().getPosition();
         if (driveInverted)
@@ -258,7 +261,7 @@ public class SwerveModule extends Subsystem {
 
     public void zeroDistance() {
         
-        mDriveMotor.getEncoder().getPosition();
+        mDriveMotor.getEncoder().setPosition(0);
     }
 
     public void resetMotor() {

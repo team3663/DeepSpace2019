@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.C_EndEffectorDirect;
+import frc.robot.commands.test_commands.C_EndEffectorDirect;
 
 /**
  * Add your docs here.
@@ -34,33 +34,57 @@ public class SS_EndEffector extends Subsystem {
 
   // Rev air pressure sensor variables
   private static final double SUPPLY_VOLTAGE = 5;
-  private AnalogInput pressureSensor;
-
-  private final Optional<DigitalInput> cargoOpticalLimit;
-
+  //private AnalogInput pressureSensor;
+  
   private CANSparkMax cargoIntakeMotor;
-  private DoubleSolenoid hatchPickupSolenoid;
   private CANSparkMax endEffectorAngleMotor;
+  
+  private DigitalInput cargoSwitch;
+  
+  private DoubleSolenoid hatchPickupSolenoid;
+  private DigitalInput hatchPickupSwitch;
 
   private double cargoIntakeMotorSpeedMultiplier = 1;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
+  //TODO: double check these angles
+  private double FRONT_ANGLE_LIMIT = 95; 
+  private double BACK_ANGLE_LIMIT = 270;
+
+  private double ANGLE_MOTOR_GEAR_RATIO = 1/100; 
   private double TICKS_PER_DEGREE = 1/360;
 
-  private double ANGLE_MOTOR_GEAR_RATIO = 1/10; //PLACEHOLDER VALUE
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-
-    cargoOpticalLimit = Optional.ofNullable(new DigitalInput(RobotMap.CARGO_OPTICAL_LIMIT));
     
     //not part of the physical robot yet
     //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
-    pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
+    //pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
+    endEffectorAngleMotor.getEncoder().setPosition(30);
+
+
+    cargoSwitch = new DigitalInput(RobotMap.CARGO_SWITCH);
+    
+    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
+    hatchPickupSwitch = new DigitalInput(RobotMap.HATCH_PICKUP_SWITCH);
     
     cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
     endEffectorAngleMotor.setIdleMode(IdleMode.kBrake);
+    endEffectorAngleMotor.setInverted(true);
+  }
+
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new C_EndEffectorDirect());
+  }
+
+  public double ticksToDegree(double ticks){
+    return (ticks * ANGLE_MOTOR_GEAR_RATIO) / TICKS_PER_DEGREE;
+  }
+  public double degreesToTicks(double degrees){
+    return degrees * TICKS_PER_DEGREE;
   }
 
   public void setIntakeSpeed(double speed) {
@@ -71,7 +95,7 @@ public class SS_EndEffector extends Subsystem {
     cargoIntakeMotorSpeedMultiplier = speedMultiplier;
   }
 
-  public void setHatchOpen(boolean state) {
+  public void setHatchClose(boolean state) {
     if(state){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
     }else{
@@ -81,29 +105,29 @@ public class SS_EndEffector extends Subsystem {
   }
 
   public double getAirPressure() {
-    return 250 * pressureSensor.getVoltage() / SUPPLY_VOLTAGE - 25;
+    return 0; //250 * pressureSensor.getVoltage() / SUPPLY_VOLTAGE - 25;
   }
 
   public double getRawAngleEncoder(){
     return endEffectorAngleMotor.getEncoder().getPosition();
   }
 
-  //Returns a positive between 0 and 180 degrees if climber is forward(out)
-  //Or a negative between 0 and -180 degrees if climber is backward(in the robot frame)
+  public DigitalInput getCagroSwitch(){
+    return cargoSwitch;
+  }
+  public boolean getCargoPresent(){
+    return !cargoSwitch.get();
+  }
   public double getAngle(){
-    double position = getRawAngleEncoder() * ANGLE_MOTOR_GEAR_RATIO;
-    if(position > 1 || position < -1) {
-      position %= 360;
+
+    double angle = -getRawAngleEncoder() * .01 * 360;
+    if(angle < 0){
+      angle += 360;
     }
-    if(position > .5 || position < -.5) {
-      position = 1 - position;
-    }
-    return position * 360;
+    return angle;
   }
 
-  public boolean cargoPresent() {
-    return cargoOpticalLimit.map(DigitalInput::get).orElse(false);
-  }
+
 
   //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
   public void setAngleSpeed(double speed){
@@ -112,10 +136,5 @@ public class SS_EndEffector extends Subsystem {
 
   public void setAngleSpeedMultiplier(double speedMultipler){
     endEffectorAngleSpeedMultiplier = speedMultipler;
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new C_EndEffectorDirect());
   }
 }
