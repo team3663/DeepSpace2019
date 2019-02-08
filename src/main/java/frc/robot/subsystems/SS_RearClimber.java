@@ -32,6 +32,8 @@ public class SS_RearClimber extends Subsystem {
   private double GEAR_RATIO = 1/210;
   private double TICKS_PER_DEGREE = GEAR_RATIO/360; 
 
+  private double ANGLE_LIMIT = 180;
+
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
@@ -70,20 +72,19 @@ public class SS_RearClimber extends Subsystem {
     return rearClimberMotor.getEncoder().getPosition();
   }
 
-  //Returns a positive between 0 and 180 degrees if climber is forward(out)
-  //Or a negative between 0 and -180 degrees if climber is backward(in the robot frame)
-  public double getAngle(){
-    //fakeEncoder = Math.round(Math.abs(getRawEncoder() - 0.5));
-    //return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
-    double position = getRawEncoder() * GEAR_RATIO;
-    if(position > 1 || position < -1) {
-      position %= 360;
-    }
-    if(position > .5 || position < -.5) {
-      position = 1 - position;
-    }
-    return position * 360;
+  public double getAngleLimit() {
+    return ANGLE_LIMIT;
   }
+
+  public double getAngle(){
+    double position = getRawEncoder() * GEAR_RATIO * 360;
+    if(position > 360 || position < -360) {
+      position %= 360;
+      position *= 360;
+    }
+    return position;
+  }
+  
   public void goToDegree(double degrees){
     //rearClimberMotor.getPIDController().setReference(degrees * REAR_CLIMBER_MOTOR_GEAR_RATIO * TICKS_PER_DEGREE, 
       //ControlType.kPosition);

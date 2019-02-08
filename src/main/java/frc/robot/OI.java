@@ -5,6 +5,7 @@ import frc.robot.commands.C_GoToLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
+import frc.robot.input.DPadButton.Direction;
 
 
 /**
@@ -57,6 +58,10 @@ public class OI {
         //testing controller: BE CAREFUL
         //
         testingController.getStartButton().whenPressed(new C_GoToLevel(1));
+
+        testingController.getDPadButton(Direction.UP).whenPressed(new C_FrontClimber(0));
+        testingController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
+        testingController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
 
 
     }

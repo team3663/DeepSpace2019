@@ -18,6 +18,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.*;
 import frc.robot.commands.test_commands.C_FrontClimberDirect;
 
 /**
@@ -53,11 +54,6 @@ public class SS_FrontClimber extends Subsystem {
     PID.setD(3);
     PID.setOutputRange(-1, 1);
   }
-  
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new C_FrontClimberDirect());
-  }
 
   public void setCargoIntakeSpeed(double speed) {
     cargoIntake.set(ControlMode.MotionProfile.PercentOutput, speed * cargoIntakeSpeedMultiplier);
@@ -75,10 +71,6 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberSpeedMultiplier = speedMuliplier;
   }
 
-  public void setReference(int angle){
-    frontClimberMotor.getPIDController().setReference(angle * TICKS_PER_DEGREE, ControlType.kPosition);
-  }
-
   public double degreeToTicks(int degree) {
     return degree*TICKS_PER_DEGREE;
   }
@@ -91,28 +83,26 @@ public class SS_FrontClimber extends Subsystem {
     return frontClimberMotor.getEncoder().getPosition();
   }
 
-  public double getRelativeEncoder(){
-    return getRawEncoder();
-  }
-
-  //Returns a positive between 0 and 180 degrees if climber is forward(out)
-  //Or a negative between 0 and -180 degrees if climber is backward(in the robot frame)
   public double getAngle(){
-    //fakeEncoder = Math.round(Math.abs(getRawEncoder() - 0.5));
-    //return (Math.abs(getRawEncoder()) - fakeEncoder) * 360;
-    double position = getRawEncoder() * GEAR_RATIO;
-    if(position > 1 || position < -1) {
+    double position = getRawEncoder() * GEAR_RATIO * 360;
+    if(position > 360 || position < -360) {
       position %= 360;
+      position *= 360;
     }
-    if(position > .5 || position < -.5) {
-      position = 1 - position;
-    }
-    return position * 360;
+    return position;
   }
 
   public void goToDegree(double degree) {
-    //frontClimberMotor.getPIDController().setReference(degree * TICKS_PER_DEGREE * GEAR_RATIO, 
-      //ControlType.kPosition);
+    frontClimberMotor.getPIDController().setReference(degree * TICKS_PER_DEGREE / GEAR_RATIO, 
+      ControlType.kPosition);
+  }
+
+  public double getTopAngleLimit() {
+    return TOP_ANGLE_LIMIT;
+  }
+
+  public double getBottomAngleLimit() {
+    return BOTTOM_ANGLE_LIMIT;
   }
 
   public DigitalInput getLimitSwitch() {
@@ -123,4 +113,8 @@ public class SS_FrontClimber extends Subsystem {
     return limitSwitch.get();
   }
 
+  @Override
+  public void initDefaultCommand() {
+    setDefaultCommand(new C_FrontClimberDirect());
+  }
 }

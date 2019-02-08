@@ -47,6 +47,8 @@ public class SS_EndEffector extends Subsystem {
   private double cargoIntakeMotorSpeedMultiplier = 1;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
+  private AnalogInput pressureSensor;
+
   //TODO: double check these angles
   private double FRONT_ANGLE_LIMIT = 95; 
   private double BACK_ANGLE_LIMIT = 270;
@@ -57,11 +59,9 @@ public class SS_EndEffector extends Subsystem {
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    
-    //not part of the physical robot yet
-    //hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
+    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
-    //pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
+    pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
     endEffectorAngleMotor.getEncoder().setPosition(30);
 
 
@@ -120,13 +120,16 @@ public class SS_EndEffector extends Subsystem {
   }
   public double getAngle(){
 
-    double angle = -getRawAngleEncoder() * .01 * 360;
+    double angle = -getRawAngleEncoder() * ANGLE_MOTOR_GEAR_RATIO * 360;
     if(angle < 0){
       angle += 360;
     }
     return angle;
   }
 
+  public AnalogInput getPressureSensor() {
+    return pressureSensor;
+  }
 
 
   //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
