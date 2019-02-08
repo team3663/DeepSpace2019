@@ -37,7 +37,6 @@ public class SS_EndEffector extends Subsystem {
   //private AnalogInput pressureSensor;
   
   private CANSparkMax cargoIntakeMotor;
-  private CANSparkMax endEffectorAngleMotor;
   
   private DigitalInput cargoSwitch;
   
@@ -49,20 +48,11 @@ public class SS_EndEffector extends Subsystem {
 
   private AnalogInput pressureSensor;
 
-  //TODO: double check these angles
-  private double FRONT_ANGLE_LIMIT = 95; 
-  private double BACK_ANGLE_LIMIT = 270;
-
-  private double ANGLE_MOTOR_GEAR_RATIO = 1/100; 
-  private double TICKS_PER_DEGREE = 1/360;
-
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
-    endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
     pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
-    endEffectorAngleMotor.getEncoder().setPosition(30);
 
 
     cargoSwitch = new DigitalInput(RobotMap.CARGO_SWITCH);
@@ -71,20 +61,11 @@ public class SS_EndEffector extends Subsystem {
     hatchPickupSwitch = new DigitalInput(RobotMap.HATCH_PICKUP_SWITCH);
     
     cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
-    endEffectorAngleMotor.setIdleMode(IdleMode.kBrake);
-    endEffectorAngleMotor.setInverted(true);
   }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new C_EndEffectorDirect());
-  }
-
-  public double ticksToDegree(double ticks){
-    return (ticks * ANGLE_MOTOR_GEAR_RATIO) / TICKS_PER_DEGREE;
-  }
-  public double degreesToTicks(double degrees){
-    return degrees * TICKS_PER_DEGREE;
+    //setDefaultCommand(new C_EndEffectorDirect());
   }
 
   public void setIntakeSpeed(double speed) {
@@ -108,36 +89,15 @@ public class SS_EndEffector extends Subsystem {
     return 0; //250 * pressureSensor.getVoltage() / SUPPLY_VOLTAGE - 25;
   }
 
-  public double getRawAngleEncoder(){
-    return endEffectorAngleMotor.getEncoder().getPosition();
-  }
-
   public DigitalInput getCagroSwitch(){
     return cargoSwitch;
   }
   public boolean getCargoPresent(){
     return !cargoSwitch.get();
   }
-  public double getAngle(){
-
-    double angle = -getRawAngleEncoder() * ANGLE_MOTOR_GEAR_RATIO * 360;
-    if(angle < 0){
-      angle += 360;
-    }
-    return angle;
-  }
 
   public AnalogInput getPressureSensor() {
     return pressureSensor;
   }
 
-
-  //TODO: this should not ever exist, as this will break a bunch of things, good for testing tho
-  public void setAngleSpeed(double speed){
-    endEffectorAngleMotor.set(speed * endEffectorAngleSpeedMultiplier);
-  }
-
-  public void setAngleSpeedMultiplier(double speedMultipler){
-    endEffectorAngleSpeedMultiplier = speedMultipler;
-  }
 }

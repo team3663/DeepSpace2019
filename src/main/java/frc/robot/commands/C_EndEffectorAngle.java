@@ -10,29 +10,26 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_RearClimber extends Command {
+public class C_EndEffectorAngle extends Command {
   private double angle;
+  private double elevatorPos;
 
-  private double limit;
+  private double forwardAngleLimit;
+  private double backwardAngleLimit;
 
-  public C_RearClimber(double angle) {
-    requires(Robot.getRearClimber());
+  public C_EndEffectorAngle(double angle) {
+    requires(Robot.getEndEffectorAngle());
+    requires(Robot.getElevator());
     this.angle = angle;
-    limit = Robot.getRearClimber().getAngleLimit();
+
+    forwardAngleLimit = Robot.getEndEffectorAngle().getFrontAngleLimit();
+    backwardAngleLimit = Robot.getEndEffectorAngle().getBackAngleLimit();
   }
 
   protected void execute() {
-    if(angle < 0) {
-      Robot.getRearClimber().goToDegree(0);
-    } else if (angle > limit) {
-      Robot.getFrontClimber().goToDegree(limit);
-    } else {
-      Robot.getFrontClimber().goToDegree(angle);
-    }
+    
+    
   }
-  /**
-   * limit = 180 degrees
-   */
   @Override
   protected boolean isFinished() {
     return false;

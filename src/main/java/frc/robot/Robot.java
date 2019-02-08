@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
 
   private static SS_EndEffector ss_EndEffector;
+  private static SS_EndEffectorAngle ss_EndEffectorAngle;
   private static SS_FrontClimber ss_FrontClimber;
   private static SS_Elevator ss_Elevator;
   private static SS_RearClimber ss_RearClimber;
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
     //some subsystems commented out
     ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain();
     ss_EndEffector = new SS_EndEffector();
+    ss_EndEffectorAngle = new SS_EndEffectorAngle();
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
     ss_RearClimber = new SS_RearClimber();
@@ -68,6 +70,10 @@ public class Robot extends TimedRobot {
 
   public static SS_EndEffector getEndEffector() {
     return ss_EndEffector;
+  }
+
+  public static SS_EndEffectorAngle getEndEffectorAngle() {
+    return ss_EndEffectorAngle;
   }
 
   public static SS_FrontClimber getFrontClimber() {
@@ -116,8 +122,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Color Proximity", ss_RevColorSensor.getProximity());
 
     //End Effector
-    SmartDashboard.putNumber("End Effector Encoder", ss_EndEffector.getRawAngleEncoder());
-    SmartDashboard.putNumber("End Effector Angle", ss_EndEffector.getAngle());
+    SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
+    SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Cargo Present", ss_EndEffector.getCargoPresent());    
 
     //Gyro

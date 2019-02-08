@@ -26,22 +26,23 @@ public class C_FrontClimber extends Command {
     bottomAngleLimit = Robot.getFrontClimber().getBottomAngleLimit();
   }
 
+  protected void execute() {
+    if(angle < topAngleLimit) {
+      Robot.getFrontClimber().goToDegree(topAngleLimit);
+    } else if (angle > bottomAngleLimit) {
+      Robot.getFrontClimber().goToDegree(bottomAngleLimit);
+    } else {
+      Robot.getFrontClimber().goToDegree(angle);
+    }
+  }
+
   /**
    * TopAngleLimit = -25
    * BottomAngleLimit = 200
    */
   @Override
   protected boolean isFinished() {
-    if(angle < topAngleLimit) {
-      Robot.getFrontClimber().goToDegree(topAngleLimit);
-      return false;
-    } else if (angle > bottomAngleLimit) {
-      Robot.getFrontClimber().goToDegree(bottomAngleLimit);
-      return false;
-    } else {
-      Robot.getFrontClimber().goToDegree(angle);
-      return false;
-    }
+    return false;
   }
 
 }

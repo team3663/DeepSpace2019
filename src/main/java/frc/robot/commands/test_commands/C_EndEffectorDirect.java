@@ -19,7 +19,7 @@ public class C_EndEffectorDirect extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getEndEffector().setAngleSpeedMultiplier(.2);
+    Robot.getEndEffectorAngle().setSpeedMultiplier(.2);
   }
 
   public double ignoreDeadBand(double input){
@@ -32,7 +32,7 @@ public class C_EndEffectorDirect extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getTestController().getLeftYValue();
-    Robot.getEndEffector().setAngleSpeed(ignoreDeadBand(speed));
+    Robot.getEndEffectorAngle().setAngleSpeed(ignoreDeadBand(speed));
   }
 
   // Make this return true when this Command no longer needs to run execute()
