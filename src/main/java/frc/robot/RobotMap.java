@@ -51,7 +51,7 @@ public static final int getDriveMotor(int module){
   public static final int CAMERA_LIGHT_MODE = 3;
   public static final int CAMERA_PIPELINE = 0;
 
-  public static final int PRESSURE_SENSOR = 9;
+  public static final int PRESSURE_SENSOR = 0;
 
   //DIO
   public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 0;

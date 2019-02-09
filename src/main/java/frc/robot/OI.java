@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.commands.C_GoToLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
@@ -32,7 +31,6 @@ public class OI {
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
-        secondaryController.getRightBumperButton().whileHeld(new C_ElevatorDirect());
         //
         //secondary controller
         //
@@ -59,9 +57,12 @@ public class OI {
         //
         testingController.getStartButton().whenPressed(new C_GoToLevel(1));
 
-        testingController.getDPadButton(Direction.UP).whenPressed(new C_FrontClimber(0));
-        testingController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
-        testingController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
+        secondaryController.getBackButton().whenPressed(new C_RearClimber(90));
+
+        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_FrontClimber(0));
+        secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
+        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
+
 
 
     }

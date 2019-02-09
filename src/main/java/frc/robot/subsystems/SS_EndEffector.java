@@ -37,6 +37,7 @@ public class SS_EndEffector extends Subsystem {
   //private AnalogInput pressureSensor;
   
   private CANSparkMax cargoIntakeMotor;
+  private CANSparkMax endEffectorAngleMotor;
   
   private DigitalInput cargoSwitch;
   
@@ -46,18 +47,26 @@ public class SS_EndEffector extends Subsystem {
   private double cargoIntakeMotorSpeedMultiplier = 1;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
-  private AnalogInput pressureSensor;
+  //private AnalogInput pressureSensor;
+
+  //TODO: double check these angles
+  private double FRONT_ANGLE_LIMIT = 110; 
+  private double BACK_ANGLE_LIMIT = 300; //not 270 because mech team
+
+  private double ANGLE_MOTOR_GEAR_RATIO = 1/100; 
+  private double TICKS_PER_DEGREE = 1/360;
 
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
-    pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
+    endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
+    //pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
+    endEffectorAngleMotor.getEncoder().setPosition(30);
 
 
     cargoSwitch = new DigitalInput(RobotMap.CARGO_SWITCH);
     
-    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
     hatchPickupSwitch = new DigitalInput(RobotMap.HATCH_PICKUP_SWITCH);
     
     cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
@@ -96,8 +105,8 @@ public class SS_EndEffector extends Subsystem {
     return !cargoSwitch.get();
   }
 
-  public AnalogInput getPressureSensor() {
-    return pressureSensor;
-  }
+  // public AnalogInput getPressureSensor() {
+  //   return pressureSensor;
+  // }
 
 }

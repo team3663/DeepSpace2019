@@ -15,19 +15,25 @@ public class C_RearClimber extends Command {
 
   private double limit;
 
+  /**
+   * 
+   * @param angle 0-180
+   */
   public C_RearClimber(double angle) {
     requires(Robot.getRearClimber());
     this.angle = angle;
     limit = Robot.getRearClimber().getAngleLimit();
   }
 
+
+  @Override
   protected void execute() {
     if(angle < 0) {
       Robot.getRearClimber().goToDegree(0);
     } else if (angle > limit) {
-      Robot.getFrontClimber().goToDegree(limit);
+      Robot.getRearClimber().goToDegree(limit);
     } else {
-      Robot.getFrontClimber().goToDegree(angle);
+      Robot.getRearClimber().goToDegree(angle);
     }
   }
   /**
@@ -37,5 +43,6 @@ public class C_RearClimber extends Command {
   protected boolean isFinished() {
     return false;
   }
+
 
 }

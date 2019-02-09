@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -35,7 +36,7 @@ public class SS_RevAirPressureSensor extends Subsystem {
   public double getPressure() {
     double voltageOut = pressureSensor.getVoltage();
     SmartDashboard.putNumber("Pressure voltage", pressureSensor.getVoltage());
-    return 250 * voltageOut / NORMALIZED_VOLTAGE - 25;
+    return 250 * voltageOut / 5 - 25;
   }
 
 }

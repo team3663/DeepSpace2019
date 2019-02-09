@@ -29,8 +29,7 @@ public class SS_RearClimber extends Subsystem {
   private double fakeEncoder = 0;
   private double speedMultiplier = 0.3;
 
-  private double GEAR_RATIO = 1/210;
-  private double TICKS_PER_DEGREE = GEAR_RATIO/360; 
+  private final double GEAR_RATIO = 1.0/300.0;
 
   private double ANGLE_LIMIT = 180;
 
@@ -42,9 +41,9 @@ public class SS_RearClimber extends Subsystem {
 
     PID = new CANPIDController(rearClimberMotor);
     PID.setP(1);
-    PID.setI(.01);
-    PID.setD(3);
-    PID.setOutputRange(-1, 1);
+    PID.setI(0);
+    PID.setD(0);
+    PID.setOutputRange(-.3, .3);
   }
 
   @Override
@@ -60,16 +59,24 @@ public class SS_RearClimber extends Subsystem {
     this.speedMultiplier = speedMultiplier;
   }
 
-  public double degreeToTicks(int degree){
-    return degree*TICKS_PER_DEGREE;
+  public double degreeToRotation(double degree){
+    return degree/360;
   }
 
-  public double ticksToDegrees(int ticks){
-    return ticks/TICKS_PER_DEGREE;
+  public double rotationToDegrees(double rotations){
+    return rotations*360;
   }
 
   public double getRawEncoder(){
     return rearClimberMotor.getEncoder().getPosition();
+  }
+
+  public double getEncoder(){
+    return gearMultiply(getRawEncoder());
+  }
+
+  public double gearMultiply(double rotation){
+    return rotation * GEAR_RATIO;
   }
 
   public double getAngleLimit() {
@@ -77,17 +84,17 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public double getAngle(){
-    double position = getRawEncoder() * GEAR_RATIO * 360;
-    if(position > 360 || position < -360) {
-      position %= 360;
-      position *= 360;
-    }
+    double position = rotationToDegrees(getEncoder());
     return position;
   }
   
   public void goToDegree(double degrees){
-    //rearClimberMotor.getPIDController().setReference(degrees * REAR_CLIMBER_MOTOR_GEAR_RATIO * TICKS_PER_DEGREE, 
-      //ControlType.kPosition);
+    rearClimberMotor.getPIDController().setReference(gearMultiply(degrees), 
+      ControlType.kPosition);
+  }
+
+  public void resetEncoder(){
+    rearClimberMotor.getEncoder().setPosition(0);
   }
 
 

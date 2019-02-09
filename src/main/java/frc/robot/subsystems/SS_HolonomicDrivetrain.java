@@ -13,8 +13,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.ConfigParameter;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -27,10 +29,49 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	private final double width = 14.5;
 	private final double length = 14.5;
-	private double speedMultiplier = 1;
+    private double speedMultiplier = 1;
+    PIDController displayPID;
+    
+    double[] pid = {0, 0, 0};
 
 
+    
+    public SS_HolonomicDrivetrain() {
+        
+        zeroGyro();
 
+        double FR = 15;
+        double FL = -15;
+        double BR = -55;
+        double BL = 82;
+        SmartDashboard.putNumber("0 Offset", FR);
+        SmartDashboard.putNumber("1 Offset", FL);
+        SmartDashboard.putNumber("2 Offset", BR);
+        SmartDashboard.putNumber("3 Offset", BL);
+
+        
+        
+
+    
+        mSwerveModules = new SwerveModule[]  {
+            new SwerveModule(0, new CANSparkMax(RobotMap.getDriveMotor(0), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(0)), FL),
+            new SwerveModule(1, new CANSparkMax(RobotMap.getDriveMotor(1), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(1)), FR),
+            new SwerveModule(2, new CANSparkMax(RobotMap.getDriveMotor(3), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(3)), BR),
+            new SwerveModule(3, new CANSparkMax(RobotMap.getDriveMotor(2), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(2)), BL),
+        };
+        mSwerveModules[2].setDriveInverted(true);
+          
+
+        
+
+        for (SwerveModule module : mSwerveModules) {
+            //module.setTargetAngle(0);
+            module.setDriveGearRatio(5.7777);
+            module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
+        }
+
+
+    }
 	public final double getWidth() {
 		return width;
 	}
@@ -91,8 +132,8 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 
   /////////////////////////////////////////////////////
-  public static final double WHEELBASE = 14.5;  // Swerve bot: 14.5 Comp bot: 20.5
-  public static final double TRACKWIDTH = 14.5; // Swerve bot: 13.5 Comp bot: 25.5
+  public static final double WHEELBASE = 21.56;  // Swerve bot: 14.5 Comp bot: 20.5
+  public static final double TRACKWIDTH = 24.5; // Swerve bot: 13.5 Comp bot: 25.5
 
   public static final double WIDTH = 21;  // Swerve bot: 20 Comp bot: 37
   public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32
@@ -116,39 +157,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
     private AHRS mNavX = new AHRS(Port.kUSB);
 
-    public SS_HolonomicDrivetrain() {
-        
-        zeroGyro();
-
-        double FR = 10;
-        double FL = -20;
-        double BR = 53;
-        double BL = 95;
-        SmartDashboard.putNumber("0 Offset", FR);
-        SmartDashboard.putNumber("1 Offset", FL);
-        SmartDashboard.putNumber("2 Offset", BR);
-        SmartDashboard.putNumber("3 Offset", BL);
-
-        
-
-    
-        mSwerveModules = new SwerveModule[]  {
-            new SwerveModule(0, new CANSparkMax(RobotMap.getDriveMotor(0), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(0)), FL),
-            new SwerveModule(1, new CANSparkMax(RobotMap.getDriveMotor(1), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(1)), FR),
-            new SwerveModule(2, new CANSparkMax(RobotMap.getDriveMotor(2), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(2)), BL),
-            new SwerveModule(3, new CANSparkMax(RobotMap.getDriveMotor(3), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(3)), BR),
-        };
-        mSwerveModules[3].setDriveInverted(true);
-        mSwerveModules[0].setDriveInverted(true);    
-        
-
-        for (SwerveModule module : mSwerveModules) {
-            //module.setTargetAngle(0);
-            module.setDriveGearRatio(5.7777);
-            module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
-        }
-        // holonomicDrive(0, 0, .4);
-    }
 
     /**
      * @deprecated

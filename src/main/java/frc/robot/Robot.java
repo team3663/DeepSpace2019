@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
+import frc.robot.commands.test_commands.*;
 
 
 public class Robot extends TimedRobot {
@@ -27,7 +29,8 @@ public class Robot extends TimedRobot {
   private static SS_Elevator ss_Elevator;
   private static SS_RearClimber ss_RearClimber;
   private static SS_Vision ss_Vision;
-  private static SS_RevColorSensor ss_RevColorSensor;
+  private static SS_ColorSensor ss_ColorSensor;
+  private static SS_RevAirPressureSensor ss_RevAirPressureSensor;
 
 
   public static OI m_oi;
@@ -45,7 +48,8 @@ public class Robot extends TimedRobot {
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
     ss_RearClimber = new SS_RearClimber();
-    ss_RevColorSensor = new SS_RevColorSensor(Port.kOnboard);
+    ss_ColorSensor = new SS_ColorSensor();
+    ss_RevAirPressureSensor = new SS_RevAirPressureSensor();
     //ss_Vision = new SS_Vision();
 
 
@@ -91,13 +95,19 @@ public class Robot extends TimedRobot {
   public static SS_Vision getVision() {
     return ss_Vision;
   }
+  public static SS_RevAirPressureSensor getPressureSensor(){
+    return ss_RevAirPressureSensor;
+  }
+  public static SS_ColorSensor getColorSensor(){
+    return ss_ColorSensor;
+  }
 
   @Override
   public void robotPeriodic() {
     //Drivetrain
     for (int i = 0; i < 4; i++) {
       SmartDashboard.putNumber("Module Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getCurrentAngle());
-      SmartDashboard.putNumber("Module Distance Pos " + i, (ss_HolonomicDrivetrain.getSwerveModule(i).getDriveDistance()));
+      SmartDashboard.putNumber("Module Distance Pos " + i, (ss_HolonomicDrivetrain.getSwerveModule(i).getDrivePos()));
       SmartDashboard.putNumber("Module Raw Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
     }
     SmartDashboard.putNumber("Drivetrain Angle", ss_HolonomicDrivetrain.getGyroAngle());
@@ -112,14 +122,18 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
     //climber
-    SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getRawEncoder());
+    SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
+    SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
     SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
     //Color sensor
-    SmartDashboard.putNumber("White", ss_RevColorSensor.getWhite());
-    SmartDashboard.putNumber("Color Proximity", ss_RevColorSensor.getProximity());
+    SmartDashboard.putNumber("White", ss_ColorSensor.getWhite());
+    SmartDashboard.putNumber("Color Proximity", ss_ColorSensor.getProximity());
+
+    //Pressure Sensor
+    SmartDashboard.putNumber("Air Pressure", ss_RevAirPressureSensor.getPressure());
 
     //End Effector
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
@@ -129,7 +143,9 @@ public class Robot extends TimedRobot {
     //Gyro
     //TODO: decide how to refrence the gyro properly
 
-    //test values
+    //tests
+    
+   
   }
 
   @Override
@@ -183,5 +199,7 @@ public class Robot extends TimedRobot {
     for (int i = 0; i < 4; i++){
     ss_HolonomicDrivetrain.getSwerveModule(i).zeroDistance();
     }
+
+    
   }
 }

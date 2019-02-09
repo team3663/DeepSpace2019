@@ -33,7 +33,7 @@ public class SS_FrontClimber extends Subsystem {
 
   private final double TOP_ANGLE_LIMIT = -25;
   private final double BOTTOM_ANGLE_LIMIT = 200;
-  private final double GEAR_RATIO = 1/147;
+  private final double GEAR_RATIO = 1/310;
   private final double TICKS_PER_DEGREE = 1/360;
   private double fakeEncoder = 0;
 
@@ -71,7 +71,7 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberSpeedMultiplier = speedMuliplier;
   }
 
-  public double degreeToTicks(int degree) {
+  public double degreeToRotation(double degree) {
     return degree*TICKS_PER_DEGREE;
   }
 
@@ -93,7 +93,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void goToDegree(double degree) {
-    frontClimberMotor.getPIDController().setReference(degree * TICKS_PER_DEGREE / GEAR_RATIO, 
+    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * GEAR_RATIO, 
       ControlType.kPosition);
   }
 
