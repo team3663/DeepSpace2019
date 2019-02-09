@@ -31,6 +31,8 @@ public class OI {
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
+        primaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
+        primaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
         //
         //secondary controller
         //
@@ -63,6 +65,7 @@ public class OI {
         secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
         secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
 
+        
 
 
     }

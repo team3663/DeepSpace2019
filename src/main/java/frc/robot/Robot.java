@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
@@ -59,7 +60,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     
 
-    
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
   public static OI getOI() {
@@ -104,9 +105,33 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    //Drivetrain
+
     for (int i = 0; i < 4; i++) {
       SmartDashboard.putNumber("Module Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getCurrentAngle());
+    }
+    //Gyro
+    //TODO: decide how to refrence the gyro properly
+    SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
+    SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
+
+
+    SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
+
+    SmartDashboard.putNumber("Air Pressure", ss_RevAirPressureSensor.getPressure());
+
+    SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
+    SmartDashboard.putBoolean("Cargo Present", ss_EndEffector.getCargoPresent());    
+
+    //tests
+    
+   
+  }
+
+  
+  @Override
+  public void testPeriodic() {
+    //Drivetrain
+    for (int i = 0; i < 4; i++) {
       SmartDashboard.putNumber("Module Distance Pos " + i, (ss_HolonomicDrivetrain.getSwerveModule(i).getDrivePos()));
       SmartDashboard.putNumber("Module Raw Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
     }
@@ -116,15 +141,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
     SmartDashboard.putNumber("Slave Encoder", ss_Elevator.getSlaveEncoder());
     SmartDashboard.putNumber("Average Encoder", ss_Elevator.getNEOEncoder());
-    SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("Top", ss_Elevator.getTopLimitSwitchOutput());
     SmartDashboard.putBoolean("Bottom", ss_Elevator.getBottomLimitSwitchOutput());
-    SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
     //climber
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
-    SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
@@ -138,14 +160,9 @@ public class Robot extends TimedRobot {
     //End Effector
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
-    SmartDashboard.putBoolean("Cargo Present", ss_EndEffector.getCargoPresent());    
 
-    //Gyro
-    //TODO: decide how to refrence the gyro properly
 
-    //tests
     
-   
   }
 
   @Override

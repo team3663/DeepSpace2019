@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.hal.sim.mockdata.I2CDataJNI;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -37,6 +38,7 @@ public class SS_Vision extends Subsystem {
     validTarget = limelightNetworkTable.getEntry("tv");
     skew = limelightNetworkTable.getEntry("ts");
     latency = limelightNetworkTable.getEntry("tl");
+
   }
 
   //0 = LED mode set in current pipeline, 1 = off, 2 = blink, 3 = on
