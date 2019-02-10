@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANPIDController.AccelStrategy;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
-import frc.robot.commands.C_GoToLevel;
+import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.util.PIDCont;
 
@@ -34,11 +35,11 @@ public class SS_Elevator extends Subsystem {
   public double speedMultiplier = .3  ;
   private int selectedLevel = 1;
   private double TICKS_PER_INCH = 2.6;
-  private double GEAR_RATIO = 1/10;
+  private double GEAR_RATIO = 1.0/10.0;
 
   private boolean initialized = false;
 
-  private final double SAFE_FLIP_LIMIT = 3.5;
+  private final double SAFE_FLIP_HEIGHT = 3.5;
   private final double LEVEL_1 = 12;
   private final double LEVEL_2 = 24;
   private final double LEVEL_3 = 36;
@@ -60,10 +61,11 @@ public class SS_Elevator extends Subsystem {
     //default PID profile
     PID = new CANPIDController(masterMotor);
 
-    PID.setP(30);
-    PID.setI(.01);
-    PID.setD(50);
-    PID.setOutputRange(-.1, .1);
+    PID.setP(.06);
+    PID.setI(.0);
+    PID.setD(1);
+    PID.setOutputRange(-.5, .5);
+    masterMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
 
 
@@ -73,7 +75,7 @@ public class SS_Elevator extends Subsystem {
   }
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new C_ElevatorDirect());
+    // setDefaultCommand(new C_ElevatorDirect());
   }
 
   public void setElevatorSpeedMultiplier(double speedMultiplier) {
@@ -91,19 +93,21 @@ public class SS_Elevator extends Subsystem {
     masterMotor.getPIDController().setReference(pos, ControlType.kPosition);
   }
 
-  public void goToLevel(int selectedLevel){
-    this.selectedLevel = selectedLevel;
-    //TODO: find position of levels
+  public void goToInch(double inch){
+    goToPos(inch * TICKS_PER_INCH);
+  }
+
+
+  public void goToSelectedLevel(){
+    
     if(selectedLevel == 1){
-      goToPos(-LEVEL_1 * TICKS_PER_INCH * GEAR_RATIO);
-      
-      System.out.println(masterMotor.get() + ", " + slaveMotor.get());
+      goToInch(LEVEL_1);
     }
     else if (selectedLevel == 2){
-
+      goToInch(LEVEL_2);
     }
     else if (selectedLevel == 3){
-
+      goToInch(LEVEL_3);
     }
   }
 
@@ -111,12 +115,10 @@ public class SS_Elevator extends Subsystem {
     return masterMotor.getPIDController();
   }
 
-  public void setSelectedLevel(int level){
-    selectedLevel = level;
-  }
+  
 
-  public double getSafeFlipLimit(){
-    return SAFE_FLIP_LIMIT;
+  public double getSafeFlipHeight(){
+    return SAFE_FLIP_HEIGHT;
   }
 
   public double getMasterEncoder(){
@@ -157,7 +159,9 @@ public class SS_Elevator extends Subsystem {
   public int getSelectedLevel() {
     return selectedLevel;
   }
-
+  public void setSelectedLevel(int level){
+    selectedLevel = level;
+  }
   
   public boolean isInitialized(){
     return initialized;

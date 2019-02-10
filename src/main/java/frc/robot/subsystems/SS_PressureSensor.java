@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
-import frc.robot.commands.C_TestPressureSensor;
 
 public class SS_PressureSensor extends Subsystem {
 

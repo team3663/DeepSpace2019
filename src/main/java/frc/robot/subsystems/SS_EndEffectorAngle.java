@@ -34,7 +34,10 @@ public class SS_EndEffectorAngle extends Subsystem {
 
   //TODO: double check these angles
   private double FRONT_ANGLE_LIMIT = 105; 
+  private double VERTICAL_ANGLE = 15;
   private double BACK_ANGLE_LIMIT = -60;
+
+  private double SAFE_FLIP_ANGLE = -40;
 
   public SS_EndEffectorAngle() {
     angleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
@@ -52,6 +55,10 @@ public class SS_EndEffectorAngle extends Subsystem {
     
     PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
+  }
+  @Override
+  public void initDefaultCommand() {
+    //setDefaultCommand(new C_EndEffectorAngle(0));
   }
 
   public double getFrontAngleLimit() {
@@ -115,8 +122,5 @@ public class SS_EndEffectorAngle extends Subsystem {
     this.initialized = initialized;
   }
 
-  @Override
-  public void initDefaultCommand() {
-    //setDefaultCommand(new C_EndEffectorAngle(0));
-  }
+
 }

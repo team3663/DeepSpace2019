@@ -19,7 +19,6 @@ public class C_EndEffectorAngle extends Command {
 
   public C_EndEffectorAngle(double angle) {
     requires(Robot.getEndEffectorAngle());
-    requires(Robot.getElevator());
     this.angle = angle;
 
     forwardAngleLimit = Robot.getEndEffectorAngle().getFrontAngleLimit();
@@ -33,6 +32,10 @@ public class C_EndEffectorAngle extends Command {
   @Override
   protected boolean isFinished() {
     return false;
+  }
+  @Override
+  public synchronized boolean isInterruptible() {
+    return true;
   }
 
 }

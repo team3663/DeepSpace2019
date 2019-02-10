@@ -10,14 +10,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetSelectedLevel extends Command {
+public class C_ChangeSelectedLevel extends Command {
   private int level;
-  public C_SetSelectedLevel(int level) {
+  public C_ChangeSelectedLevel(int level) {
     this.level = level;
+    requires(Robot.getElevator());
   }
   @Override
-  protected void initialize() {
-    Robot.getElevator().setSelectedLevel(level);
+  protected void execute() {
+    int totalLevel = Robot.getElevator().getSelectedLevel() + level;
+    if (totalLevel >= 1 && totalLevel <= 3)
+    Robot.getElevator().setSelectedLevel( totalLevel );
   }
   @Override
   protected boolean isFinished() {

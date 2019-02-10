@@ -49,7 +49,7 @@ public class C_StartOrchestra extends Command {
         frontClimber.setInitialized(true);
       }
       if(!efAngle.isInitialized() && frontClimber.isInitialized()){
-        if(elevator.getAverageInch() < elevator.getSafeFlipLimit()){
+        if(elevator.getAverageInch() < elevator.getSafeFlipHeight()){
           if(!efAngle.getIsReset()){
             efAngle.setAngleSpeed(-.6);
           }
@@ -91,6 +91,7 @@ public class C_StartOrchestra extends Command {
       new C_FrontClimberDirect().start();
     }
     else{
+
 
       new C_FrontClimber(0).start();;
     }

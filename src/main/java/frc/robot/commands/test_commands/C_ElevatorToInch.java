@@ -5,14 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.test_commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class C_TestPressureSensor extends Command {
-  public C_TestPressureSensor() {
+public class C_ElevatorToInch extends Command {
+  double inch;
+  public C_ElevatorToInch(double inch) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    this.inch = inch;
+    requires(Robot.getElevator());
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +27,7 @@ public class C_TestPressureSensor extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.getElevator().goToInch(inch);
   }
 
   // Make this return true when this Command no longer needs to run execute()

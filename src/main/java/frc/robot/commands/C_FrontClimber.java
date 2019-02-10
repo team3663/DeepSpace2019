@@ -19,7 +19,6 @@ public class C_FrontClimber extends Command {
 
   public C_FrontClimber(double angle) {
     requires(Robot.getFrontClimber());
-    requires(Robot.getEndEffector());
     this.angle = angle;
 
     topAngleLimit = Robot.getFrontClimber().getTopAngleLimit();

@@ -69,7 +69,7 @@ public class SS_EndEffector extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new C_EndEffectorDirect());
+    //setDefaultCommand(new C_EndEffectorDirect());
   }
 
   public void setIntakeSpeed(double speed) {

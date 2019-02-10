@@ -44,7 +44,8 @@ public class SwerveModule  {
         angleMotor.setSensorPhase(true);
         angleMotor.config_kP(0, 30, 0);
         angleMotor.config_kI(0, 0.001, 0);
-        angleMotor.config_kD(0, 200, 0);
+        angleMotor.config_kD(0, 50, 0);
+    
         angleMotor.setNeutralMode(NeutralMode.Brake);
         
         angleMotor.set(ControlMode.Position, 0);

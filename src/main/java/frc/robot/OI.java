@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
 import frc.robot.input.DPadButton.Direction;
@@ -31,35 +32,19 @@ public class OI {
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
-        primaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
-        primaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
+        secondaryController.getRightBumperButton().whenPressed(new C_SetHatchClose(true));
+        secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchClose(false));
         //
         //secondary controller
         //
         // grabbing/releasing hatches
         // secondaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
         // secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
-        // collecting cargo
-        testingController.getYButton().whenPressed(new C_SetCargoIntakeSpeed(-1));
-        testingController.getYButton().whenReleased(new C_SetCargoIntakeSpeed(0));
 
-        // releasing cargo
-        testingController.getXButton().whenPressed(new C_SetCargoIntakeSpeed(1));
-        testingController.getXButton().whenReleased(new C_SetCargoIntakeSpeed(0));
-        
-        //climber intake
-        testingController.getBButton().whenPressed(new C_SetFrontClimberIntake(-1));
-        testingController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
-        
-
-
-        testingController.getAButton().whenPressed(new C_SetFrontClimberIntake(1));
-        testingController.getAButton().whenReleased(new C_SetFrontClimberIntake(0));
         //
         //testing controller: BE CAREFUL
 
         //
-        testingController.getStartButton().whenPressed(new C_GoToLevel(1));
 
         secondaryController.getBackButton().whenPressed(new C_RearClimber(90));
 
@@ -67,8 +52,12 @@ public class OI {
         secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
         secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
 
-        
+        testingController.getXButton().whenPressed(new C_ElevatorToInch(12));
 
+        testingController.getStartButton().whenPressed(new C_GoToSelectedLevel());
+
+        testingController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
+        testingController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));
 
     }
     

@@ -9,16 +9,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.SS_Elevator;
+import frc.robot.subsystems.SS_EndEffectorAngle;
+import frc.robot.subsystems.SS_FrontClimber;
 
-public class C_GoToLevel extends Command {
-  private int mLevel = 0;
-  public C_GoToLevel(int level) {
+public class C_GoToSelectedLevel extends Command {
+  SS_FrontClimber frontClimber;
+  SS_Elevator elevator;
+  SS_EndEffectorAngle efAngle;
+  public C_GoToSelectedLevel() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getElevator());
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getFrontClimber());
-    this.mLevel = level;
+
+    elevator = Robot.getElevator();
+    frontClimber = Robot.getFrontClimber();
+    efAngle = Robot.getEndEffectorAngle();
   }
 
   // Called just before this Command runs the first time
@@ -30,8 +38,21 @@ public class C_GoToLevel extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getElevator().goToLevel(mLevel);
+
+    if(frontClimber.getAngle() + 5 > frontClimber.getAngle() || frontClimber.getAngle() - 5 < frontClimber.getAngle()){
+      frontClimber.goToDegree(90);
+    }
     
+    else if(frontClimber.getAngle() + 5 < frontClimber.getAngle() && frontClimber.getAngle() - 5 > frontClimber.getAngle()){
+      if(efAngle.getAngle() + 5 > efAngle.getAngle() || efAngle.getAngle() - 2 < efAngle.getAngle()){
+        elevator.goToInch(elevator.getSafeFlipHeight());
+        efAngle.goToDegree(-30);
+      }
+      
+    }
+    
+    
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

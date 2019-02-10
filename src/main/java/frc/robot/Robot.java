@@ -144,6 +144,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
+    SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
 
 
     //tests
