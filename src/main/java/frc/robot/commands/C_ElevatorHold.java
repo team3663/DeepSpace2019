@@ -24,7 +24,7 @@ public class C_ElevatorHold extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    mHoldPos = Robot.getElevator().getNEOEncoder();
+    mHoldPos = Robot.getElevator().getAverageEncoder();
   }
 
   // Called repeatedly when this Command is scheduled to run

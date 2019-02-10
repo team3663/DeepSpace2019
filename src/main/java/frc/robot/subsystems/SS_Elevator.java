@@ -31,11 +31,14 @@ public class SS_Elevator extends Subsystem {
   private DigitalInput bottomLimitSwitch;
   private DigitalInput topLimitSwitch;
 
-  public double speedMultiplier = 0.3;
+  public double speedMultiplier = .3  ;
   private int selectedLevel = 1;
   private double TICKS_PER_INCH = 2.6;
   private double GEAR_RATIO = 1/10;
 
+  private boolean initialized = false;
+
+  private final double SAFE_FLIP_LIMIT = 3.5;
   private final double LEVEL_1 = 12;
   private final double LEVEL_2 = 24;
   private final double LEVEL_3 = 36;
@@ -77,10 +80,12 @@ public class SS_Elevator extends Subsystem {
     this.speedMultiplier = speedMultiplier;
   }
 
-  
+
+
   public void setElevatorSpeed(double speed) {
       masterMotor.set(speed * speedMultiplier);
   }
+
 
   public void goToPos(double pos){
     masterMotor.getPIDController().setReference(pos, ControlType.kPosition);
@@ -110,8 +115,11 @@ public class SS_Elevator extends Subsystem {
     selectedLevel = level;
   }
 
+  public double getSafeFlipLimit(){
+    return SAFE_FLIP_LIMIT;
+  }
+
   public double getMasterEncoder(){
-    //TODO: compare encoders or replace with better encoders
     return masterMotor.getEncoder().getPosition();
   }
   public double getSlaveEncoder(){
@@ -121,7 +129,7 @@ public class SS_Elevator extends Subsystem {
     masterMotor.getEncoder().setPosition(0);
     slaveMotor.getEncoder().setPosition(0);
   }
-  public double getNEOEncoder(){
+  public double getAverageEncoder(){
     return (getMasterEncoder()+getSlaveEncoder())/2;
   }
   public double getAverageInch(){
@@ -146,5 +154,18 @@ public class SS_Elevator extends Subsystem {
   public boolean getAtBottom(){
     return getTopLimitSwitchOutput() && getBottomLimitSwitchOutput();
   }
+  public int getSelectedLevel() {
+    return selectedLevel;
+  }
+
+  
+  public boolean isInitialized(){
+    return initialized;
+  }
+
+  public void setInitialized(boolean initialized) {
+    this.initialized = initialized;
+  }
+
 
 }

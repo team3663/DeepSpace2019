@@ -16,6 +16,8 @@ public class C_GoToLevel extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getElevator());
+    requires(Robot.getEndEffectorAngle());
+    requires(Robot.getFrontClimber());
     this.mLevel = level;
   }
 

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.C_TestPressureSensor;
 
-public class SS_RevAirPressureSensor extends Subsystem {
+public class SS_PressureSensor extends Subsystem {
 
   
   //normalized voltage = Vo / (0.004 * Po + 0.1)
@@ -22,7 +22,7 @@ public class SS_RevAirPressureSensor extends Subsystem {
   private static final double NORMALIZED_VOLTAGE = 4.98;
   private AnalogInput pressureSensor;
 
-  public SS_RevAirPressureSensor() {
+  public SS_PressureSensor() {
     pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
   }
   
@@ -35,7 +35,7 @@ public class SS_RevAirPressureSensor extends Subsystem {
    */
   public double getPressure() {
     double voltageOut = pressureSensor.getVoltage();
-    SmartDashboard.putNumber("Pressure voltage", pressureSensor.getVoltage());
+    // SmartDashboard.putNumber("Pressure voltage", pressureSensor.getVoltage());
     return 250 * voltageOut / 5 - 25;
   }
 

@@ -50,12 +50,14 @@ public class OI {
         //climber intake
         testingController.getBButton().whenPressed(new C_SetFrontClimberIntake(-1));
         testingController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
+        
 
 
         testingController.getAButton().whenPressed(new C_SetFrontClimberIntake(1));
         testingController.getAButton().whenReleased(new C_SetFrontClimberIntake(0));
         //
         //testing controller: BE CAREFUL
+
         //
         testingController.getStartButton().whenPressed(new C_GoToLevel(1));
 

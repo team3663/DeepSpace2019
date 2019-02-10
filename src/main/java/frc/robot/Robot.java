@@ -7,15 +7,24 @@
 
 package frc.robot;
 
+import java.util.Map;
+
+import edu.wpi.cscore.HttpCamera;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
+import frc.robot.commands.C_StartOrchestra;
 import frc.robot.commands.test_commands.*;
 
 
@@ -31,8 +40,9 @@ public class Robot extends TimedRobot {
   private static SS_RearClimber ss_RearClimber;
   private static SS_Vision ss_Vision;
   private static SS_ColorSensor ss_ColorSensor;
-  private static SS_RevAirPressureSensor ss_RevAirPressureSensor;
+  private static SS_PressureSensor ss_PressureSensor;
 
+  private ShuffleboardTab driver;
 
   public static OI m_oi;
 
@@ -50,18 +60,24 @@ public class Robot extends TimedRobot {
     ss_Elevator = new SS_Elevator();
     ss_RearClimber = new SS_RearClimber();
     ss_ColorSensor = new SS_ColorSensor();
-    ss_RevAirPressureSensor = new SS_RevAirPressureSensor();
-    //ss_Vision = new SS_Vision();
+    ss_PressureSensor = new SS_PressureSensor();
+    ss_Vision = new SS_Vision();
 
-
-    
 
 		m_oi.registerControls();
     // chooser.addOption("My Auto", new MyAutoCommand());
     
+    driver = Shuffleboard.getTab("driver");
 
-    CameraServer.getInstance().startAutomaticCapture();
-  }
+    //show cameras on the driver tab of shuffleboard
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(320, 240);
+    camera.setPixelFormat(PixelFormat.kMJPEG);
+    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream);
+
+    HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
+    driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
+   }
 
   public static OI getOI() {
 		return m_oi;
@@ -96,8 +112,8 @@ public class Robot extends TimedRobot {
   public static SS_Vision getVision() {
     return ss_Vision;
   }
-  public static SS_RevAirPressureSensor getPressureSensor(){
-    return ss_RevAirPressureSensor;
+  public static SS_PressureSensor getPressureSensor(){
+    return ss_PressureSensor;
   }
   public static SS_ColorSensor getColorSensor(){
     return ss_ColorSensor;
@@ -111,16 +127,24 @@ public class Robot extends TimedRobot {
     }
     //Gyro
     //TODO: decide how to refrence the gyro properly
+    SmartDashboard.putNumber("Selected Level", ss_Elevator.getSelectedLevel());
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
 
-    SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
-    SmartDashboard.putNumber("Air Pressure", ss_RevAirPressureSensor.getPressure());
+    SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Cargo Present", ss_EndEffector.getCargoPresent());    
+    
+    SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
+    SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
+    SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
+    SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
+
+    SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
+
 
     //tests
     
@@ -140,29 +164,24 @@ public class Robot extends TimedRobot {
     //Elevator
     SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
     SmartDashboard.putNumber("Slave Encoder", ss_Elevator.getSlaveEncoder());
-    SmartDashboard.putNumber("Average Encoder", ss_Elevator.getNEOEncoder());
+    SmartDashboard.putNumber("Average Encoder", ss_Elevator.getAverageEncoder());
     SmartDashboard.putBoolean("Top", ss_Elevator.getTopLimitSwitchOutput());
     SmartDashboard.putBoolean("Bottom", ss_Elevator.getBottomLimitSwitchOutput());
 
     //climber
-    SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
-    SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
-    SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
-    SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
+
 
     //Color sensor
     SmartDashboard.putNumber("White", ss_ColorSensor.getWhite());
     SmartDashboard.putNumber("Color Proximity", ss_ColorSensor.getProximity());
 
-    //Pressure Sensor
-    SmartDashboard.putNumber("Air Pressure", ss_RevAirPressureSensor.getPressure());
-
+  
     //End Effector
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
-    SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
 
 
-    
+
+
   }
 
   @Override
@@ -209,14 +228,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
     for (int i = 0; i < 4; i++){
     ss_HolonomicDrivetrain.getSwerveModule(i).zeroDistance();
     }
-
-    
+    new C_StartOrchestra().start();
   }
 }

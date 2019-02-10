@@ -37,44 +37,39 @@ public class SS_EndEffector extends Subsystem {
   //private AnalogInput pressureSensor;
   
   private CANSparkMax cargoIntakeMotor;
-  private CANSparkMax endEffectorAngleMotor;
   
   private DigitalInput cargoSwitch;
   
   private DoubleSolenoid hatchPickupSolenoid;
-  private DigitalInput hatchPickupSwitch;
 
   private double cargoIntakeMotorSpeedMultiplier = 1;
   private double endEffectorAngleSpeedMultiplier = 0.3;
 
-  //private AnalogInput pressureSensor;
+  private boolean initialized = false;
+
 
   //TODO: double check these angles
   private double FRONT_ANGLE_LIMIT = 110; 
   private double BACK_ANGLE_LIMIT = 300; //not 270 because mech team
 
-  private double ANGLE_MOTOR_GEAR_RATIO = 1/100; 
-  private double TICKS_PER_DEGREE = 1/360;
+  private double ANGLE_MOTOR_GEAR_RATIO = 1.0/100.0; 
 
 
   public SS_EndEffector() {
     cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
-    endEffectorAngleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
-    //pressureSensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
-    endEffectorAngleMotor.getEncoder().setPosition(30);
+    cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
 
+
+    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
 
     cargoSwitch = new DigitalInput(RobotMap.CARGO_SWITCH);
     
-    hatchPickupSwitch = new DigitalInput(RobotMap.HATCH_PICKUP_SWITCH);
     
-    cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
   }
 
   @Override
   public void initDefaultCommand() {
-    //setDefaultCommand(new C_EndEffectorDirect());
+    setDefaultCommand(new C_EndEffectorDirect());
   }
 
   public void setIntakeSpeed(double speed) {
@@ -94,10 +89,6 @@ public class SS_EndEffector extends Subsystem {
 
   }
 
-  public double getAirPressure() {
-    return 0; //250 * pressureSensor.getVoltage() / SUPPLY_VOLTAGE - 25;
-  }
-
   public DigitalInput getCagroSwitch(){
     return cargoSwitch;
   }
@@ -105,8 +96,6 @@ public class SS_EndEffector extends Subsystem {
     return !cargoSwitch.get();
   }
 
-  // public AnalogInput getPressureSensor() {
-  //   return pressureSensor;
-  // }
+
 
 }

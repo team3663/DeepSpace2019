@@ -5,36 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.test_commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-/**
- * ONLY FOR TESTING, LIMITS NOT SET
- */
-public class C_FrontClimberDirect extends Command {
-  public final double DEAD_BAND = 0.1;
-  public C_FrontClimberDirect() {
-    requires(Robot.getFrontClimber());
-  }
-
-  public double ignoreDeadBand(double input){
-    if(Math.abs(input) < DEAD_BAND){
-      return 0;
-    }
-    return input;
+public class C_SetSelectedLevel extends Command {
+  private int level;
+  public C_SetSelectedLevel(int level) {
+    this.level = level;
   }
   @Override
-  protected void execute() {
-    double speed = Robot.getOI().getSecondaryController().getLeftYValue();
-    Robot.getFrontClimber().setClimberMotorSpeed(ignoreDeadBand(speed));
+  protected void initialize() {
+    Robot.getElevator().setSelectedLevel(level);
   }
-
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
-
 
 }

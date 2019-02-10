@@ -44,5 +44,10 @@ public class C_FrontClimber extends Command {
   protected boolean isFinished() {
     return false;
   }
+  @Override
+  public synchronized boolean isInterruptible() {
+    return true;
+  }
+  
 
 }

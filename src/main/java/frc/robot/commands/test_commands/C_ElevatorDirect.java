@@ -41,7 +41,4 @@ public class C_ElevatorDirect extends Command {
     return false;
   }
 
-  @Override
-  protected void interrupted() {
-  }
 }

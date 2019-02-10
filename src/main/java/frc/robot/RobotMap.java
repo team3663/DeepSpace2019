@@ -59,7 +59,8 @@ public static final int getDriveMotor(int module){
 
   public static final int CLIMBER_FRONT_LIMIT_SWITCH = 2;
   
-  public static final int HATCH_PICKUP_SWITCH = 3;
+  //public static final int HATCH_PICKUP_SWITCH = 3;
+  public static final int ANGLE_RESET_SWITCH = 3;
   public static final int CARGO_SWITCH = 8;
 
 

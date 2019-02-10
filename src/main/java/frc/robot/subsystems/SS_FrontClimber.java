@@ -13,10 +13,12 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANPIDController.AccelStrategy;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
 import frc.robot.commands.test_commands.C_FrontClimberDirect;
@@ -33,9 +35,11 @@ public class SS_FrontClimber extends Subsystem {
 
   private final double TOP_ANGLE_LIMIT = -25;
   private final double BOTTOM_ANGLE_LIMIT = 200;
-  private final double GEAR_RATIO = 1/310;
-  private final double TICKS_PER_DEGREE = 1/360;
+  private final double GEAR_RATIO = 1.0/147.0;
+  private final double TICKS_PER_DEGREE = 1.0/360.0;
   private double fakeEncoder = 0;
+
+  private boolean initialized = false;
 
   private double frontClimberSpeedMultiplier = 0.3;//askInitDefault
   private double cargoIntakeSpeedMultiplier = 1;
@@ -44,15 +48,23 @@ public class SS_FrontClimber extends Subsystem {
     cargoIntake = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
     limitSwitch = new DigitalInput(RobotMap.CLIMBER_FRONT_LIMIT_SWITCH);
     
-
-
+    frontClimberMotor.setClosedLoopRampRate(0);
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
+    frontClimberMotor.getEncoder().setPosition(0);
+    frontClimberMotor.setInverted(true);
     //TODO: tweak PID values
     PID = new CANPIDController(frontClimberMotor);
-    PID.setP(1);
-    PID.setI(.01);
-    PID.setD(3);
-    PID.setOutputRange(-1, 1);
+    PID.setP(.4);    //.4  for music use commented pid values
+    PID.setI(.00001);  //.0001
+    PID.setD(0);     //10
+    PID.setOutputRange(-.6, .6);
+    
+    
+    PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
+  }
+  @Override
+  public void initDefaultCommand() {
+    //setDefaultCommand(new C_FrontClimberDirect());
   }
 
   public void setCargoIntakeSpeed(double speed) {
@@ -72,7 +84,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public double degreeToRotation(double degree) {
-    return degree*TICKS_PER_DEGREE;
+    return degree/360;
   }
 
   public double ticksToDegrees(double ticks) {
@@ -82,6 +94,7 @@ public class SS_FrontClimber extends Subsystem {
   public double getRawEncoder() {
     return frontClimberMotor.getEncoder().getPosition();
   }
+
 
   public double getAngle(){
     double position = getRawEncoder() * GEAR_RATIO * 360;
@@ -93,9 +106,11 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void goToDegree(double degree) {
-    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * GEAR_RATIO, 
+    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * 147, 
       ControlType.kPosition);
   }
+
+
 
   public double getTopAngleLimit() {
     return TOP_ANGLE_LIMIT;
@@ -113,8 +128,13 @@ public class SS_FrontClimber extends Subsystem {
     return limitSwitch.get();
   }
 
-  @Override
-  public void initDefaultCommand() {
-    setDefaultCommand(new C_FrontClimberDirect());
+  public boolean isInitialized(){
+    return initialized;
   }
+
+  public void setInitialized(boolean initialized) {
+    this.initialized = initialized;
+  }
+
+
 }
