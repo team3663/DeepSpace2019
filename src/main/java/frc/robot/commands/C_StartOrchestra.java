@@ -45,13 +45,14 @@ public class C_StartOrchestra extends Command {
 
       
       if(!frontClimber.isInitialized()){
+        frontClimber.resetEncoder();
         frontClimber.goToDegree(90);
         frontClimber.setInitialized(true);
       }
       if(!efAngle.isInitialized() && frontClimber.isInitialized()){
         if(elevator.getAverageInch() < elevator.getSafeFlipHeight()){
           if(!efAngle.getIsReset()){
-            efAngle.setAngleSpeed(-.6);
+            efAngle.setAngleSpeed(-.4);
           }
           else{
             efAngle.resetEncoder();

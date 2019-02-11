@@ -53,6 +53,8 @@ public class OI {
         secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
 
         testingController.getXButton().whenPressed(new C_ElevatorToInch(12));
+        testingController.getBButton().whenPressed(new C_EndEffectorAngle(-75));
+        testingController.getAButton().whenPressed(new C_EndEffectorAngle(80));
 
         testingController.getStartButton().whenPressed(new C_GoToSelectedLevel());
 

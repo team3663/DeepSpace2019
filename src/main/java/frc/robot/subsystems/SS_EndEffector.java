@@ -48,11 +48,6 @@ public class SS_EndEffector extends Subsystem {
   private boolean initialized = false;
 
 
-  //TODO: double check these angles
-  private double FRONT_ANGLE_LIMIT = 110; 
-  private double BACK_ANGLE_LIMIT = 300; //not 270 because mech team
-
-  private double ANGLE_MOTOR_GEAR_RATIO = 1.0/100.0; 
 
 
   public SS_EndEffector() {

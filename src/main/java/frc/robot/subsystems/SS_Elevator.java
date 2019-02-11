@@ -64,7 +64,7 @@ public class SS_Elevator extends Subsystem {
     PID.setP(.06);
     PID.setI(.0);
     PID.setD(1);
-    PID.setOutputRange(-.5, .5);
+    PID.setOutputRange(-.4, .4);
     masterMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
 
@@ -90,6 +90,7 @@ public class SS_Elevator extends Subsystem {
 
 
   public void goToPos(double pos){
+    
     masterMotor.getPIDController().setReference(pos, ControlType.kPosition);
   }
 

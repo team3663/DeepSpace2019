@@ -12,7 +12,6 @@ import frc.robot.Robot;
 
 public class C_EndEffectorAngle extends Command {
   private double angle;
-  private double elevatorPos;
 
   private double forwardAngleLimit;
   private double backwardAngleLimit;
@@ -23,15 +22,21 @@ public class C_EndEffectorAngle extends Command {
 
     forwardAngleLimit = Robot.getEndEffectorAngle().getFrontAngleLimit();
     backwardAngleLimit = Robot.getEndEffectorAngle().getBackAngleLimit();
+    if(angle > forwardAngleLimit){
+      angle = forwardAngleLimit;
+    }
+    if(angle < backwardAngleLimit){
+      angle = backwardAngleLimit;
+    }
   }
 
   protected void execute() {
-    
+    Robot.getEndEffectorAngle().goToDegree(angle);
     
   }
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipHeight();
   }
   @Override
   public synchronized boolean isInterruptible() {

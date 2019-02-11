@@ -50,7 +50,6 @@ public class SS_FrontClimber extends Subsystem {
     
     frontClimberMotor.setClosedLoopRampRate(0);
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
-    frontClimberMotor.getEncoder().setPosition(0);
     frontClimberMotor.setInverted(true);
     //TODO: tweak PID values
     PID = new CANPIDController(frontClimberMotor);
@@ -95,6 +94,10 @@ public class SS_FrontClimber extends Subsystem {
     return frontClimberMotor.getEncoder().getPosition();
   }
 
+  public void resetEncoder(){
+    frontClimberMotor.getEncoder().setPosition(0);
+  }
+
 
   public double getAngle(){
     double position = getRawEncoder() * GEAR_RATIO * 360;
@@ -106,7 +109,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void goToDegree(double degree) {
-    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * 147, 
+    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * (1/GEAR_RATIO), 
       ControlType.kPosition);
   }
 

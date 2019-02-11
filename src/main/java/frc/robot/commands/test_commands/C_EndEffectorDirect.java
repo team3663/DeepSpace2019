@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_EndEffectorDirect extends Command {
-  private static final double DEAD_BAND = 0.05;
+  private static final double DEAD_BAND = 0.5;
   public C_EndEffectorDirect() {
     requires(Robot.getEndEffector());
   }

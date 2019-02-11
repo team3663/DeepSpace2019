@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_Elevator;
 import frc.robot.subsystems.SS_EndEffectorAngle;
@@ -17,6 +18,7 @@ public class C_GoToSelectedLevel extends Command {
   SS_FrontClimber frontClimber;
   SS_Elevator elevator;
   SS_EndEffectorAngle efAngle;
+  boolean afterFlip = false;
   public C_GoToSelectedLevel() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -39,15 +41,22 @@ public class C_GoToSelectedLevel extends Command {
   @Override
   protected void execute() {
 
-    if(frontClimber.getAngle() + 5 > frontClimber.getAngle() || frontClimber.getAngle() - 5 < frontClimber.getAngle()){
-      frontClimber.goToDegree(90);
-    }
     
-    else if(frontClimber.getAngle() + 5 < frontClimber.getAngle() && frontClimber.getAngle() - 5 > frontClimber.getAngle()){
-      if(efAngle.getAngle() + 5 > efAngle.getAngle() || efAngle.getAngle() - 2 < efAngle.getAngle()){
+    frontClimber.goToDegree(90);
+    
+    
+    if(frontClimber.getAngle() + 5 > 90 && frontClimber.getAngle() - 5 < 90){
+      if((efAngle.getAngle() + 2 < -75 || efAngle.getAngle() - 2 > -75) && !afterFlip){
         elevator.goToInch(elevator.getSafeFlipHeight());
-        efAngle.goToDegree(-30);
+        efAngle.goToDegree(-75);
+        if(elevator.getAverageInch() + .1 > elevator.getSafeFlipHeight() && elevator.getAverageInch() - .1 < elevator.getSafeFlipHeight()){
+          afterFlip = true;
+        }
       }
+      else{
+        elevator.goToSelectedLevel();
+      }
+
       
     }
     
@@ -67,9 +76,4 @@ public class C_GoToSelectedLevel extends Command {
   
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }
