@@ -108,6 +108,10 @@ public class SS_FrontClimber extends Subsystem {
     return position;
   }
 
+  public boolean atTarget(double angle){
+    return getAngle() < angle + 1 && getAngle() > angle - 1;
+  }
+
   public void goToDegree(double degree) {
     frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * (1/GEAR_RATIO), 
       ControlType.kPosition);

@@ -1,6 +1,8 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import frc.robot.commands.command_groups.CG_BallIntake;
+import frc.robot.commands.command_groups.CG_CancelBallIntake;
 import frc.robot.commands.command_groups.CG_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
@@ -33,31 +35,27 @@ public class OI {
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
 
-        secondaryController.getRightBumperButton().whenPressed(new C_SetHatchClose(true));
-        secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchClose(false));
+
         //
         //secondary controller
         //
-        // grabbing/releasing hatches
-        // secondaryController.getRightBumperButton().whenPressed(new C_SetHatchPos(true));
-        // secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchPos(false));
-
-        //
-        //testing controller: BE CAREFUL
-
-        //
-
         secondaryController.getBackButton().whenPressed(new C_RearClimber(90));
 
         secondaryController.getDPadButton(Direction.UP).whenPressed(new C_FrontClimber(0));
         secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
         secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
 
-        testingController.getXButton().whenPressed(new C_ElevatorToInch(12));
-        testingController.getBButton().whenPressed(new C_EndEffectorAngle(-75));
-        testingController.getAButton().whenPressed(new C_EndEffectorAngle(80));
-
+        secondaryController.getRightBumperButton().whenPressed(new C_SetHatchClose(true));
+        secondaryController.getLeftBumperButton().whenPressed(new C_SetHatchClose(false));
+        
+        //
+        //testing controller: BE CAREFUL
+        //
         testingController.getStartButton().whenPressed(new CG_GoToSelectedLevel());
+
+        testingController.getXButton().whenPressed(new CG_BallIntake());
+        testingController.getBButton().whenPressed(new CG_CancelBallIntake());
+        testingController.getYButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
 
         testingController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
         testingController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));

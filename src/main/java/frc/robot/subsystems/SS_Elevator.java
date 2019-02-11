@@ -136,8 +136,9 @@ public class SS_Elevator extends Subsystem {
     return SAFE_FLIP_HEIGHT;
   }
 
-  public boolean atSafeFlipHeight(){
-    return getAverageInch() < getSafeFlipHeight() + .5 && getAverageInch() > getSafeFlipHeight() - .5;
+
+  public boolean atTarget(double targetInch){
+    return getAverageInch() < targetInch + .5 && getAverageInch() > targetInch - .5;
   }
 
   public double getMasterEncoder(){

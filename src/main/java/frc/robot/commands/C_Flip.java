@@ -29,7 +29,7 @@ public class C_Flip extends Command {
   @Override
   protected void execute() {
     Robot.getElevator().goToInch(Robot.getElevator().getSafeFlipHeight());
-    if(Robot.getElevator().atSafeFlipHeight()){
+    if(Robot.getElevator().atTarget(Robot.getElevator().getSafeFlipHeight())){
       Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
     }
   }

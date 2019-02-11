@@ -10,22 +10,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetCargoIntakeSpeed extends Command {
-  private double speed = 0;
-
-  public C_SetCargoIntakeSpeed(double speed) {
+public class C_WaitForBall extends Command {
+  public C_WaitForBall() {
     requires(Robot.getEndEffector());
-    this.speed = speed;
-  }
-
-  @Override
-  protected void execute() {
-    Robot.getEndEffector().setIntakeSpeed(speed);
   }
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return Robot.getEndEffector().getCargoPresent();
   }
 
 }

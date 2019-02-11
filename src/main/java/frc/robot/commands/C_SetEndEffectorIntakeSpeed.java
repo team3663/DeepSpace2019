@@ -5,25 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.test_commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_ElevatorToInch extends Command {
-  double inch;
-  public C_ElevatorToInch(double inch) {
- 
-    this.inch = inch;
-    requires(Robot.getElevator());
+public class C_SetEndEffectorIntakeSpeed extends Command {
+  private double speed = 0;
+
+  public C_SetEndEffectorIntakeSpeed(double speed) {
+    requires(Robot.getEndEffector());
+    this.speed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.getElevator().goToInch(inch);
+    Robot.getEndEffector().setIntakeSpeed(speed);
   }
+
   @Override
   protected boolean isFinished() {
-    return Robot.getElevator().atTarget(inch);
+    return true;
   }
+
 }

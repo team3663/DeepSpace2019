@@ -31,14 +31,14 @@ public class C_EndEffectorAngle extends Command {
   }
 
   protected void execute() {
-    if(Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipHeight()){
+    if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipHeight()){
       Robot.getEndEffectorAngle().goToDegree(angle);
     }
     
   }
   @Override
   protected boolean isFinished() {
-    return true;
+    return Robot.getEndEffectorAngle().atTarget(angle);
   }
 
 

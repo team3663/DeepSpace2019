@@ -96,6 +96,10 @@ public class SS_EndEffectorAngle extends Subsystem {
     return angle;
   }
 
+  public boolean atTarget(double angle){
+    return getAngle() < angle + 1 && getAngle() > angle - 1;
+  }
+
   public boolean isFliped(boolean toFront){
     if(toFront){
       return getAngle() > 85;
