@@ -12,12 +12,12 @@ import frc.robot.Robot;
 
 public class C_WaitForBall extends Command {
   public C_WaitForBall() {
-    requires(Robot.getEndEffector());
+    requires(Robot.getBall());
   }
 
   @Override
   protected boolean isFinished() {
-    return Robot.getEndEffector().getCargoPresent();
+    return Robot.getBall().getCargoPresent();
   }
 
 }

@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_SetEndEffectorIntakeSpeed extends Command {
-  private double speed = 0;
+  private double speed;
 
   public C_SetEndEffectorIntakeSpeed(double speed) {
-    requires(Robot.getEndEffector());
+    requires(Robot.getBall());
     this.speed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.getEndEffector().setIntakeSpeed(speed);
+    Robot.getBall().setIntakeSpeed(speed);
   }
 
   @Override

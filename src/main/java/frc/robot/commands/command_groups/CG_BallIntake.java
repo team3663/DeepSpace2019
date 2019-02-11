@@ -24,7 +24,7 @@ public class CG_BallIntake extends CommandGroup {
     addSequential(new C_Flip(true));
     addSequential(new C_FrontClimber(95));
     addParallel(new C_ElevatorToInch(0)); 
-    addSequential(new C_SetEndEffectorIntakeSpeed(-.3));
+    addSequential(new C_SetEndEffectorIntakeSpeed(-.3));  
     addSequential(new C_SetFrontClimberIntake(-1));
     addSequential(new C_WaitForBall());
     addSequential(new C_EndEffectorAngle(0));

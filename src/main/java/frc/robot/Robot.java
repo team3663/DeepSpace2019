@@ -33,7 +33,6 @@ public class Robot extends TimedRobot {
 
   private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
 
-  private static SS_EndEffector ss_EndEffector;
   private static SS_EndEffectorAngle ss_EndEffectorAngle;
   private static SS_FrontClimber ss_FrontClimber;
   private static SS_Elevator ss_Elevator;
@@ -41,6 +40,8 @@ public class Robot extends TimedRobot {
   private static SS_Vision ss_Vision;
   private static SS_ColorSensor ss_ColorSensor;
   private static SS_PressureSensor ss_PressureSensor;
+  private static SS_Ball ss_Ball;
+  private static SS_Hatch ss_Hatch;
 
   private ShuffleboardTab driver;
 
@@ -54,7 +55,6 @@ public class Robot extends TimedRobot {
 
     //some subsystems commented out
     ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain();
-    ss_EndEffector = new SS_EndEffector();
     ss_EndEffectorAngle = new SS_EndEffectorAngle();
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
@@ -62,6 +62,8 @@ public class Robot extends TimedRobot {
     ss_ColorSensor = new SS_ColorSensor();
     ss_PressureSensor = new SS_PressureSensor();
     ss_Vision = new SS_Vision();
+    ss_Ball = new SS_Ball();
+    ss_Hatch = new SS_Hatch();
 
 
 		m_oi.registerControls();
@@ -83,14 +85,17 @@ public class Robot extends TimedRobot {
 		return m_oi;
   }
 
-
+  
+  public static SS_Hatch getHatch(){
+    return ss_Hatch;
+  }
   
   public static SS_HolonomicDrivetrain getDrivetrain() {
 		return ss_HolonomicDrivetrain;
   }
 
-  public static SS_EndEffector getEndEffector() {
-    return ss_EndEffector;
+  public static SS_Ball getBall() {
+    return ss_Ball;
   }
 
   public static SS_EndEffectorAngle getEndEffectorAngle() {
@@ -136,7 +141,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
-    SmartDashboard.putBoolean("Cargo Present", ss_EndEffector.getCargoPresent());    
+    SmartDashboard.putBoolean("Cargo Present", ss_Ball.getCargoPresent());    
     
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
@@ -146,7 +151,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
 
-
+ 
     //tests
     
    
@@ -181,7 +186,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
 
 
-
+ 
 
   }
 

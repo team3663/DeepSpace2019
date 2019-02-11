@@ -29,7 +29,6 @@ import frc.robot.commands.test_commands.C_FrontClimberDirect;
 public class SS_FrontClimber extends Subsystem {
 
   private CANSparkMax frontClimberMotor;
-  private TalonSRX cargoIntake;
   private CANPIDController PID;
   private DigitalInput limitSwitch;
 
@@ -45,7 +44,6 @@ public class SS_FrontClimber extends Subsystem {
   private double cargoIntakeSpeedMultiplier = 1;
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
-    cargoIntake = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
     limitSwitch = new DigitalInput(RobotMap.CLIMBER_FRONT_LIMIT_SWITCH);
     
     frontClimberMotor.setClosedLoopRampRate(0);
@@ -66,9 +64,7 @@ public class SS_FrontClimber extends Subsystem {
     //setDefaultCommand(new C_FrontClimberDirect());
   }
 
-  public void setCargoIntakeSpeed(double speed) {
-    cargoIntake.set(ControlMode.MotionProfile.PercentOutput, speed * cargoIntakeSpeedMultiplier);
-  }
+  
 
   public void setClimberMotorSpeed(double speed){
     frontClimberMotor.set(speed * frontClimberSpeedMultiplier);

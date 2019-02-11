@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class C_EndEffectorDirect extends Command {
   private static final double DEAD_BAND = 0.5;
   public C_EndEffectorDirect() {
-    requires(Robot.getEndEffector());
+    requires(Robot.getEndEffectorAngle());
   }
 
   // Called just before this Command runs the first time

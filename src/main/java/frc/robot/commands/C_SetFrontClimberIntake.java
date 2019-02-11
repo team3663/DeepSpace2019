@@ -14,13 +14,13 @@ public class C_SetFrontClimberIntake extends Command {
   private double speed;
 
   public C_SetFrontClimberIntake(double speed) {
-    requires(Robot.getFrontClimber());
+    requires(Robot.getBall());
     this.speed = speed;
   }
 
   @Override
   protected void execute() {
-    Robot.getFrontClimber().setCargoIntakeSpeed(speed);
+    Robot.getBall().setCargoIntakeSpeed(speed);
   }
 
   @Override

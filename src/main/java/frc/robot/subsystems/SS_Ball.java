@@ -30,58 +30,33 @@ import frc.robot.commands.test_commands.C_EndEffectorDirect;
 /**
  * Add your docs here.
  */
-public class SS_EndEffector extends Subsystem {
+public class SS_Ball extends Subsystem {
+  
+  private CANSparkMax EndEffectorIntakeMotor;
+  private TalonSRX climberIntakeMotor;
 
-  // Rev air pressure sensor variables
-  private static final double SUPPLY_VOLTAGE = 5;
-  //private AnalogInput pressureSensor;
-  
-  private CANSparkMax cargoIntakeMotor;
-  
   private DigitalInput cargoSwitch;
   
-  private DoubleSolenoid hatchPickupSolenoid;
-
-  private double cargoIntakeMotorSpeedMultiplier = 1;
-  private double endEffectorAngleSpeedMultiplier = 0.3;
-
-  private boolean initialized = false;
 
 
 
-
-  public SS_EndEffector() {
-    cargoIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
-    cargoIntakeMotor.setIdleMode(IdleMode.kCoast);
-
-
-    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
+  public SS_Ball() {
+    climberIntakeMotor = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
+    EndEffectorIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
+    EndEffectorIntakeMotor.setIdleMode(IdleMode.kCoast);
 
     cargoSwitch = new DigitalInput(RobotMap.CARGO_SWITCH);
-    
-    
   }
 
   @Override
-  public void initDefaultCommand() {
-    //setDefaultCommand(new C_EndEffectorDirect());
-  }
+  public void initDefaultCommand() {}
 
   public void setIntakeSpeed(double speed) {
-    cargoIntakeMotor.set(speed * cargoIntakeMotorSpeedMultiplier);
+    EndEffectorIntakeMotor.set(speed);
   }
 
-  public void setIntakeSpeedMultiplier(double speedMultiplier) {
-    cargoIntakeMotorSpeedMultiplier = speedMultiplier;
-  }
-
-  public void setHatchClose(boolean state) {
-    if(state){
-      hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
-    }else{
-      hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
-    }
-
+  public void setCargoIntakeSpeed(double speed) {
+    climberIntakeMotor.set(ControlMode.MotionProfile.PercentOutput, speed);
   }
 
   public DigitalInput getCagroSwitch(){
@@ -90,7 +65,6 @@ public class SS_EndEffector extends Subsystem {
   public boolean getCargoPresent(){
     return !cargoSwitch.get();
   }
-
 
 
 }

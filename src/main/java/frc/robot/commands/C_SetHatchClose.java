@@ -19,13 +19,13 @@ public class C_SetHatchClose extends Command {
    * @param grab if true, grab the hatch. If false, release it.
    */
   public C_SetHatchClose(boolean isClosed) {
-    requires(Robot.getEndEffector());
+    requires(Robot.getHatch());
     this.isClosed = isClosed;
   }
 
   @Override
   protected void execute() {
-    Robot.getEndEffector().setHatchClose(isClosed);
+    Robot.getHatch().setHatchClose(isClosed);
   }
 
   @Override

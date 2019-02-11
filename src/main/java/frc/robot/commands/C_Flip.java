@@ -28,10 +28,13 @@ public class C_Flip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getElevator().goToInch(Robot.getElevator().getSafeFlipHeight());
-    if(Robot.getElevator().atTarget(Robot.getElevator().getSafeFlipHeight())){
-      Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
+    if(!Robot.getEndEffectorAngle().isFliped(isFront)){
+      Robot.getElevator().goToInch(Robot.getElevator().getSafeFlipHeight());
+      if(Robot.getElevator().atTarget(Robot.getElevator().getSafeFlipHeight())){
+        Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
+      }
     }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
