@@ -37,7 +37,8 @@ public class SS_EndEffectorAngle extends Subsystem {
   private double VERTICAL_ANGLE = 15;
   private double BACK_ANGLE_LIMIT = -80;
 
-  private double SAFE_FLIP_ANGLE = -40;
+  private double SAFE_FLIP_BACK_ANGLE = -75;
+  private double SAFEFLIP_FRONT_ANGLE = 90;
 
   public SS_EndEffectorAngle() {
     angleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
@@ -59,6 +60,16 @@ public class SS_EndEffectorAngle extends Subsystem {
   @Override
   public void initDefaultCommand() {
     //setDefaultCommand(new C_EndEffectorAngle(0));
+  }
+
+  public double getSafeFlipAngle(boolean isFront){
+
+    if(isFront){
+      return SAFEFLIP_FRONT_ANGLE;
+    }
+    else{
+      return SAFE_FLIP_BACK_ANGLE;
+    }
   }
 
   public double getFrontAngleLimit() {
@@ -85,6 +96,15 @@ public class SS_EndEffectorAngle extends Subsystem {
     return angle;
   }
 
+  public boolean isFliped(boolean toFront){
+    if(toFront){
+      return getAngle() > 85;
+    }
+    else{
+      return getAngle() < -65;
+    }
+    
+  }
   public void resetEncoder(){
     //30 for 100:1
     angleMotor.getEncoder().setPosition(18);

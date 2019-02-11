@@ -41,7 +41,7 @@ public class C_FrontClimber extends Command {
    */
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.getFrontClimber().getAngle() < angle + 1 && Robot.getFrontClimber().getAngle() > angle - 1;
   }
   @Override
   public synchronized boolean isInterruptible() {

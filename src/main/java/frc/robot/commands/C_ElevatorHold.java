@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_ElevatorHold extends Command {
-  private double mHoldPos;
+  private double holdPos;
 
   //TODO: implement exit code
 
@@ -24,13 +24,13 @@ public class C_ElevatorHold extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    mHoldPos = Robot.getElevator().getAverageEncoder();
+    holdPos = Robot.getElevator().getAverageEncoder();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getElevator().goToPos(mHoldPos);
+    Robot.getElevator().goToPos(holdPos);
   }
 
   // Make this return true when this Command no longer needs to run execute()

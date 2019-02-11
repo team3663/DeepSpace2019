@@ -116,10 +116,28 @@ public class SS_Elevator extends Subsystem {
     return masterMotor.getPIDController();
   }
 
-  
+  public double getSelectedLevelInch(){
+    
+    if(selectedLevel == 1){
+      return LEVEL_1;
+    }
+    else if (selectedLevel == 2){
+      return LEVEL_2;
+    }
+    else if (selectedLevel == 3){
+      return LEVEL_3;
+    }
+    else{
+      return 0;
+    }
+  }
 
   public double getSafeFlipHeight(){
     return SAFE_FLIP_HEIGHT;
+  }
+
+  public boolean atSafeFlipHeight(){
+    return getAverageInch() < getSafeFlipHeight() + .5 && getAverageInch() > getSafeFlipHeight() - .5;
   }
 
   public double getMasterEncoder(){

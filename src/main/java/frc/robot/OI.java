@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import frc.robot.commands.command_groups.CG_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.input.IGamepad;
@@ -56,7 +57,7 @@ public class OI {
         testingController.getBButton().whenPressed(new C_EndEffectorAngle(-75));
         testingController.getAButton().whenPressed(new C_EndEffectorAngle(80));
 
-        testingController.getStartButton().whenPressed(new C_GoToSelectedLevel());
+        testingController.getStartButton().whenPressed(new CG_GoToSelectedLevel());
 
         testingController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
         testingController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));

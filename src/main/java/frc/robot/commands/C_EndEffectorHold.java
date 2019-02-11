@@ -10,36 +10,34 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_EndEffectorAngle extends Command {
-  private double angle;
-
-  private double forwardAngleLimit;
-  private double backwardAngleLimit;
-
-  public C_EndEffectorAngle(double angle) {
+public class C_EndEffectorHold extends Command {
+  private double holdAngle;
+  public C_EndEffectorHold() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.getEndEffectorAngle());
-    this.angle = angle;
-
-    forwardAngleLimit = Robot.getEndEffectorAngle().getFrontAngleLimit();
-    backwardAngleLimit = Robot.getEndEffectorAngle().getBackAngleLimit();
-    if(angle > forwardAngleLimit){
-      angle = forwardAngleLimit;
-    }
-    if(angle < backwardAngleLimit){
-      angle = backwardAngleLimit;
-    }
   }
 
+  // Called just before this Command runs the first time
+  @Override
+  protected void initialize() {
+    holdAngle = Robot.getEndEffectorAngle().getAngle();
+  }
+
+  // Called repeatedly when this Command is scheduled to run
+  @Override
   protected void execute() {
-    if(Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipHeight()){
-      Robot.getEndEffectorAngle().goToDegree(angle);
-    }
-    
+    Robot.getEndEffectorAngle().goToDegree(holdAngle);
   }
+
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
-
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+  }
 }
