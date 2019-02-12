@@ -67,8 +67,4 @@ public static final int getDriveMotor(int module){
   //Pneumatics
   public static final int HATCH_SOLENOID_FORWARD = 0;
   public static final int HATCH_SOLENOID_REVERSE = 1;
-
-  //gyro
-  public static final int GYRO_ANALOG_PORT = 0;
-
 }
