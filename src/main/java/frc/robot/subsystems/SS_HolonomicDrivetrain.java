@@ -23,7 +23,6 @@ import frc.robot.RobotMap;
 import frc.robot.commands.C_HolonomicDrive;
 
 public class SS_HolonomicDrivetrain extends Subsystem {
-
 	private double mAdjustmentAngle = 0;
 	private boolean mFieldOriented = true;
 
@@ -122,7 +121,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	public void zeroGyro() {
 		setAdjustmentAngle(getRawGyroAngle());
-  }
+    }
   /////////////////////////////////////////////////////
   /////////////////////////////////////////////////////
 

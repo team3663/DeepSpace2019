@@ -7,8 +7,10 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -22,7 +24,6 @@ import frc.robot.util.PIDCont;
  * Add your docs here.
  */
 public class SS_RearClimber extends Subsystem {
-
   private CANSparkMax rearClimberMotor;
   private CANPIDController PID;
 
