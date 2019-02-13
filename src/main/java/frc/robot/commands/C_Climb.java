@@ -14,6 +14,7 @@ public class C_Climb extends Command {
   private double frontAngleError = 0;
   private double rearAngleError = 0;
   private double angleMultiplier = 10;
+  private double gyroStartAngle;
 
   public C_Climb(double angleMultiplier) {
     requires(Robot.getFrontClimber());
@@ -25,7 +26,7 @@ public class C_Climb extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getGyro().reset();
+    gyroStartAngle = Robot.getGyro().getAngle();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -45,7 +46,7 @@ public class C_Climb extends Command {
   }
 
   private double getAngleError(){
-    return Robot.getGyro().getAngle();
+    return Robot.getGyro().getAngle() - gyroStartAngle;
   }
 
   // Make this return true when this Command no longer needs to run execute()
