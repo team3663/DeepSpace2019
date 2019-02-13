@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_Climb extends Command {
-  private double frontAngleError;
-  private double rearAngleError;
+  private double frontAngleError = 0;
+  private double rearAngleError = 0;
   private double angleMultiplier = 10;
 
   public C_Climb(double angleMultiplier) {
