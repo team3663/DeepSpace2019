@@ -34,12 +34,14 @@ public class C_Climb extends Command {
     double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
     if(getAngleError() > 0){
       rearAngleError = getAngleError();
+      frontAngleError = 0;
     }else{
       frontAngleError = getAngleError();
+      rearAngleError = 0;
     }
 
     Robot.getFrontClimber().goToDegree(targetAngle + frontAngleError);
-    Robot.getRearClimber().goToDegree(targetAngle + rearAngleError);
+    Robot.getRearClimber().goToDegree(-(targetAngle + rearAngleError));
   }
 
   private double getAngleError(){
