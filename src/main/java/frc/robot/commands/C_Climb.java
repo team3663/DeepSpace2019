@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_Climb extends Command {
-  private double frontTargetAngle;
-  private double rearTargetAngle;
+  private double frontAngleError;
+  private double rearAngleError;
+  private double angleMultiplier = 10;
 
-  public C_Climb() {
+  public C_Climb(double angleMultiplier) {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getGyro());
+    this.angleMultiplier = angleMultiplier;
   }
 
   // Called just before this Command runs the first time
@@ -29,8 +31,15 @@ public class C_Climb extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getFrontClimber().goToDegree(-(getAngleError() + Robot.getOI().getTestController().getLeftYValue()));
-    Robot.getRearClimber().goToDegree(getAngleError() + Robot.getOI().getTestController().getLeftYValue());
+    double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
+    if(getAngleError() > 0){
+      rearAngleError = getAngleError();
+    }else{
+      frontAngleError = getAngleError();
+    }
+
+    Robot.getFrontClimber().goToDegree(targetAngle + frontAngleError);
+    Robot.getRearClimber().goToDegree(targetAngle + rearAngleError);
   }
 
   private double getAngleError(){
