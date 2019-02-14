@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class SS_Gyro extends Subsystem {
   private AHRS navX;
+  private double offset;
 
   public SS_Gyro(){ 
     navX = new AHRS(Port.kUSB);
@@ -42,6 +43,14 @@ public class SS_Gyro extends Subsystem {
 
   public void reset(){
     navX.reset();
+  }
+
+  public void softReset(){
+    offset = -getAngle();
+  }
+
+  public double getOffsetAngle(){
+    return getAngle() + offset;
   }
 
   @Override
