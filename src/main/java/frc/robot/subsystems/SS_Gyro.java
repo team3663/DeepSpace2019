@@ -25,32 +25,28 @@ public class SS_Gyro extends Subsystem {
     navX = new AHRS(Port.kUSB);
   }
 
-  public double getAngle() {
-    double angle = navX.getAngle();
+  public double getPitch() {
+    double angle = navX.getPitch();
     if(angle >= 360){
       angle %= 360;
     }
     return angle;
-  }
-  
-  public double getRate() {
-    return navX.getRate();
   }
 
   public double getRawAngle() {
     return navX.getAngle();
   }
 
-  public void reset(){
+  public void hardReset(){
     navX.reset();
   }
 
   public void softReset(){
-    offset = -getAngle();
+    offset = -getPitch();
   }
 
-  public double getOffsetAngle(){
-    return getAngle() + offset;
+  public double getOffsetPitch(){
+    return getPitch() + offset;
   }
 
   @Override

@@ -14,7 +14,9 @@ public class C_Climb extends Command {
   private double frontAngleError = 0;
   private double rearAngleError = 0;
   private double angleMultiplier = 10;
-
+  private static final double FRONT_CLIMBER_RADIUS = 16;
+  private static final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(27, 2) + Math.pow(4, 2));
+  private static final double FRONT_REAR_RATIO = FRONT_CLIMBER_RADIUS/REAR_CLIMBER_RADIUS;
   public C_Climb(double angleMultiplier) {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
@@ -32,35 +34,23 @@ public class C_Climb extends Command {
   @Override
   protected void execute() {
     double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
-    if(getAngleError() > 0){
-      rearAngleError = getAngleError();
-      frontAngleError = 0;
-    }else{
-      frontAngleError = getAngleError();
-      rearAngleError = 0;
-    }
-
-    Robot.getFrontClimber().goToDegree(targetAngle + frontAngleError);
-    Robot.getRearClimber().goToDegree(-(targetAngle + rearAngleError));
+    Robot.getFrontClimber().goToDegree((targetAngle + getAngleError()));//needs testing
+    Robot.getRearClimber().goToDegree(-FRONT_REAR_RATIO * (targetAngle + getAngleError()));
   }
 
   private double getAngleError(){
-    return Robot.getGyro().getOffsetAngle();
+    return Robot.getGyro().getOffsetPitch();
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }

@@ -48,8 +48,6 @@ public class Robot extends TimedRobot {
 
   public static OI m_oi;
 
-  
-
   @Override
   public void robotInit() {
     m_oi = new OI(this);
@@ -66,7 +64,6 @@ public class Robot extends TimedRobot {
     ss_Ball = new SS_Ball();
     ss_Hatch = new SS_Hatch();
     ss_gyro = new SS_Gyro();
-
 
 		m_oi.registerControls();
     // chooser.addOption("My Auto", new MyAutoCommand());
