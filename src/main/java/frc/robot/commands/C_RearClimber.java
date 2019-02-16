@@ -41,7 +41,7 @@ public class C_RearClimber extends Command {
    */
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.getRearClimber().atTarget(angle);
   }
 
 

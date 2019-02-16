@@ -88,6 +88,10 @@ public class SS_RearClimber extends Subsystem {
     double position = rotationToDegrees(getEncoder());
     return position;
   }
+
+  public boolean atTarget(double angle){
+    return getAngle() < angle + 1 && getAngle() > angle - 1;
+  }
   
   public void goToDegree(double degrees){
     rearClimberMotor.getPIDController().setReference(gearMultiply(degrees), 
