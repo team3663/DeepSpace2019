@@ -155,7 +155,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 	private SwerveModule[] mSwerveModules;
 
     private AHRS mNavX = new AHRS(Port.kUSB);
-
+    private double offset = 0;
 
     /**
      * @deprecated
@@ -213,6 +213,29 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         return angle;
     }
 
+    public double getPitch() {
+        double angle = mNavX.getPitch();
+        if(angle >= 360){
+        angle %= 360;
+        }
+        return angle;
+    }
+
+    public double getRawAngle() {
+        return mNavX.getAngle();
+    }
+
+    public void hardReset(){
+        mNavX.reset();
+    }
+
+    public void softReset(){
+        offset = -getPitch();
+    }
+
+      public double getOffsetPitch(){
+        return getPitch() + offset;
+    }
     public double getGyroAcelleration(){
         return mNavX.getAccelFullScaleRangeG();
     }

@@ -15,17 +15,19 @@ public class C_Climb extends Command {
   private static final double FRONT_CLIMBER_RADIUS = 16;
   private static final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(27, 2) + Math.pow(4, 2));
   private static final double FRONT_REAR_RATIO = FRONT_CLIMBER_RADIUS/REAR_CLIMBER_RADIUS;
+
   public C_Climb(double angleMultiplier) {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
-    requires(Robot.getGyro());
+    requires(Robot.getDrivetrain());
+
     this.angleMultiplier = angleMultiplier;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.getGyro().softReset();
+    Robot.getDrivetrain().softReset();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,7 +45,7 @@ public class C_Climb extends Command {
   }
 
   private double getAngleError(){
-    return Robot.getGyro().getOffsetPitch();
+    return Robot.getDrivetrain().getOffsetPitch();
   }
 
   @Override
