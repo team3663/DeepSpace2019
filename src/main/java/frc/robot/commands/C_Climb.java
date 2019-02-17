@@ -39,8 +39,10 @@ public class C_Climb extends Command {
     3.) figure out if the balancing works with the controller
     */
     double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
-    Robot.getFrontClimber().goToDegree(targetAngle + -getAngleError());
-    Robot.getRearClimber().goToDegree(-FRONT_REAR_RATIO * (targetAngle + getAngleError()));
+    double currentFrontAngle = Robot.getFrontClimber().getAngle();
+    double currentRearAngle = Robot.getRearClimber().getAngle();
+    Robot.getFrontClimber().goToDegree(currentFrontAngle + targetAngle + -getAngleError());
+    Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + targetAngle + getAngleError()));
   }
 
   private double getAngleError(){
