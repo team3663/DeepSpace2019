@@ -60,6 +60,8 @@ public class OI {
         testingController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
         testingController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));
 
+        testingController.getBackButton().whileHeld(new C_Climb(10));
+
     }
     
     public IGamepad getTestController(){

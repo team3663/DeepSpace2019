@@ -234,6 +234,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     }
 
       public double getOffsetPitch(){
+        SmartDashboard.putNumber("Pitch", getPitch() + offset);
         return getPitch() + offset;
     }
     public double getGyroAcelleration(){

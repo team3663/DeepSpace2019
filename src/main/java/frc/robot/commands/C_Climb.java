@@ -50,14 +50,18 @@ public class C_Climb extends Command {
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   @Override
   protected void end() {
+    Robot.getFrontClimber().setClimberMotorSpeed(0);
+    Robot.getRearClimber().setCimberMotorSpeed(0);
   }
 
   @Override
   protected void interrupted() {
+    Robot.getFrontClimber().setClimberMotorSpeed(0);
+    Robot.getRearClimber().setCimberMotorSpeed(0);    
   }
 }
