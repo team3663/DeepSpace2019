@@ -5,38 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.test_commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_EndEffectorDirect extends Command {
-  private static final double DEAD_BAND = 0.5;
-  public C_EndEffectorDirect() {
-    requires(Robot.getEndEffectorAngle());
+public class C_FrontClimberHold extends Command {
+
+  private double holdPos;
+  public C_FrontClimberHold() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.getFrontClimber());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    holdPos = Robot.getFrontClimber().getAngle();
   }
 
-  public double ignoreDeadBand(double input){
-    if(Math.abs(input) < DEAD_BAND){
-      return 0;
-    }
-    return input;
-  }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getTestController().getRightXValue();
-    if(Robot.getEndEffectorAngle().getIsReset()){
-      if(speed < 0){
-        speed = 0;
-      }
-    }
-    Robot.getEndEffectorAngle().setAngleSpeed(ignoreDeadBand(speed));
+    Robot.getFrontClimber().goToDegree(holdPos);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -51,9 +43,12 @@ public class C_EndEffectorDirect extends Command {
   }
 
   // Called when another command which requires one or more of the same
-  // subsystems is scheduled to runp
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+  }
+  @Override
+  public synchronized boolean isInterruptible() {
+    return true;
   }
 }

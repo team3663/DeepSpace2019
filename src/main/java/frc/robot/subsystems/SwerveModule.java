@@ -44,13 +44,12 @@ public class SwerveModule  {
         angleMotor.setSensorPhase(true);
         angleMotor.config_kP(0, 30, 0);
         angleMotor.config_kI(0, 0.001, 0);
-        angleMotor.config_kD(0, 50, 0);
+        angleMotor.config_kD(0, 200, 0);
     
         angleMotor.setNeutralMode(NeutralMode.Brake);
         
         angleMotor.set(ControlMode.Position, 0);
 
-        driveMotor.setControlFramePeriod(10);
         driveMotor.setIdleMode(IdleMode.kBrake);
 
         driveMotor.getPIDController().setP(15);
@@ -61,7 +60,7 @@ public class SwerveModule  {
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
         angleMotor.configPeakCurrentLimit(30, 0);
-        angleMotor.configPeakCurrentDuration(100, 0);
+        angleMotor.configPeakCurrentDuration(00, 0);
         angleMotor.enableCurrentLimit(true);
 
         driveMotor.setSmartCurrentLimit(25);

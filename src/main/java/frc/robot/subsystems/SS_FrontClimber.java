@@ -30,21 +30,24 @@ public class SS_FrontClimber extends Subsystem {
 
   private CANSparkMax frontClimberMotor;
   private CANPIDController PID;
-  private DigitalInput limitSwitch;
 
   private final double TOP_ANGLE_LIMIT = -25;
   private final double BOTTOM_ANGLE_LIMIT = 200;
+
+  private final double SAFE_FLIP_TOP = 80;
+  private final double SAFE_FLIP_BOT = 100;
+
+
   private final double GEAR_RATIO = 1.0/147.0;
   private final double TICKS_PER_DEGREE = 1.0/360.0;
   private double fakeEncoder = 0;
 
   private boolean initialized = false;
 
-  private double frontClimberSpeedMultiplier = 0.3;//askInitDefault
+  private double frontClimberSpeedMultiplier = 0.5;//askInitDefault
   private double cargoIntakeSpeedMultiplier = 1;
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
-    limitSwitch = new DigitalInput(RobotMap.CLIMBER_FRONT_LIMIT_SWITCH);
     
     frontClimberMotor.setClosedLoopRampRate(0);
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
@@ -61,7 +64,7 @@ public class SS_FrontClimber extends Subsystem {
   }
   @Override
   public void initDefaultCommand() {
-    //setDefaultCommand(new C_FrontClimberDirect());
+    // setDefaultCommand(new C_FrontClimberDirect());
   }
 
   
@@ -123,20 +126,16 @@ public class SS_FrontClimber extends Subsystem {
     return BOTTOM_ANGLE_LIMIT;
   }
 
-  public DigitalInput getLimitSwitch() {
-    return limitSwitch;
-  }
-
-  public boolean limitSwitchIsPressed() {
-    return limitSwitch.get();
-  }
-
   public boolean isInitialized(){
     return initialized;
   }
 
   public void setInitialized(boolean initialized) {
     this.initialized = initialized;
+  }
+
+  public boolean safeToFlip(){
+    return getAngle() > SAFE_FLIP_TOP && getAngle() < SAFE_FLIP_BOT;
   }
 
 

@@ -29,9 +29,9 @@ import frc.robot.commands.test_commands.*;
 
 
 public class Robot extends TimedRobot {
-  public static final boolean PRACTICE_BOT = true;
+  public static final boolean PRACTICE_BOT = false;
 
-  private static SS_HolonomicDrivetrain ss_HolonomicDrivetrain;
+  private static SS_Swerve ss_Swerve;
 
   private static SS_EndEffectorAngle ss_EndEffectorAngle;
   private static SS_FrontClimber ss_FrontClimber;
@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
     m_oi = new OI(this);
 
     //some subsystems commented out
-    ss_HolonomicDrivetrain = new SS_HolonomicDrivetrain();
+    ss_Swerve = new SS_Swerve();
     ss_EndEffectorAngle = new SS_EndEffectorAngle();
     ss_FrontClimber = new SS_FrontClimber();
     ss_Elevator = new SS_Elevator();
@@ -69,10 +69,10 @@ public class Robot extends TimedRobot {
     driver = Shuffleboard.getTab("driver");
 
     //show cameras on the driver tab of shuffleboard
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(320, 240);
-    camera.setPixelFormat(PixelFormat.kMJPEG);
-    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream);
+    // UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    // camera.setResolution(320, 240);
+    // camera.setPixelFormat(PixelFormat.kMJPEG);
+    // driver.add(camera).withWidget(BuiltInWidgets.kCameraStream);
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
@@ -87,8 +87,8 @@ public class Robot extends TimedRobot {
     return ss_Hatch;
   }
   
-  public static SS_HolonomicDrivetrain getDrivetrain() {
-		return ss_HolonomicDrivetrain;
+  public static SS_Swerve getDrivetrain() {
+		return ss_Swerve;
   }
 
   public static SS_Ball getBall() {
@@ -125,9 +125,11 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
 
     for (int i = 0; i < 4; i++) {
-      SmartDashboard.putNumber("Module Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getCurrentAngle());
+      SmartDashboard.putNumber("Module Angle " + i, ss_Swerve.getSwerveModule(i).getCurrentAngle());
     }
     //Gyro
+    SmartDashboard.putNumber("Gyro angle", ss_Swerve.getGyroAngle());
+    SmartDashboard.putNumber("Gyro pitch", ss_Swerve.getNavX().getPitch());
     //TODO: decide how to refrence the gyro properly
     SmartDashboard.putNumber("Selected Level", ss_Elevator.getSelectedLevel());
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
@@ -138,8 +140,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
-    SmartDashboard.putBoolean("Cargo Present", ss_Ball.getCargoPresent());    
-    
+    SmartDashboard.putBoolean("Cargo Present", ss_Ball.cargoIsPresent());   
+    SmartDashboard.putBoolean("Angle Switch", ss_Ball.cargoIsPresent());    
+ 
+    SmartDashboard.putBoolean("Hatch Present", ss_Hatch.hatchIsPresent());
+
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
@@ -148,7 +153,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
 
- 
+    
     //tests
     
    
@@ -159,10 +164,10 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     //Drivetrain
     for (int i = 0; i < 4; i++) {
-      SmartDashboard.putNumber("Module Distance Pos " + i, (ss_HolonomicDrivetrain.getSwerveModule(i).getDrivePos()));
-      SmartDashboard.putNumber("Module Raw Angle " + i, ss_HolonomicDrivetrain.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
+      SmartDashboard.putNumber("Module Distance Pos " + i, (ss_Swerve.getSwerveModule(i).getDrivePos()));
+      SmartDashboard.putNumber("Module Raw Angle " + i, ss_Swerve.getSwerveModule(i).getAngleMotor().getSelectedSensorPosition(0));
     }
-    SmartDashboard.putNumber("Drivetrain Angle", ss_HolonomicDrivetrain.getGyroAngle());
+    SmartDashboard.putNumber("Drivetrain Angle", ss_Swerve.getGyroAngle());
 
     //Elevator
     SmartDashboard.putNumber("Master Encoder", ss_Elevator.getMasterEncoder());
@@ -190,7 +195,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     for (int i = 0; i < 4; i++) {
-			ss_HolonomicDrivetrain.getSwerveModule(i).robotDisabledInit();
+			ss_Swerve.getSwerveModule(i).robotDisabledInit();
 		}
   }
 
@@ -232,7 +237,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     for (int i = 0; i < 4; i++){
-    ss_HolonomicDrivetrain.getSwerveModule(i).zeroDistance();
+    ss_Swerve.getSwerveModule(i).zeroDistance();
     }
     new C_StartOrchestra().start();
   }

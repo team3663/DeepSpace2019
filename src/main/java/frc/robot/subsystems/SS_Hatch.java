@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -19,8 +20,12 @@ public class SS_Hatch extends Subsystem {
   // here. Call these from Commands.
   private DoubleSolenoid hatchPickupSolenoid;
 
+  private DigitalInput hatchSwitch;
+
   public SS_Hatch(){
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
+
+    hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
   }
 
   
@@ -30,7 +35,17 @@ public class SS_Hatch extends Subsystem {
     }else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
+  }
 
+   /**
+   * @return the hatchSwitch
+   */
+  public DigitalInput getHatchSwitch() {
+    return hatchSwitch;
+  }
+  
+  public boolean hatchIsPresent(){
+    return !hatchSwitch.get();
   }
 
   @Override

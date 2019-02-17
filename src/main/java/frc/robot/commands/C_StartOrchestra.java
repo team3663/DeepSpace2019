@@ -52,7 +52,7 @@ public class C_StartOrchestra extends Command {
       if(!efAngle.isInitialized() && frontClimber.isInitialized()){
         if(elevator.getAverageInch() < elevator.getSafeFlipHeight()){
           if(!efAngle.getIsReset()){
-            efAngle.setAngleSpeed(-.4);
+            efAngle.setAngleSpeed(-.6);
           }
           else{
             efAngle.resetEncoder();

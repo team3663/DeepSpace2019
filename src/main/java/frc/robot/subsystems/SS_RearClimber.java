@@ -44,12 +44,12 @@ public class SS_RearClimber extends Subsystem {
     PID.setP(1);
     PID.setI(0);
     PID.setD(0);
-    PID.setOutputRange(-.3, .3);
+    PID.setOutputRange(-.6, .6);
   }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new C_RearClimberDirect());
+    // setDefaultCommand(new C_RearClimberDirect());
   }
   
   public void setCimberMotorSpeed(double speed){

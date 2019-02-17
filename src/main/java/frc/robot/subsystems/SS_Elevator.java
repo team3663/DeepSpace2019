@@ -40,9 +40,9 @@ public class SS_Elevator extends Subsystem {
   private boolean initialized = false;
 
   private final double SAFE_FLIP_HEIGHT = 3.5;
-  private final double LEVEL_1 = 12;
-  private final double LEVEL_2 = 24;
-  private final double LEVEL_3 = 36;
+  private final double LEVEL_1 = 5;
+  private final double LEVEL_2 = 26;
+  private final double LEVEL_3 = 26;
 
   private CANPIDController PID;
 

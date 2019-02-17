@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
+import frc.robot.subsystems.SS_Swerve;
 
 public class C_ZeroDrivetrainGyro extends Command {
-	private SS_HolonomicDrivetrain mDrivetrain;
+	private SS_Swerve mDrivetrain;
 
-	public C_ZeroDrivetrainGyro(SS_HolonomicDrivetrain drivetrain) {
+	public C_ZeroDrivetrainGyro(SS_Swerve drivetrain) {
 		mDrivetrain = drivetrain;
 	}
 

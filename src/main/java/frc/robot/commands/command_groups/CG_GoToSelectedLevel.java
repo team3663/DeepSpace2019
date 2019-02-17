@@ -14,6 +14,8 @@ import frc.robot.commands.C_EndEffectorHold;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_GoToSelectedLevel;
+import frc.robot.commands.C_SetEndEffectorIntakeSpeed;
+import frc.robot.commands.C_SetFrontClimberIntake;
 import frc.robot.commands.C_Wait;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
@@ -22,17 +24,14 @@ public class CG_GoToSelectedLevel extends CommandGroup {
    * Add your docs here.
    */
   public CG_GoToSelectedLevel() {
+    addSequential(new C_SetFrontClimberIntake(0));
+    addSequential(new C_SetEndEffectorIntakeSpeed(0));
     addSequential(new C_FrontClimber(90));
     addSequential(new C_Flip(false));
     addParallel(new C_FrontClimber(0));
-    addParallel(new C_EndEffectorHold());
+    addParallel(new C_EndEffectorAngle(-85));
     addSequential(new C_GoToSelectedLevel());
     addParallel(new C_ElevatorHold());
     addParallel(new C_EndEffectorHold());
-    addSequential(new C_Wait(2000));
-    addParallel(new C_FrontClimber(90));
-    addSequential(new C_Flip(true));
-    addParallel(new C_ElevatorToInch(.2));
-    addSequential(new C_FrontClimber(15));
   }
 }

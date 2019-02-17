@@ -8,15 +8,17 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_SetEndEffectorIntakeSpeed;
 import frc.robot.commands.C_SetFrontClimberIntake;
 
-public class CG_CancelBallIntake extends CommandGroup {
+public class CG_CancelIntake extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_CancelBallIntake() {
+  public CG_CancelIntake() {
+    addSequential(new C_Flip(true));
     addSequential(new C_SetEndEffectorIntakeSpeed(0));
     addSequential(new C_SetFrontClimberIntake(0));
     addSequential(new C_FrontClimber(0));

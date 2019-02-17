@@ -20,7 +20,6 @@ public class C_Climb extends Command {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
-
     this.angleMultiplier = angleMultiplier;
   }
 

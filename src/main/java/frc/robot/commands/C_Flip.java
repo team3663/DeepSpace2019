@@ -17,6 +17,7 @@ public class C_Flip extends Command {
     // eg. requires(chassis);
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
+    requires(Robot.getFrontClimber());
     this.isFront = isFront;
   }
 
@@ -29,9 +30,14 @@ public class C_Flip extends Command {
   @Override
   protected void execute() {
     if(!Robot.getEndEffectorAngle().isFliped(isFront)){
-      Robot.getElevator().goToInch(Robot.getElevator().getSafeFlipHeight());
-      if(Robot.getElevator().atTarget(Robot.getElevator().getSafeFlipHeight())){
-        Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
+      if(Robot.getFrontClimber().safeToFlip()){
+        Robot.getElevator().goToInch(Robot.getElevator().getSafeFlipHeight());
+        if(Robot.getElevator().atTarget(Robot.getElevator().getSafeFlipHeight())){
+          Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
+        }
+      }
+      else{
+        Robot.getFrontClimber().goToDegree(90); 
       }
     }
 

@@ -41,7 +41,7 @@ public class C_GoToSelectedLevel extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return elevator.getAverageInch() < elevator.getSelectedLevelInch() + .2 && elevator.getAverageInch() > elevator.getSelectedLevelInch() - .2;
+    return elevator.atTarget(elevator.getSelectedLevelInch());
   }
 
   // Called once after isFinished returns true

@@ -8,28 +8,18 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.C_EndEffectorAngle;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
-import frc.robot.commands.C_SetEndEffectorIntakeSpeed;
-import frc.robot.commands.C_SetFrontClimberIntake;
-import frc.robot.commands.C_WaitForBall;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class CG_BallIntake extends CommandGroup {
+public class CG_DownAll extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_BallIntake() {
-    addSequential(new C_FrontClimber(95));
+  public CG_DownAll() {
+    addParallel(new C_FrontClimber(90));
     addSequential(new C_Flip(true));
-    addParallel(new C_ElevatorToInch(0)); 
-    addSequential(new C_SetEndEffectorIntakeSpeed(-.3));  
-    addSequential(new C_SetFrontClimberIntake(-1));
-    addSequential(new C_WaitForBall());
-    addSequential(new C_EndEffectorAngle(0));
-    addSequential(new C_SetFrontClimberIntake(0));
-    addSequential(new C_SetEndEffectorIntakeSpeed(0));
+    addParallel(new C_ElevatorToInch(.2));
     addSequential(new C_FrontClimber(0));
   }
 }
