@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
   private static SS_PressureSensor ss_PressureSensor;
   private static SS_Ball ss_Ball;
   private static SS_Hatch ss_Hatch;
-  private static SS_Gyro ss_gyro;
 
   private ShuffleboardTab driver;
 
@@ -63,7 +62,6 @@ public class Robot extends TimedRobot {
     ss_Vision = new SS_Vision();
     ss_Ball = new SS_Ball();
     ss_Hatch = new SS_Hatch();
-    ss_gyro = new SS_Gyro();
 
 		m_oi.registerControls();
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -121,9 +119,6 @@ public class Robot extends TimedRobot {
   }
   public static SS_ColorSensor getColorSensor(){
     return ss_ColorSensor;
-  }
-  public static SS_Gyro getGyro(){
-    return ss_gyro;
   }
 
   @Override

@@ -34,14 +34,14 @@ public class C_Climb extends Command {
   @Override
   protected void execute() {
     /*
-    TESTING
+    TESTING(back = pos)
     1.) figure out which direction the robot is tilted for a (-) output value from gyro
     2.) figure out if the balancing works without controller
     3.) figure out if the balancing works with the controller
     */
     double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
-    Robot.getFrontClimber().goToDegree((targetAngle + getAngleError()));
-    Robot.getRearClimber().goToDegree(-FRONT_REAR_RATIO * (targetAngle + getAngleError()));
+    Robot.getFrontClimber().goToDegree(-(targetAngle + getAngleError()));
+    Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (targetAngle + getAngleError()));
   }
 
   private double getAngleError(){
