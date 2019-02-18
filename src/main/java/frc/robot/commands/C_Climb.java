@@ -12,17 +12,24 @@ import frc.robot.Robot;
 
 public class C_Climb extends Command {
   private double angleMultiplier = 10;
+  private double targetAngle;
+  private static final double THRESHOLD_MIN = 145;
+  private static final double THRESHOLD_MAX = 160;
+  private double ANGLE_ERROR_AMOUNT = 3;
   private static final double FRONT_CLIMBER_RADIUS = 16;
-  private static final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(27, 2) + Math.pow(4, 2));
+  private static final double REAR_LONG_SIDE_LENGTH = 27;
+  private static final double REAR_SHORT_SIDE_LENGTH = 4;
+  private static final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(REAR_LONG_SIDE_LENGTH, 2) + Math.pow(REAR_SHORT_SIDE_LENGTH, 2));
   private static final double FRONT_REAR_RATIO = FRONT_CLIMBER_RADIUS/REAR_CLIMBER_RADIUS;
 
-  public C_Climb(double angleMultiplier) {
+  public C_Climb(double targetAngle) {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
-    this.angleMultiplier = angleMultiplier;
+    requires(Robot.getBall());
+    this.targetAngle = targetAngle;
   }
-
+  
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -33,25 +40,69 @@ public class C_Climb extends Command {
   @Override
   protected void execute() {
     /*
-    TESTING(back = pos)
-    1.) figure out which direction the robot is tilted for a (-) output value from gyro
-    2.) figure out if the balancing works without controller
-    3.) figure out if the balancing works with the controller
+      I have made 3 different ways to climb, im not sure which one works, wrote them just in case one doesn't work
     */
-    double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
+
+    /*1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
+    ANGLE_ERROR_AMOUNT = 0;
+    double currentFrontAngle = Robot.getFrontClimber().getAngle();
+		double direction = Math.signum(targetAngle - currentFrontAngle);
+		double tilt = Math.signum(getAngleError());
+	  double maxSpeed = 1;
+    double controlSpeed = Math.abs(Math.signum(direction + tilt)) * maxSpeed;
+
+    Robot.getFrontClimber().setClimberMotorSpeed(0.5);
+    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed);
+    */
+
+    // This statement is if we can use intake wheels to climb
+    // rotate the front climber intake wheels
+    // if(isInThresholdArea()){
+    //   Robot.getBall().setCargoIntakeSpeed(speedLimit * 0.5);
+    // }
+
+    /*2.) Climbs based on Angle(front climber target angle is constant, back must make up for the errors)
+    ANGLE_ERROR_AMOUNT = 3;
+    double currentFrontAngle = Robot.getFrontClimber().getAngle();
+		double direction = Math.signum(targetAngle - currentFrontAngle);
+    double tilt = Math.signum(getAngleError());    
+    double angleError = Math.abs(Math.signum(direction + tilt)) * Math.abs(getAngleError());
+    if(direction == -1 && tilt == -1){
+      Robot.getFrontClimber().goToDegree(currentFrontAngle);
+    }else{ 
+      Robot.getFrontClimber().goToDegree(targetAngle);
+    }
+    Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentFrontAngle + angleError));
+    */
+
+    /*3.) Both climbers climb to target angle, if the robot is tilted, pause the climb and autoBalances
+    ANGLE_ERROR_AMOUNT = 3;
     double currentFrontAngle = Robot.getFrontClimber().getAngle();
     double currentRearAngle = Robot.getRearClimber().getAngle();
-    Robot.getFrontClimber().goToDegree(currentFrontAngle + targetAngle + -getAngleError());
-    Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + targetAngle + getAngleError()));
+    if(Math.abs(getAngleError()) > 0){
+      Robot.getFrontClimber().goToDegree(currentFrontAngle + -getAngleError());
+      Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO  * (currentRearAngle + getAngleError()));
+    }else{
+      Robot.getFrontClimber().goToDegree(targetAngle + -getAngleError());
+      Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (targetAngle + getAngleError()));
+    }
+    */
+  }
+
+  private boolean isInIntakeArea(){
+    return Robot.getFrontClimber().getAngle() > THRESHOLD_MIN && Robot.getFrontClimber().getAngle() < THRESHOLD_MAX;
   }
 
   private double getAngleError(){
+    if(Math.abs(Robot.getDrivetrain().getOffsetPitch()) < ANGLE_ERROR_AMOUNT){
+      return 0;
+    }
     return Robot.getDrivetrain().getOffsetPitch();
   }
 
   @Override
   protected boolean isFinished() {
-    return false;
+    return targetAngle - Robot.getFrontClimber().getAngle() < ANGLE_ERROR_AMOUNT;
   }
 
   @Override
