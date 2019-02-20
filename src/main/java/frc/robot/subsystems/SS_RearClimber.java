@@ -94,7 +94,7 @@ public class SS_RearClimber extends Subsystem {
   }
   
   public void goToDegree(double degrees){
-    rearClimberMotor.getPIDController().setReference(gearMultiply(degrees), 
+    rearClimberMotor.getPIDController().setReference(gearMultiply(degrees) * 360, 
       ControlType.kPosition);
   }
 

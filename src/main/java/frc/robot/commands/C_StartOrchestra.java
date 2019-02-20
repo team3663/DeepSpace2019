@@ -13,6 +13,7 @@ import frc.robot.Robot;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_EndEffectorDirect;
 import frc.robot.commands.test_commands.C_FrontClimberDirect;
+import frc.robot.commands.test_commands.C_RearClimberDirect;
 import frc.robot.subsystems.SS_Elevator;
 import frc.robot.subsystems.SS_EndEffectorAngle;
 import frc.robot.subsystems.SS_FrontClimber;
@@ -90,6 +91,8 @@ public class C_StartOrchestra extends Command {
       new C_ElevatorDirect().start();
       new C_EndEffectorDirect().start();
       new C_FrontClimberDirect().start();
+      new C_RearClimberDirect().start();
+
     }
     else{
 
