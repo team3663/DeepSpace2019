@@ -38,11 +38,19 @@ public class C_Climb extends Command {
     2.) figure out if the balancing works without controller
     3.) figure out if the balancing works with the controller
     */
-    double targetAngle =  Robot.getOI().getTestController().getLeftYValue() * angleMultiplier;
-    double currentFrontAngle = Robot.getFrontClimber().getAngle();
-    double currentRearAngle = Robot.getRearClimber().getAngle();
-    Robot.getFrontClimber().goToDegree(currentFrontAngle + targetAngle + -getAngleError());
-    Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + targetAngle + getAngleError()));
+
+    double speedScale =  Robot.getOI().getTestController().getLeftYValue();
+    Robot.getFrontClimber().setClimberMotorSpeed(0.5 * speedScale);
+    if(getAngleError() > 0){
+      Robot.getRearClimber().setCimberMotorSpeed(-1 * speedScale);
+    }else{
+      Robot.getRearClimber().setCimberMotorSpeed(0);
+    }
+    // double currentFrontAngle = Robot.getFrontClimber().getAngle();
+    // double currentRearAngle = Robot.getRearClimber().getAngle();
+    // Robot.getFrontClimber().goToDegree(currentFrontAngle + targetAngle + -
+    // getAngleError());
+    // Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + targetAngle + getAngleError()));
   }
 
   private double getAngleError(){
@@ -51,7 +59,7 @@ public class C_Climb extends Command {
 
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.getFrontClimber().getAngle() > 160;
   }
 
   @Override
