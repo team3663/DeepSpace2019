@@ -41,7 +41,7 @@ public class C_Climb extends Command {
 
     double speedScale =  Robot.getOI().getTestController().getLeftYValue();
     Robot.getFrontClimber().setClimberMotorSpeed(0.5 * speedScale);
-    if(getAngleError() > 0){
+    if(getAngleError() != 0){
       Robot.getRearClimber().setCimberMotorSpeed(-1 * speedScale);
     }else{
       Robot.getRearClimber().setCimberMotorSpeed(0);
