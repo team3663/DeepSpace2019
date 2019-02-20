@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_Climb extends Command {
-  private double angleMultiplier = 10;
+  private double direction;
   private double targetAngle;
   private static final double THRESHOLD_MIN = 145;
   private static final double THRESHOLD_MAX = 160;
@@ -34,6 +34,7 @@ public class C_Climb extends Command {
   @Override
   protected void initialize() {
     Robot.getDrivetrain().softReset();
+    direction = Math.signum(targetAngle - Robot.getFrontClimber().getAngle());
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -43,17 +44,15 @@ public class C_Climb extends Command {
       I have made 3 different ways to climb, im not sure which one works, wrote them just in case one doesn't work
     */
 
-    /*1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
+    //1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
     ANGLE_ERROR_AMOUNT = 0;
-    double currentFrontAngle = Robot.getFrontClimber().getAngle();
-		double direction = Math.signum(targetAngle - currentFrontAngle);
 		double tilt = Math.signum(getAngleError());
 	  double maxSpeed = 1;
-    double controlSpeed = Math.abs(Math.signum(direction + tilt)) * maxSpeed;
+    double controlSpeed = Math.abs(Math.signum(direction + tilt));
 
-    Robot.getFrontClimber().setClimberMotorSpeed(0.5);
-    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed);
-    */
+    Robot.getFrontClimber().setClimberMotorSpeed(0.5 * maxSpeed * direction);
+    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed * maxSpeed);
+    
 
     // This statement is if we can use intake wheels to climb
     // rotate the front climber intake wheels
@@ -102,7 +101,7 @@ public class C_Climb extends Command {
 
   @Override
   protected boolean isFinished() {
-    return targetAngle - Robot.getFrontClimber().getAngle() < ANGLE_ERROR_AMOUNT;
+    return (targetAngle - Robot.getFrontClimber().getAngle()) * direction < 0;
   }
 
   @Override
