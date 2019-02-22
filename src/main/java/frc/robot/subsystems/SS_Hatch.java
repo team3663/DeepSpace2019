@@ -16,24 +16,33 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class SS_Hatch extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+
   private DoubleSolenoid hatchPickupSolenoid;
+  private DoubleSolenoid hatchExtendSolenoid;
 
   private DigitalInput hatchSwitch;
 
   public SS_Hatch(){
-    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_SOLENOID_FORWARD, RobotMap.HATCH_SOLENOID_REVERSE);
+    hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_PICKUP_SOLENOID_FORWARD, RobotMap.HATCH_PICKUP_SOLENOID_REVERSE);
+    hatchExtendSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_SOLENOID_FORWARD, RobotMap.HATCH_EXTEND_SOLENOID_REVERSE);
 
     hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
   }
 
   
-  public void setHatchClose(boolean state) {
+  public void setHatchClosed(boolean state) {
     if(state){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
     }else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+  }
+
+  public void extendHatchPickup(boolean state) {
+    if(state){
+      hatchExtendSolenoid.set(DoubleSolenoid.Value.kForward);
+    } else {
+      hatchExtendSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
   }
 
