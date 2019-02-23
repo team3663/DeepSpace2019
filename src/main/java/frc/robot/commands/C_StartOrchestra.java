@@ -18,18 +18,22 @@ import frc.robot.commands.test_commands.C_RearClimberDirect;
 import frc.robot.subsystems.SS_Elevator;
 import frc.robot.subsystems.SS_EndEffectorAngle;
 import frc.robot.subsystems.SS_FrontClimber;
+import frc.robot.subsystems.SS_RearClimber;
 
 public class C_StartOrchestra extends Command {
   SS_FrontClimber frontClimber;
+  SS_RearClimber rearClimber;
   SS_Elevator elevator;
   SS_EndEffectorAngle efAngle;
   public C_StartOrchestra() {
     requires(Robot.getElevator());
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getFrontClimber());
+    requires(Robot.getRearClimber());
 
-    elevator = Robot.getElevator();
     frontClimber = Robot.getFrontClimber();
+    rearClimber = Robot.getRearClimber();
+    elevator = Robot.getElevator();
     efAngle = Robot.getEndEffectorAngle();
   }
 
@@ -43,12 +47,28 @@ public class C_StartOrchestra extends Command {
   protected void execute() {
     if(!Robot.getOI().getTestController().getRightBumperButton().get()){
 
-      
+
+      if(!rearClimber.isInitialized()){
+        /*
+        rear climber
+        */
+        if(!frontClimber.isReset()){
+          frontClimber.setSpeed(.2);
+        }
+        else{
+          frontClimber.setSpeed(0);
+          frontClimber.resetEncoder();
+
+          frontClimber.setInitialized(true);
+        }
+
+        frontClimber.goToDegree(45);
+      }
+
       if(!frontClimber.isInitialized()){
         /*
         frontClimber.
         */
-        
         if(!frontClimber.isReset()){
           frontClimber.setSpeed(.2);
         }
@@ -62,8 +82,11 @@ public class C_StartOrchestra extends Command {
         frontClimber.goToDegree(45);
       }
       if(!efAngle.isInitialized() && frontClimber.isInitialized()){
+        /*
+        end effector
+        */
         if(elevator.getAverageInch() < elevator.getSafeFlipHeight()){
-          if(!efAngle.getIsReset()){
+          if(!efAngle.isReset()){
             efAngle.setAngleSpeed(-.6);
           }
           else{
@@ -74,6 +97,9 @@ public class C_StartOrchestra extends Command {
         }
       }
       if(!elevator.isInitialized() && frontClimber.isInitialized()){
+        /*
+        elevator
+        */
         if(!elevator.getAtBottom()){
           elevator.setElevatorSpeed(-.4);
         }

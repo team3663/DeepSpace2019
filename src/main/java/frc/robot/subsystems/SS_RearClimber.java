@@ -38,6 +38,8 @@ public class SS_RearClimber extends Subsystem {
 
   private double ANGLE_LIMIT = 180;
 
+  private boolean initilized = false;
+
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
@@ -57,6 +59,14 @@ public class SS_RearClimber extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // setDefaultCommand(new C_RearClimberDirect());
+  }
+
+  public void setInitilized(boolean initilized){
+    this.initilized = initilized;
+  }
+
+  public boolean isInitilized(){
+    return initilized;
   }
   
   public void setSpeed(double speed){

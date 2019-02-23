@@ -39,7 +39,8 @@ public class SS_Elevator extends Subsystem {
 
   private boolean initialized = false;
 
-  private final double SAFE_FLIP_HEIGHT = 3.5;
+  private final double SAFE_FLIP_TOP = 12;
+  private final double SAFE_FLIP_BOT = 2;
   private final double LEVEL_1 = 5;
   private final double LEVEL_2 = 26;
   private final double LEVEL_3 = 60;
@@ -82,12 +83,9 @@ public class SS_Elevator extends Subsystem {
     this.speedMultiplier = speedMultiplier;
   }
 
-
-
   public void setElevatorSpeed(double speed) {
       masterMotor.set(speed * speedMultiplier);
   }
-
 
   public void goToPos(double pos){
     
@@ -133,7 +131,7 @@ public class SS_Elevator extends Subsystem {
   }
 
   public double getSafeFlipHeight(){
-    return SAFE_FLIP_HEIGHT;
+    return SAFE_FLIP_TOP;
   }
 
 

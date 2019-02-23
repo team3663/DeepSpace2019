@@ -132,7 +132,7 @@ public class SS_EndEffectorAngle extends Subsystem {
   public DigitalInput getAngleSwitch(){
     return angleResetSwitch;
   }
-  public boolean getIsReset(){
+  public boolean isReset(){
     return !angleResetSwitch.get();
   }  
 

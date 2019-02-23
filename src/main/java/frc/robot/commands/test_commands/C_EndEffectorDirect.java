@@ -31,7 +31,7 @@ public class C_EndEffectorDirect extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getTestController().getRightXValue();
-    if(Robot.getEndEffectorAngle().getIsReset()){
+    if(Robot.getEndEffectorAngle().isReset()){
       if(speed < 0){
         speed = 0;
       }
