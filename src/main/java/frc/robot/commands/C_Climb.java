@@ -13,6 +13,7 @@ import frc.robot.Robot;
 public class C_Climb extends Command {
   private double direction;
   private double targetAngle;
+  private double speedMultiplier = 1;
   private static final double THRESHOLD_MIN = 100;
   private static final double THRESHOLD_MAX = 160;
   private double ANGLE_ERROR_AMOUNT = 3;
@@ -50,11 +51,11 @@ public class C_Climb extends Command {
     //1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
     ANGLE_ERROR_AMOUNT = 0;
 		double tilt = Math.signum(Math.signum(getAngleError()) + -direction);
-	  double maxSpeed = 1;  
+	  speedMultiplier = 1;  
     double controlSpeed = Math.abs(Math.signum(direction + tilt));
   
-    Robot.getFrontClimber().setClimberMotorSpeed(0.5 * maxSpeed * direction);
-    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed * maxSpeed);
+    Robot.getFrontClimber().setClimberMotorSpeed(0.5 * speedMultiplier * direction);
+    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed * speedMultiplier);
 
     //2.) Climbs based on Angle(front climber target angle is constant, back must make up for the errors)
     // ANGLE_ERROR_AMOUNT = 3;
@@ -88,7 +89,7 @@ public class C_Climb extends Command {
 
     //rotate the front climber intake wheels
     if(isInIntakeArea()){
-      Robot.getBall().setCargoIntakeSpeed(maxSpeed * 0.5 * direction);
+      Robot.getBall().setCargoIntakeSpeed(speedMultiplier * 0.5 * direction);
     }else{
       Robot.getBall().setCargoIntakeSpeed(0);
     }

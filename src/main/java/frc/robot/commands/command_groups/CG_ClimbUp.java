@@ -8,14 +8,11 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.Robot;
 import frc.robot.commands.C_Climb;
 import frc.robot.commands.C_DriveDistance;
-import frc.robot.commands.C_EndEffectorAngle;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_RearClimber;
-import frc.robot.commands.C_SetFrontClimberIntake;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_ClimbUp extends CommandGroup {
