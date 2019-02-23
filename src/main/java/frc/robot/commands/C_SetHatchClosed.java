@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetHatchClose extends Command {
+public class C_SetHatchClosed extends Command {
 
   private boolean isClosed;
 
@@ -18,7 +18,7 @@ public class C_SetHatchClose extends Command {
    * Makes the end effector grab or release the hatch
    * @param grab if true, grab the hatch. If false, release it.
    */
-  public C_SetHatchClose(boolean isClosed) {
+  public C_SetHatchClosed(boolean isClosed) {
     requires(Robot.getHatch());
     this.isClosed = isClosed;
   }
