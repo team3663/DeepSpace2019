@@ -24,12 +24,12 @@ public class CG_ClimbUp extends CommandGroup {
    */
   public CG_ClimbUp() {
     addSequential(new C_ElevatorToInch(0));
-    addSequential(new C_Flip(false));
     //climb sequence
     addParallel(new C_FrontClimber(40));
     addParallel(new C_RearClimber(105));
+    addParallel(new C_Flip(false));
     addSequential(new C_Climb(210));
-    addSequential(new C_DriveDistance(25, 0.3));
+    addSequential(new C_DriveDistance(15, 0.3));
     addSequential(new C_RearClimber(0));
   }
 }

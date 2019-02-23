@@ -49,7 +49,7 @@ public class C_Climb extends Command {
 
     //1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
     ANGLE_ERROR_AMOUNT = 0;
-		double tilt = Math.signum(getAngleError());
+		double tilt = Math.signum(Math.signum(getAngleError()) + -direction);
 	  double maxSpeed = 1;
     double controlSpeed = Math.abs(Math.signum(direction + tilt));
 
