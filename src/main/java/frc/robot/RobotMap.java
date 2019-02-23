@@ -69,4 +69,9 @@ public static final int getDriveMotor(int module){
   //Pneumatics
   public static final int HATCH_SOLENOID_FORWARD = 0;
   public static final int HATCH_SOLENOID_REVERSE = 1;
+
+  public static final int HATCH_PICKUP_SOLENOID_FORWARD = 0;
+  public static final int HATCH_PICKUP_SOLENOID_REVERSE = 1;
+  public static final int HATCH_EXTEND_SOLENOID_FORWARD = 2;
+  public static final int HATCH_EXTEND_SOLENOID_REVERSE = 3;
 }
