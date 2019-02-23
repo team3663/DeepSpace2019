@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANDigitalInput.LimitSwitch;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.sun.jdi.Value;
@@ -15,6 +16,7 @@ import com.sun.jdi.Value;
 import java.util.Optional;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.hal.sim.SimHooks;
@@ -42,6 +44,7 @@ public class SS_Ball extends Subsystem {
 
   public SS_Ball() {
     climberIntakeMotor = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
+    climberIntakeMotor.setNeutralMode(NeutralMode.Coast);
     EndEffectorIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
     EndEffectorIntakeMotor.setIdleMode(IdleMode.kCoast);
 
@@ -57,6 +60,10 @@ public class SS_Ball extends Subsystem {
 
   public void setCargoIntakeSpeed(double speed) {
     climberIntakeMotor.set(ControlMode.MotionProfile.PercentOutput, speed);
+  }
+
+  public void setBrakeMode(){
+    climberIntakeMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   public DigitalInput getCagroSwitch(){

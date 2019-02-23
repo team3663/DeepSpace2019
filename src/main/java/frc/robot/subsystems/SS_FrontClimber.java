@@ -81,6 +81,10 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberSpeedMultiplier = speedMuliplier;
   }
 
+  public void setBrakeMode(){
+    frontClimberMotor.setIdleMode(IdleMode.kBrake);
+  }
+
   public double degreeToRotation(double degree) {
     return degree/360;
   }
