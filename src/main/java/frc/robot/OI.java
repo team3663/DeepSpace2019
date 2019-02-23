@@ -40,8 +40,8 @@ public class OI {
         primaryController.getAButton().whenPressed(new C_SetHatchClose(false));
         primaryController.getBButton().whenPressed(new C_SetHatchClose(true));
 
-        primaryController.getStartButton().whileHeld(new C_ExtendHatch(true));
-        primaryController.getBackButton().whileHeld(new C_ExtendHatch(false));
+        primaryController.getStartButton().whenPressed(new C_ExtendHatch(true));
+        primaryController.getBackButton().whenPressed(new C_ExtendHatch(false));
         
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
