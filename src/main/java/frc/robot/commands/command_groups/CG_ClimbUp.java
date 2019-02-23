@@ -23,13 +23,15 @@ public class CG_ClimbUp extends CommandGroup {
    * Add your docs here.
    */
   public CG_ClimbUp() {
-    addSequential(new C_ElevatorToInch(0));
-    //climb sequence
-    addParallel(new C_FrontClimber(40));
+    addParallel(new C_FrontClimber(45));
+    addParallel(new C_ElevatorToInch(0));
     addParallel(new C_RearClimber(105));
-    addParallel(new C_Flip(false));
-    addSequential(new C_Climb(210));
+    addSequential(new C_Flip(false));
+    //climb sequence
+    addSequential(new C_Climb(200));
     addSequential(new C_DriveDistance(15, 0.3));
+    //drives forward once on platform
     addSequential(new C_RearClimber(0));
+    addSequential(new C_DriveDistance(10, 0.3));
   }
 }

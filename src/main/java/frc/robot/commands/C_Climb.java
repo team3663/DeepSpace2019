@@ -50,9 +50,9 @@ public class C_Climb extends Command {
     //1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
     ANGLE_ERROR_AMOUNT = 0;
 		double tilt = Math.signum(Math.signum(getAngleError()) + -direction);
-	  double maxSpeed = 1;
+	  double maxSpeed = 1;  
     double controlSpeed = Math.abs(Math.signum(direction + tilt));
-
+  
     Robot.getFrontClimber().setClimberMotorSpeed(0.5 * maxSpeed * direction);
     Robot.getRearClimber().setCimberMotorSpeed(controlSpeed * maxSpeed);
 
@@ -65,11 +65,12 @@ public class C_Climb extends Command {
     // double angleError = Math.abs(Math.signum(direction + tilt)) * Math.abs(getAngleError());
 
     // if(Math.signum(angleError) > 0){
-    //   Robot.getFrontClimber().setClimberMotorSpeed(0);
+    //   Robot.getFrontClimber().setClimberMotorSpeed(0.5);
     // }else{
     //   Robot.getFrontClimber().goToDegree(targetAngle);
-    //   Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + (angleError * direction)));
     // }
+    // Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + (angleError * direction)));
+
     
 
     /*3.) Both climbers climb to target angle, if the robot is tilted, pause the climb and autoBalances
