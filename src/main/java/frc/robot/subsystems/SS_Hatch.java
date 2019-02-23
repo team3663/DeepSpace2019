@@ -7,8 +7,11 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -20,13 +23,13 @@ public class SS_Hatch extends Subsystem {
   private DoubleSolenoid hatchPickupSolenoid;
   private DoubleSolenoid hatchExtendSolenoid;
 
-  private DigitalInput hatchSwitch;
+  private static Optional<DigitalInput> hatchSwitch;
 
   public SS_Hatch(){
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_PICKUP_SOLENOID_FORWARD, RobotMap.HATCH_PICKUP_SOLENOID_REVERSE);
     hatchExtendSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_SOLENOID_FORWARD, RobotMap.HATCH_EXTEND_SOLENOID_REVERSE);
 
-    hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
+    hatchSwitch = Optional.ofNullable(new DigitalInput(RobotMap.HATCH_SWITCH));
   }
 
   
@@ -50,11 +53,15 @@ public class SS_Hatch extends Subsystem {
    * @return the hatchSwitch
    */
   public DigitalInput getHatchSwitch() {
-    return hatchSwitch;
+    return hatchSwitch.get();
   }
   
   public boolean hatchIsPresent(){
-    return !hatchSwitch.get();
+    if(hatchSwitch.isPresent()){
+      return !hatchSwitch.get().get();
+    }
+    System.err.print("SS_Hatch limit switch doesn't exist");
+    return false;
   }
 
   @Override
