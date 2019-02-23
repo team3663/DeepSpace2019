@@ -37,7 +37,8 @@ public class OI {
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
-
+        primaryController.getAButton().whenPressed(new C_SetHatchClose(false));
+        primaryController.getBButton().whenPressed(new C_SetHatchClose(true));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
         
