@@ -14,6 +14,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
@@ -37,7 +38,6 @@ public class SS_RearClimber extends Subsystem {
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
-
     rearClimberMotor.getEncoder().setPosition(0);
 
     PID = new CANPIDController(rearClimberMotor);
@@ -58,6 +58,10 @@ public class SS_RearClimber extends Subsystem {
 
   public void setSpeedMultiplier(double speedMultiplier){
     this.speedMultiplier = speedMultiplier;
+  }
+  
+  public void setBrakeMode(){
+    rearClimberMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public double degreeToRotation(double degree){
