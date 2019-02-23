@@ -34,14 +34,15 @@ public class OI {
         //primary controller
         //
         //primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
-        primaryController.getXButton().whenPressed(new CG_BallIntake()); 
-        primaryController.getBButton().whenPressed(new CG_CancelIntake());
+        //primaryController.getXButton().whenPressed(new CG_BallIntake()); 
+        //primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
         primaryController.getAButton().whenPressed(new C_SetHatchClose(false));
-        primaryController.getYButton().whenPressed(new C_SetHatchClose(true));
+        primaryController.getBButton().whenPressed(new C_SetHatchClose(true));
 
-        primaryController.getBackButton().whenPressed(new C_ExtendHatch(true));
-        primaryController.getStartButton().whenPressed(new C_ExtendHatch(false));
+        primaryController.getStartButton().whileHeld(new C_ExtendHatch(true));
+        primaryController.getBackButton().whileHeld(new C_ExtendHatch(false));
+        
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
         
