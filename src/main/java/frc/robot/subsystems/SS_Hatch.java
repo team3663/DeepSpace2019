@@ -26,7 +26,7 @@ public class SS_Hatch extends Subsystem {
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_PICKUP_SOLENOID_FORWARD, RobotMap.HATCH_PICKUP_SOLENOID_REVERSE);
     hatchExtendSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_SOLENOID_FORWARD, RobotMap.HATCH_EXTEND_SOLENOID_REVERSE);
 
-    hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
+    //hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
   }
 
   
@@ -49,9 +49,9 @@ public class SS_Hatch extends Subsystem {
    /**
    * @return the hatchSwitch
    */
-  public DigitalInput getHatchSwitch() {
-    return hatchSwitch;
-  }
+  /*public DigitalInput getHatchSwitch() {
+   return hatchSwitch;
+  /}*/
   
   public boolean hatchIsPresent(){
     return !hatchSwitch.get();

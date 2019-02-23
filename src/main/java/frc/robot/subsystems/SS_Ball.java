@@ -45,6 +45,7 @@ public class SS_Ball extends Subsystem {
   public SS_Ball() {
     climberIntakeMotor = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
     climberIntakeMotor.setNeutralMode(NeutralMode.Coast);
+    climberIntakeMotor.setInverted(true);
     EndEffectorIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
     EndEffectorIntakeMotor.setIdleMode(IdleMode.kCoast);
 

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.commands.test_commands.C_EndEffectorDirect;
 import frc.robot.commands.test_commands.C_FrontClimberDirect;
 import frc.robot.commands.test_commands.C_RearClimberDirect;
@@ -23,8 +24,6 @@ public class C_StartOrchestra extends Command {
   SS_Elevator elevator;
   SS_EndEffectorAngle efAngle;
   public C_StartOrchestra() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getElevator());
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getFrontClimber());
@@ -46,9 +45,21 @@ public class C_StartOrchestra extends Command {
 
       
       if(!frontClimber.isInitialized()){
-        frontClimber.resetEncoder();
-        frontClimber.goToDegree(90);
-        frontClimber.setInitialized(true);
+        /*
+        frontClimber.
+        */
+        
+        if(!frontClimber.isReset()){
+          frontClimber.setSpeed(.2);
+        }
+        else{
+          frontClimber.setSpeed(0);
+          frontClimber.resetEncoder();
+
+          frontClimber.setInitialized(true);
+        }
+
+        frontClimber.goToDegree(45);
       }
       if(!efAngle.isInitialized() && frontClimber.isInitialized()){
         if(elevator.getAverageInch() < elevator.getSafeFlipHeight()){
@@ -96,7 +107,7 @@ public class C_StartOrchestra extends Command {
     }
     else{
 
-
+      new C_ElevatorToInch(1);
       new C_FrontClimber(0).start();;
     }
 

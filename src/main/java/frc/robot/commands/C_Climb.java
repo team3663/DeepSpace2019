@@ -54,8 +54,8 @@ public class C_Climb extends Command {
 	  speedMultiplier = 1;  
     double controlSpeed = Math.abs(Math.signum(direction + tilt));
   
-    Robot.getFrontClimber().setClimberMotorSpeed(0.5 * speedMultiplier * direction);
-    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed * speedMultiplier);
+    Robot.getFrontClimber().setSpeed(0.5 * speedMultiplier * direction);
+    Robot.getRearClimber().setSpeed(controlSpeed * speedMultiplier);
 
     //2.) Climbs based on Angle(front climber target angle is constant, back must make up for the errors)
     // ANGLE_ERROR_AMOUNT = 3;
@@ -113,13 +113,13 @@ public class C_Climb extends Command {
 
   @Override
   protected void end() {
-    Robot.getFrontClimber().setClimberMotorSpeed(0);
-    Robot.getRearClimber().setCimberMotorSpeed(0);
+    Robot.getFrontClimber().setSpeed(0);
+    Robot.getRearClimber().setSpeed(0);
   }
 
   @Override
   protected void interrupted() {
-    Robot.getFrontClimber().setClimberMotorSpeed(0);
-    Robot.getRearClimber().setCimberMotorSpeed(0);    
+    Robot.getFrontClimber().setSpeed(0);
+    Robot.getRearClimber().setSpeed(0);    
   }
 }

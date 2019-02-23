@@ -69,10 +69,10 @@ public class Robot extends TimedRobot {
     driver = Shuffleboard.getTab("driver");
 
     //show cameras on the driver tab of shuffleboard
-    // UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    // camera.setResolution(320, 240);
-    // camera.setPixelFormat(PixelFormat.kMJPEG);
-    // driver.add(camera).withWidget(BuiltInWidgets.kCameraStream);
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(320, 240);
+    camera.setPixelFormat(PixelFormat.kMJPEG);
+    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream);
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
@@ -143,8 +143,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.cargoIsPresent());   
     SmartDashboard.putBoolean("Angle Switch", ss_Ball.cargoIsPresent());    
  
-    SmartDashboard.putBoolean("Hatch Present", ss_Hatch.hatchIsPresent());
-
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());

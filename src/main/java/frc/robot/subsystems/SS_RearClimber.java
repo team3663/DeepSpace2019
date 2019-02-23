@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -28,17 +29,23 @@ public class SS_RearClimber extends Subsystem {
   private CANSparkMax rearClimberMotor;
   private CANPIDController PID;
 
+  private DigitalInput rearClimberReset;
+
   private double fakeEncoder = 0;
   private double speedMultiplier = 0.3;
 
-  private final double GEAR_RATIO = 1.0/300.0;
+  private final double GEAR_RATIO = 1.0/208.0;
 
   private double ANGLE_LIMIT = 180;
 
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
+
+    rearClimberReset = new DigitalInput(RobotMap.REAR_CLIMBER_LIMIT_SWITCH);
+
     rearClimberMotor.getEncoder().setPosition(0);
+    rearClimberMotor.setIdleMode(IdleMode.kBrake);
 
     PID = new CANPIDController(rearClimberMotor);
     PID.setP(1);
@@ -52,7 +59,7 @@ public class SS_RearClimber extends Subsystem {
     // setDefaultCommand(new C_RearClimberDirect());
   }
   
-  public void setCimberMotorSpeed(double speed){
+  public void setSpeed(double speed){
     rearClimberMotor.set( -speed * speedMultiplier);
   }
 
@@ -103,7 +110,15 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public void resetEncoder(){
-    rearClimberMotor.getEncoder().setPosition(0);
+    rearClimberMotor.getEncoder().setPosition(0); //TODO: find what is the reset pos
+  }
+
+  public DigitalInput getRearClimberReset(){
+    return rearClimberReset;
+  }
+
+  public boolean isReset(){
+    return rearClimberReset.get();
   }
 
 

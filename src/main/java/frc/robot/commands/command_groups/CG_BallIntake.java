@@ -30,6 +30,6 @@ public class CG_BallIntake extends CommandGroup {
     addSequential(new C_EndEffectorAngle(0));
     addSequential(new C_SetFrontClimberIntake(0));
     addSequential(new C_SetEndEffectorIntakeSpeed(0));
-    addSequential(new C_FrontClimber(0));
+    addSequential(new C_FrontClimber(10));
   }
 }

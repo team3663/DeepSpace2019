@@ -20,6 +20,7 @@ import com.revrobotics.ControlType;
 import com.revrobotics.CANPIDController.AccelStrategy;
 
 
+
 public class SS_EndEffectorAngle extends Subsystem {
 
   private boolean initialized = false;
@@ -30,7 +31,7 @@ public class SS_EndEffectorAngle extends Subsystem {
 
   private double GEAR_RATIO = 1.0/147.0;
   private double TICKS_PER_DEGREE = 1.0/360.0;
-  private double speedMultiplier = .2;
+  private double speedMultiplier = .5;
 
   //TODO: double check these angles
   private double FRONT_ANGLE_LIMIT = 95; 
@@ -51,7 +52,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     PID.setP(.5);
     PID.setI(.00001); 
     PID.setD(0);     
-    PID.setOutputRange(-.7, .7);
+    PID.setOutputRange(-.85, .85);
     
     
     PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
@@ -110,7 +111,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     
   }
   public void resetEncoder(){
-    angleMotor.getEncoder().setPosition(38.1); 
+    angleMotor.getEncoder().setPosition(39.1);
   }
 
   public void setAngleSpeed(double speed){
@@ -132,7 +133,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     return angleResetSwitch;
   }
   public boolean getIsReset(){
-    return angleResetSwitch.get();
+    return !angleResetSwitch.get();
   }  
 
   public boolean isInitialized(){

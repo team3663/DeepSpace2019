@@ -34,7 +34,7 @@ public class SS_Elevator extends Subsystem {
 
   public double speedMultiplier = .3  ;
   private int selectedLevel = 1;
-  private double TICKS_PER_INCH = 2.6;
+  private double TICKS_PER_INCH = 1.6;
   private double GEAR_RATIO = 1.0/10.0;
 
   private boolean initialized = false;
@@ -42,7 +42,7 @@ public class SS_Elevator extends Subsystem {
   private final double SAFE_FLIP_HEIGHT = 3.5;
   private final double LEVEL_1 = 5;
   private final double LEVEL_2 = 26;
-  private final double LEVEL_3 = 26;
+  private final double LEVEL_3 = 60;
 
   private CANPIDController PID;
 
@@ -64,7 +64,7 @@ public class SS_Elevator extends Subsystem {
     PID.setP(.06);
     PID.setI(.0);
     PID.setD(1);
-    PID.setOutputRange(-.4, .4);
+    PID.setOutputRange(-1, 1);
     masterMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
 

@@ -30,12 +30,14 @@ public class SS_FrontClimber extends Subsystem {
 
   private CANSparkMax frontClimberMotor;
   private CANPIDController PID;
+  
+  private DigitalInput frontClimberReset;
 
   private final double TOP_ANGLE_LIMIT = -25;
   private final double BOTTOM_ANGLE_LIMIT = 200;
 
-  private final double SAFE_FLIP_TOP = 80;
-  private final double SAFE_FLIP_BOT = 100;
+  private final double SAFE_FLIP_TOP = 45;
+  private final double SAFE_FLIP_BOT = 125;
 
 
   private final double GEAR_RATIO = 1.0/147.0;
@@ -48,7 +50,8 @@ public class SS_FrontClimber extends Subsystem {
   private double cargoIntakeSpeedMultiplier = 1;
   public SS_FrontClimber() {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
-    
+    frontClimberReset = new DigitalInput(RobotMap.FRONT_CLIMBER_LIMIT_SWITCH);
+
     frontClimberMotor.setClosedLoopRampRate(0);
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
     frontClimberMotor.setInverted(true);
@@ -67,13 +70,20 @@ public class SS_FrontClimber extends Subsystem {
     // setDefaultCommand(new C_FrontClimberDirect());
   }
 
+  public DigitalInput getFrontClimberResetSwitch(){
+    return frontClimberReset;
+  }
+
+  public boolean isReset(){
+    return frontClimberReset.get();
+  }
   
 
-  public void setClimberMotorSpeed(double speed){
+  public void setSpeed(double speed){
     frontClimberMotor.set(speed * frontClimberSpeedMultiplier);
   }
 
-  public void setCargoSpeedIntakeSpeedMultiplier(double speedMuliplier){
+  public void setIntakeSpeedMultiplier(double speedMuliplier){
     cargoIntakeSpeedMultiplier = speedMuliplier;
   }
 

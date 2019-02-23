@@ -40,10 +40,10 @@ public class SS_Swerve extends Subsystem {
         
         zeroGyro();
 
-        double FR = 15;
-        double FL = -15;
-        double BR = -55;
-        double BL = 82;
+        double FR = 10;
+        double FL = 7;
+        double BR = 39;
+        double BL = 18;
         SmartDashboard.putNumber("0 Offset", FR);
         SmartDashboard.putNumber("1 Offset", FL);
         SmartDashboard.putNumber("2 Offset", BR);
@@ -59,8 +59,9 @@ public class SS_Swerve extends Subsystem {
             new SwerveModule(2, new CANSparkMax(RobotMap.getDriveMotor(3), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(3)), BR),
             new SwerveModule(3, new CANSparkMax(RobotMap.getDriveMotor(2), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(2)), BL),
         };
+        mSwerveModules[3].setDriveInverted(true);
         mSwerveModules[2].setDriveInverted(true);
-          
+        mSwerveModules[1].setDriveInverted(true);
 
         
 

@@ -28,7 +28,7 @@ public class C_FrontClimberDirect extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getSecondaryController().getLeftYValue();
-    Robot.getFrontClimber().setClimberMotorSpeed(ignoreDeadBand(speed));
+    Robot.getFrontClimber().setSpeed(ignoreDeadBand(speed));
   }
 
   @Override
