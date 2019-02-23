@@ -1,10 +1,7 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.commands.command_groups.CG_BallIntake;
-import frc.robot.commands.command_groups.CG_CancelIntake;
-import frc.robot.commands.command_groups.CG_DownAll;
-import frc.robot.commands.command_groups.CG_GoToSelectedLevel;
+import frc.robot.commands.command_groups.*;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.input.AxisButton;
@@ -36,6 +33,9 @@ public class OI {
         //primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
+
+        primaryController.getYButton().whenPressed(new CG_GetHatch());
+        primaryController.getAButton().whenPressed(new CG_PlaceHatch());
 
 
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
