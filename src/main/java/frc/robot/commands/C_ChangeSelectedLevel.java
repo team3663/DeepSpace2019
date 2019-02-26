@@ -18,9 +18,10 @@ public class C_ChangeSelectedLevel extends Command {
   }
   @Override
   protected void execute() {
-    int totalLevel = Robot.getElevator().getSelectedLevel() + level;
-    if (totalLevel >= 1 && totalLevel <= 3)
-    Robot.getElevator().setSelectedLevel( totalLevel );
+    // int totalLevel = Robot.getElevator().getSelectedLevel() + level;
+    // if (totalLevel >= 1 && totalLevel <= 3)
+    // Robot.getElevator().setSelectedLevel( totalLevel );
+    Robot.getElevator().setSelectedLevel(level);
   }
   @Override
   protected boolean isFinished() {

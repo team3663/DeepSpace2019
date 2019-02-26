@@ -2,9 +2,13 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.commands.command_groups.CG_BallIntake;
+import frc.robot.commands.command_groups.CG_BallReady;
 import frc.robot.commands.command_groups.CG_CancelIntake;
 import frc.robot.commands.command_groups.CG_DownAll;
+import frc.robot.commands.command_groups.CG_FeederBallIntake;
 import frc.robot.commands.command_groups.CG_GoToSelectedLevel;
+import frc.robot.commands.command_groups.CG_HatchDrop;
+import frc.robot.commands.command_groups.CG_HatchReady;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.input.AxisButton;
@@ -33,16 +37,11 @@ public class OI {
         //
         //primary controller
         //
-        //primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
-        //primaryController.getXButton().whenPressed(new CG_BallIntake()); 
-        //primaryController.getBButton().whenPressed(new CG_CancelIntake());
+        primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
+        primaryController.getXButton().whenPressed(new CG_BallIntake()); 
+        primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
+        primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
-        primaryController.getAButton().whenPressed(new C_SetHatchClose(false));
-        primaryController.getBButton().whenPressed(new C_SetHatchClose(true));
-
-        primaryController.getStartButton().whenPressed(new C_ExtendHatch(true));
-        primaryController.getBackButton().whenPressed(new C_ExtendHatch(false));
-        
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
         
@@ -64,14 +63,22 @@ public class OI {
 
         // secondaryController.getYButton().whenPressed(new C_FrontClimberHold());
 
-        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
-        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));
+        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(3));
+        secondaryController.getDPadButton(Direction.LEFT).whenPressed(new C_ChangeSelectedLevel(2));
+        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(1));
+        secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_ChangeSelectedLevel(7));
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
         secondaryController.getRightBumperButton().whenPressed(new CG_DownAll());
 
         secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
+
+        secondaryController.getYButton().whenPressed(new C_SetHatchClose(true));
+        secondaryController.getBButton().whenPressed(new CG_HatchDrop());
+
+        secondaryController.getBackButton().whenPressed(new CG_BallReady());
+        secondaryController.getStartButton().whenPressed(new CG_HatchReady());
 
         
         //
