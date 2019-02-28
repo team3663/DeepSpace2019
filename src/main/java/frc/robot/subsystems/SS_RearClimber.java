@@ -52,7 +52,7 @@ public class SS_RearClimber extends Subsystem {
     // setDefaultCommand(new C_RearClimberDirect());
   }
   
-  public void setCimberMotorSpeed(double speed){
+  public void setSpeed(double speed){
     rearClimberMotor.set( -speed * speedMultiplier);
   }
 
@@ -104,6 +104,10 @@ public class SS_RearClimber extends Subsystem {
 
   public void resetEncoder(){
     rearClimberMotor.getEncoder().setPosition(0);
+  }
+
+  public double getGearRatio() {
+    return GEAR_RATIO;
   }
 
 

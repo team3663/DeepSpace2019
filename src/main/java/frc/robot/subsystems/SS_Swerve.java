@@ -69,9 +69,8 @@ public class SS_Swerve extends Subsystem {
             module.setDriveGearRatio(5.7777);
             module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
         }
-
-
     }
+
 	public final double getWidth() {
 		return width;
 	}
@@ -233,8 +232,10 @@ public class SS_Swerve extends Subsystem {
     public void softReset(){
         offset = -getPitch();
     }
-
-      public double getOffsetPitch(){
+    /**
+     * Positive pitch is robot tilting backwards.
+     */
+    public double getOffsetPitch(){
         SmartDashboard.putNumber("Pitch", getPitch() + offset);
         return getPitch() + offset;
     }

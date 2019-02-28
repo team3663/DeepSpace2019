@@ -27,7 +27,7 @@ public class C_RearClimberDirect extends Command {
   @Override
   protected void execute() {
     double speed = Robot.getOI().getSecondaryController().getRightYValue();
-    Robot.getRearClimber().setCimberMotorSpeed(ignoreDeadBand(speed));
+    Robot.getRearClimber().setSpeed(ignoreDeadBand(speed));
   }
 
   @Override

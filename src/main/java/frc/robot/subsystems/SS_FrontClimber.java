@@ -69,7 +69,7 @@ public class SS_FrontClimber extends Subsystem {
 
   
 
-  public void setClimberMotorSpeed(double speed){
+  public void setSpeed(double speed){
     frontClimberMotor.set(speed * frontClimberSpeedMultiplier);
   }
 
@@ -142,5 +142,8 @@ public class SS_FrontClimber extends Subsystem {
     return getAngle() > SAFE_FLIP_TOP && getAngle() < SAFE_FLIP_BOT;
   }
 
+  public double getGearRatio() {
+    return GEAR_RATIO;
+  }
 
 }

@@ -21,13 +21,18 @@ public class C_Climb extends Command {
   private static final double REAR_SHORT_SIDE_LENGTH = 4;
   private static final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(REAR_LONG_SIDE_LENGTH, 2) + Math.pow(REAR_SHORT_SIDE_LENGTH, 2));
   private static final double FRONT_REAR_RATIO = FRONT_CLIMBER_RADIUS/REAR_CLIMBER_RADIUS;
+  private static final double ABSOLUTE_PITCH_LIMIT = 30;
+  private static final double WOAH_THERE = .45;
 
-  public C_Climb(double targetAngle) {
+  private final double FRONT_CLIMBER_SCALAR = (Robot.getRearClimber().getGearRatio() / Robot.getFrontClimber().getGearRatio())
+    * (REAR_CLIMBER_RADIUS / FRONT_CLIMBER_RADIUS);
+
+  public C_Climb() {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
     requires(Robot.getBall());
-    this.targetAngle = targetAngle;
+    //this.targetAngle = targetAngle;
   }
   
   // Called just before this Command runs the first time
@@ -43,18 +48,30 @@ public class C_Climb extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
+
+    double joystickInput = Robot.getOI().getSecondaryController().getRightYValue();
+    double pitch = Robot.getDrivetrain().getOffsetPitch();
+
+    Robot.getRearClimber().setSpeed(joystickInput * WOAH_THERE);
+    
+    Robot.getFrontClimber().setSpeed((joystickInput + calcAdjustmentSpeed(pitch)) * FRONT_CLIMBER_SCALAR * WOAH_THERE);
+
     /*
       I have made 3 different ways to climb, im not sure which one works, wrote them just in case one doesn't work
     */
 
     //1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
+
+    /*
     ANGLE_ERROR_AMOUNT = 0;
 		double tilt = Math.signum(getAngleError());
 	  double maxSpeed = 1;
     double controlSpeed = Math.abs(Math.signum(direction + tilt));
-
-    Robot.getFrontClimber().setClimberMotorSpeed(0.5 * maxSpeed * direction);
-    Robot.getRearClimber().setCimberMotorSpeed(controlSpeed * maxSpeed);
+  
+    Robot.getFrontClimber().setSpeed(0.5 * speedMultiplier * direction);
+    Robot.getRearClimber().setSpeed(controlSpeed * speedMultiplier);
+    */
 
     //2.) Climbs based on Angle(front climber target angle is constant, back must make up for the errors)
     // ANGLE_ERROR_AMOUNT = 3;
@@ -83,15 +100,16 @@ public class C_Climb extends Command {
       Robot.getFrontClimber().goToDegree(targetAngle + -getAngleError());
       Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (targetAngle + getAngleError()));
     }
-    */
+    
 
     //rotate the front climber intake wheels
     if(isInIntakeArea()){
       Robot.getBall().setCargoIntakeSpeed(maxSpeed * 0.5 * direction);
     }else{
       Robot.getBall().setCargoIntakeSpeed(0);
-    }
+    } */
   }
+  
 
   private boolean isInIntakeArea(){
     return Robot.getFrontClimber().getAngle() > THRESHOLD_MIN && Robot.getFrontClimber().getAngle() < THRESHOLD_MAX;
@@ -104,6 +122,13 @@ public class C_Climb extends Command {
     return Robot.getDrivetrain().getOffsetPitch();
   }
 
+  private double calcAdjustmentSpeed(double pitch) {
+    if(Math.abs(pitch) > ABSOLUTE_PITCH_LIMIT) pitch = Math.signum(pitch) * ABSOLUTE_PITCH_LIMIT;
+    double adjSpeed = pitch / ABSOLUTE_PITCH_LIMIT;
+    return -adjSpeed;
+
+  }
+
   @Override
   protected boolean isFinished() {
     return (targetAngle - Robot.getFrontClimber().getAngle()) * direction < 0;
@@ -111,13 +136,13 @@ public class C_Climb extends Command {
 
   @Override
   protected void end() {
-    Robot.getFrontClimber().setClimberMotorSpeed(0);
-    Robot.getRearClimber().setCimberMotorSpeed(0);
+    Robot.getFrontClimber().setSpeed(0);
+    Robot.getRearClimber().setSpeed(0);
   }
 
   @Override
   protected void interrupted() {
-    Robot.getFrontClimber().setClimberMotorSpeed(0);
-    Robot.getRearClimber().setCimberMotorSpeed(0);    
+    Robot.getFrontClimber().setSpeed(0);
+    Robot.getRearClimber().setSpeed(0);    
   }
 }

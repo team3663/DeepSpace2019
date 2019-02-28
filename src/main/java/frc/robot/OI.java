@@ -77,6 +77,8 @@ public class OI {
         secondaryController.getBackButton().whenPressed(new CG_BallReady());
         secondaryController.getStartButton().whenPressed(new CG_HatchReady());
 
+        secondaryController.getXButton().whileHeld(new C_Climb());
+
         
         //
         //testing controller: BE CAREFUL
@@ -87,7 +89,7 @@ public class OI {
         // testingController.getLeftBumperButton().whenReleased(new C_SetHatchClose(false));
 
 
-        testingController.getBackButton().whileHeld(new C_Climb(10));
+        //testingController.getBackButton().whileHeld(new C_Climb(10));
 
     }
     
