@@ -68,6 +68,8 @@ public class OI {
         secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
 
+        secondaryController.getXButton().whileHeld(new C_Climb());
+
         
         //
         //testing controller: BE CAREFUL
@@ -78,7 +80,7 @@ public class OI {
         // testingController.getLeftBumperButton().whenReleased(new C_SetHatchClose(false));
 
 
-        testingController.getBackButton().whileHeld(new C_Climb(10));
+        //testingController.getBackButton().whileHeld(new C_Climb(10));
 
     }
     

@@ -152,5 +152,8 @@ public class SS_FrontClimber extends Subsystem {
     return getAngle() > SAFE_FLIP_TOP && getAngle() < SAFE_FLIP_BOT;
   }
 
+  public double getGearRatio() {
+    return GEAR_RATIO;
+  }
 
 }

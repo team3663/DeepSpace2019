@@ -21,7 +21,7 @@ public class CG_ClimbDown extends CommandGroup {
     addParallel(new C_RearClimber(105));
     addParallel(new C_FrontClimber(180));
     addSequential(new C_DriveDistance(25, 0.3));
-    addSequential(new C_Climb(0));
+    //addSequential(new C_Climb(0));
     addSequential(new C_RearClimber(0));
   }
 }

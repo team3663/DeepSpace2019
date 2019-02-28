@@ -121,5 +121,8 @@ public class SS_RearClimber extends Subsystem {
     return rearClimberReset.get();
   }
 
+  public double getGearRatio() {
+    return GEAR_RATIO;
+  }
 
 }

@@ -25,7 +25,7 @@ public class CG_ClimbUp extends CommandGroup {
     addParallel(new C_RearClimber(105));
     addSequential(new C_Flip(false));
     //climb sequence
-    addSequential(new C_Climb(200));
+    //addSequential(new C_Climb(200));
     addSequential(new C_DriveDistance(15, 0.3));
     //drives forward once on platform
     addSequential(new C_RearClimber(0));
