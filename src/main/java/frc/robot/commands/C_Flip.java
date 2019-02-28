@@ -18,12 +18,16 @@ public class C_Flip extends Command {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
+    requires(Robot.getHatch());
     this.isFront = isFront;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+  
+    Robot.getHatch().setHatchClosed(true);
+    Robot.getHatch().extendHatchPickup(false);
   }
 
   // Called repeatedly when this Command is scheduled to run

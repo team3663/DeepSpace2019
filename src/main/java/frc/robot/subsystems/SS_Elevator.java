@@ -43,6 +43,7 @@ public class SS_Elevator extends Subsystem {
   private final double LEVEL_1 = 5;
   private final double LEVEL_2 = 26;
   private final double LEVEL_3 = 26;
+  private final double LEVEL_7 = 16;
 
   private CANPIDController PID;
 
@@ -109,6 +110,9 @@ public class SS_Elevator extends Subsystem {
     }
     else if (selectedLevel == 3){
       goToInch(LEVEL_3);
+    }
+    else if(selectedLevel == 7){
+      goToInch(LEVEL_7);
     }
   }
 

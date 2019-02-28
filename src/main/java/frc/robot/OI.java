@@ -30,8 +30,9 @@ public class OI {
         //
         //primary controller
         //
-        //primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
+        primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
+        primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
         primaryController.getYButton().whenPressed(new CG_GetHatch());
@@ -59,14 +60,22 @@ public class OI {
 
         // secondaryController.getYButton().whenPressed(new C_FrontClimberHold());
 
-        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
-        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));
+        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(3));
+        secondaryController.getDPadButton(Direction.LEFT).whenPressed(new C_ChangeSelectedLevel(2));
+        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(1));
+        secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_ChangeSelectedLevel(7));
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
         secondaryController.getRightBumperButton().whenPressed(new CG_DownAll());
 
         secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
+
+        secondaryController.getYButton().whenPressed(new C_SetHatchClosed(true));
+        secondaryController.getBButton().whenPressed(new CG_HatchDrop());
+
+        secondaryController.getBackButton().whenPressed(new CG_BallReady());
+        secondaryController.getStartButton().whenPressed(new CG_HatchReady());
 
         
         //

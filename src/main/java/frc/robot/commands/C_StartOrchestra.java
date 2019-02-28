@@ -95,8 +95,6 @@ public class C_StartOrchestra extends Command {
 
     }
     else{
-
-
       new C_FrontClimber(0).start();;
     }
 

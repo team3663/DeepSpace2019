@@ -8,28 +8,23 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.C_EndEffectorAngle;
+import frc.robot.commands.C_EndEffectorHold;
+import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
-import frc.robot.commands.C_SetEndEffectorIntakeSpeed;
-import frc.robot.commands.C_SetFrontClimberIntake;
-import frc.robot.commands.C_WaitForBall;
+import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class CG_BallIntake extends CommandGroup {
+public class CG_HatchReady extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_BallIntake() {
-    addSequential(new C_FrontClimber(90));
-    addSequential(new C_Flip(true));
-    addParallel(new C_ElevatorToInch(0)); 
-    addSequential(new C_SetEndEffectorIntakeSpeed(-.3));  
-    addSequential(new C_SetFrontClimberIntake(-1));
-    addSequential(new C_WaitForBall());
-    addSequential(new C_SetFrontClimberIntake(0));
-    addSequential(new C_SetEndEffectorIntakeSpeed(0));
-    addSequential(new C_EndEffectorAngle(0));
+  public CG_HatchReady() {
+    addSequential(new C_Flip(false));
+   // addParallel(new C_EndEffectorHold());
+    addParallel(new C_ElevatorToInch(4.5));
+    addSequential(new C_ExtendHatch(true));
+    addSequential(new C_SetHatchClosed(false));
     addSequential(new C_FrontClimber(0));
   }
 }

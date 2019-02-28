@@ -37,8 +37,8 @@ public class SS_EndEffectorAngle extends Subsystem {
   private double VERTICAL_ANGLE = 0;
   private double BACK_ANGLE_LIMIT = -80;
 
-  private double SAFE_FLIP_BACK_ANGLE = -80;
-  private double SAFEFLIP_FRONT_ANGLE = 90;
+  private double SAFE_FLIP_BACK_ANGLE = -75;
+  private double SAFEFLIP_FRONT_ANGLE = 85;
 
   public SS_EndEffectorAngle() {
     angleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
