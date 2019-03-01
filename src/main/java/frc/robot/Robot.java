@@ -142,8 +142,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
-    SmartDashboard.putBoolean("Cargo Present", ss_Ball.cargoIsPresent());
-    SmartDashboard.putBoolean("Angle Switch", ss_Ball.cargoIsPresent());    
+    SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
+    SmartDashboard.putBoolean("Angle Switch", ss_Ball.isPresent());    
  
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());

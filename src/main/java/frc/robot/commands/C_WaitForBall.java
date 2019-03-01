@@ -17,7 +17,7 @@ public class C_WaitForBall extends Command {
 
   @Override
   protected boolean isFinished() {
-    return Robot.getBall().cargoIsPresent();
+    return Robot.getBall().isPresent();
   }
 
 }

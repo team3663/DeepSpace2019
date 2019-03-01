@@ -26,12 +26,10 @@ public class CG_GoToSelectedLevel extends CommandGroup {
   public CG_GoToSelectedLevel() {
     addSequential(new C_SetFrontClimberIntake(0));
     addSequential(new C_SetEndEffectorIntakeSpeed(0));
-    addSequential(new C_FrontClimber(90));
     addSequential(new C_Flip(false));
+    addParallel(new C_EndEffectorHold());
     addParallel(new C_FrontClimber(0));
-    addParallel(new C_EndEffectorAngle(-85));
     addSequential(new C_GoToSelectedLevel());
     addParallel(new C_ElevatorHold());
-    addParallel(new C_EndEffectorHold());
   }
 }

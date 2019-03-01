@@ -17,6 +17,7 @@ import com.revrobotics.CANPIDController.AccelStrategy;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
@@ -41,9 +42,15 @@ public class SS_Elevator extends Subsystem {
 
   private final double SAFE_FLIP_TOP = 12;
   private final double SAFE_FLIP_BOT = .5;
-  private final double LEVEL_1 = 5;
-  private final double LEVEL_2 = 26;
-  private final double LEVEL_3 = 60;
+
+  private final double LEVEL_1_B = 5;
+  private final double LEVEL_2_B = 26;
+  private final double LEVEL_3_B = 60;
+  private final double LEVEL_15_B = 16;
+
+  private final double LEVEL_1_H = 5;
+  private final double LEVEL_2_H = 26;
+  private final double LEVEL_3_H = 60;
 
   private CANPIDController PID;
 
@@ -105,16 +112,8 @@ public class SS_Elevator extends Subsystem {
 
 
   public void goToSelectedLevel(){
-    
-    if(selectedLevel == 1){
-      goToInch(LEVEL_1);
-    }
-    else if (selectedLevel == 2){
-      goToInch(LEVEL_2);
-    }
-    else if (selectedLevel == 3){
-      goToInch(LEVEL_3);
-    }
+
+    goToInch(getSelectedLevelInch());
   }
 
   public CANPIDController elevatorPID(){
@@ -122,21 +121,39 @@ public class SS_Elevator extends Subsystem {
   }
 
   public double getSelectedLevelInch(){
-    
-    if(selectedLevel == 1){
-      return LEVEL_1;
-    }
-    else if (selectedLevel == 2){
-      return LEVEL_2;
-    }
-    else if (selectedLevel == 3){
-      return LEVEL_3;
+    if(Robot.getBall().isPresent()){
+
+      if(selectedLevel == 1){
+        return LEVEL_1_B;
+      }
+      else if (selectedLevel == 2){
+        return LEVEL_2_B;
+      }
+      else if (selectedLevel == 3){
+        return LEVEL_3_B;
+      }
+      else if (selectedLevel ==15){
+        return LEVEL_15_B;
+      }
+      else{
+        return 0;
+      }
     }
     else{
-      return 0;
+      if(selectedLevel == 1){
+        return LEVEL_1_H;
+      }
+      else if (selectedLevel == 2){
+        return LEVEL_2_H;
+      }
+      else if (selectedLevel == 3){
+        return LEVEL_3_H;
+      }
+      else{
+        return 0;
+      }
     }
   }
-
   public double getSafeFlipTop(){
     return SAFE_FLIP_TOP;
   }

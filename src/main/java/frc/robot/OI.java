@@ -30,7 +30,7 @@ public class OI {
         //
         //primary controller
         //
-        //primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
+        primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
@@ -45,22 +45,12 @@ public class OI {
         //
         //secondary controller
         //
-        // secondaryController.getBackButton().whenPressed(new C_RearClimber(90));
 
-        // secondaryController.getDPadButton(Direction.UP).whenPressed(new C_FrontClimber(0));
-        // secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
-        // secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
+        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_SetSelectedLevel(3));
+        secondaryController.getDPadButton(Direction.LEFT).whenPressed(new C_SetSelectedLevel(2));
+        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_SetSelectedLevel(1));
+        secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_SetSelectedLevel(15));
 
-        // secondaryController.getAButton().whenPressed(new C_SetFrontClimberIntake(-.5));
-        // secondaryController.getAButton().whenReleased(new C_SetFrontClimberIntake(0));
-
-        // secondaryController.getBButton().whenPressed(new C_SetFrontClimberIntake(.5));
-        // secondaryController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
-
-        // secondaryController.getYButton().whenPressed(new C_FrontClimberHold());
-
-        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
-        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
         secondaryController.getRightBumperButton().whenPressed(new CG_DownAll());

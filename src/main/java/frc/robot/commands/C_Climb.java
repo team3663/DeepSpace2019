@@ -38,6 +38,8 @@ public class C_Climb extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    new C_CrabDrive().start();
+
     Robot.getDrivetrain().softReset();
     direction = Math.signum(targetAngle - Robot.getFrontClimber().getAngle());
     Robot.getFrontClimber().setBrakeMode();

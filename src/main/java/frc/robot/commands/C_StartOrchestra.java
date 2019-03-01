@@ -82,7 +82,7 @@ public class C_StartOrchestra extends Command {
         }
       }
       else{
-        frontClimber.goToDegree(45);
+        frontClimber.goToDegree(frontClimber.getSafeTop());
       }
       if(Robot.getHatch().isPresent()){
         //does nothing if there is a hatch on startup
@@ -142,7 +142,7 @@ public class C_StartOrchestra extends Command {
       new C_EndEffectorDirect().start();
       new C_FrontClimberDirect().start();
       new C_RearClimberDirect().start();
-      new C_CrabDrive().start();;
+      
 
     }
     else{
