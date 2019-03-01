@@ -30,9 +30,9 @@ public class C_WaitForHatch extends Command {
   @Override
   protected boolean isFinished() {
     if (waitForHatchDeploy) {
-      return !Robot.getHatch().hatchIsPresent();
+      return !Robot.getHatch().isPresent();
     }
-    return Robot.getHatch().hatchIsPresent();
+    return Robot.getHatch().isPresent();
   }
 
 }

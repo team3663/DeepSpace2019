@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -10,16 +11,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_Flip extends Command {
-  private boolean isFront;
-  private double elevatorEnd;
-
-  public C_Flip(boolean isFront) {
+public class C_EFRestart extends Command {
+  
+  public C_EFRestart() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
-    requires(Robot.getFrontClimber());
-    this.isFront = isFront;
-    this.elevatorEnd = Robot.getElevator().getSafeFlipTop();
+    requires(Robot.getHatch());
   }
 
   // Called just before this Command runs the first time
@@ -30,27 +29,29 @@ public class C_Flip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isFliped(isFront)){
+    if(!Robot.getEndEffectorAngle().isInitialized()){
 
-      if(Robot.getFrontClimber().safeToFlip()){
-        Robot.getElevator().goToInch(elevatorEnd);
-
-        if(Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipBot() && Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop()){
-          Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
+      if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop() && Robot.getFrontClimber().safeToFlip()){
+        if(!Robot.getEndEffectorAngle().isReset()){
+          Robot.getEndEffectorAngle().setAngleSpeed(-.6);
         }
-        
+        else{
+          Robot.getEndEffectorAngle().resetEncoder();
+          Robot.getEndEffectorAngle().setAngleSpeed(0);
+          Robot.getEndEffectorAngle().setInitialized(true);
+        }
       }
       else{
-        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop()); 
+        Robot.getElevator().goToInch(1);
+        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
       }
     }
-
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.getEndEffectorAngle().isFliped(isFront);
+    return Robot.getEndEffectorAngle().isReset() || Robot.getHatch().isPresent();
   }
 
   // Called once after isFinished returns true

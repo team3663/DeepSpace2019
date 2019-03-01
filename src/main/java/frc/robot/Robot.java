@@ -72,7 +72,8 @@ public class Robot extends TimedRobot {
     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
     camera.setResolution(320, 240);
     camera.setPixelFormat(PixelFormat.kMJPEG);
-    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream);
+    
+    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "HALF"));
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
@@ -135,12 +136,13 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
-
-
     SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure());
 
+    SmartDashboard.putNumber("slave Volt", ss_Elevator.getSVoltage());
+    SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());
+
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
-    SmartDashboard.putBoolean("Cargo Present", ss_Ball.cargoIsPresent());   
+    SmartDashboard.putBoolean("Cargo Present", ss_Ball.cargoIsPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_Ball.cargoIsPresent());    
  
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
@@ -237,6 +239,7 @@ public class Robot extends TimedRobot {
     for (int i = 0; i < 4; i++){
     ss_Swerve.getSwerveModule(i).zeroDistance();
     }
+    getVision().setLightMode(0);
     new C_StartOrchestra().start();
   }
 }

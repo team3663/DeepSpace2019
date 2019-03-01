@@ -82,6 +82,7 @@ public class OI {
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
+        testingController.getYButton().whenPressed(new C_VisionAlign());
     }
     
     public IGamepad getTestController(){

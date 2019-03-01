@@ -46,7 +46,6 @@ public class SS_RearClimber extends Subsystem {
 
     rearClimberReset = new DigitalInput(RobotMap.REAR_CLIMBER_LIMIT_SWITCH);
 
-    rearClimberMotor.getEncoder().setPosition(0);
     rearClimberMotor.setIdleMode(IdleMode.kBrake);
 
     PID = new CANPIDController(rearClimberMotor);
@@ -120,7 +119,7 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public void resetEncoder(){
-    rearClimberMotor.getEncoder().setPosition(0); //TODO: find what is the reset pos
+    rearClimberMotor.getEncoder().setPosition(-1.3); 
   }
 
   public DigitalInput getRearClimberReset(){

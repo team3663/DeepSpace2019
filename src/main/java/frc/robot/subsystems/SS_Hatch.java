@@ -49,11 +49,11 @@ public class SS_Hatch extends Subsystem {
    /**
    * @return the hatchSwitch
    */
-  /*public DigitalInput getHatchSwitch() {
+  public DigitalInput getHatchSwitch() {
    return hatchSwitch;
-  /}*/
+  }
   
-  public boolean hatchIsPresent(){
+  public boolean isPresent(){
     return !hatchSwitch.get();
   }
 

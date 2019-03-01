@@ -30,6 +30,7 @@ public class C_StartOrchestra extends Command {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
+    requires(Robot.getHatch());
 
     frontClimber = Robot.getFrontClimber();
     rearClimber = Robot.getRearClimber();
@@ -48,21 +49,22 @@ public class C_StartOrchestra extends Command {
     if(!Robot.getOI().getTestController().getRightBumperButton().get()){
 
 
-      if(!rearClimber.isInitialized()){
+      if(!rearClimber.isInitilized()){
         /*
         rear climber
         */
-        if(!frontClimber.isReset()){
-          frontClimber.setSpeed(.2);
+        if(!rearClimber.isReset()){
+          rearClimber.setSpeed(.2);
         }
         else{
-          frontClimber.setSpeed(0);
-          frontClimber.resetEncoder();
+          rearClimber.setSpeed(0);
+          rearClimber.resetEncoder();
 
-          frontClimber.setInitialized(true);
+          rearClimber.setInitilized(true);
         }
-
-        frontClimber.goToDegree(45);
+      }
+      else{
+        rearClimber.goToDegree(5);
       }
 
       if(!frontClimber.isInitialized()){
@@ -70,7 +72,7 @@ public class C_StartOrchestra extends Command {
         frontClimber.
         */
         if(!frontClimber.isReset()){
-          frontClimber.setSpeed(.2);
+          frontClimber.setSpeed(.5);
         }
         else{
           frontClimber.setSpeed(0);
@@ -78,14 +80,18 @@ public class C_StartOrchestra extends Command {
 
           frontClimber.setInitialized(true);
         }
-
+      }
+      else{
         frontClimber.goToDegree(45);
       }
-      if(!efAngle.isInitialized() && frontClimber.isInitialized()){
+      if(Robot.getHatch().isPresent()){
+        //does nothing if there is a hatch on startup
+      }
+      else if(!efAngle.isInitialized() && frontClimber.isInitialized()){
         /*
         end effector
         */
-        if(elevator.getAverageInch() < elevator.getSafeFlipHeight()){
+        if(elevator.getAverageInch() < elevator.getSafeFlipTop()){
           if(!efAngle.isReset()){
             efAngle.setAngleSpeed(-.6);
           }
@@ -95,6 +101,9 @@ public class C_StartOrchestra extends Command {
             efAngle.setInitialized(true);
           }
         }
+      }
+      else if (efAngle.isInitialized()){
+       // efAngle.goToDegree(90);
       }
       if(!elevator.isInitialized() && frontClimber.isInitialized()){
         /*
@@ -118,7 +127,11 @@ public class C_StartOrchestra extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (elevator.isInitialized() && frontClimber.isInitialized() && efAngle.isInitialized()) || Robot.getOI().getTestController().getRightBumperButton().get();
+    return (elevator.isInitialized() && 
+      frontClimber.isInitialized() && 
+      rearClimber.isInitilized() && 
+      (efAngle.isInitialized() || Robot.getHatch().isPresent())) ||
+      Robot.getOI().getTestController().getRightBumperButton().get();
   }
 
   // Called once after isFinished returns true
@@ -129,15 +142,21 @@ public class C_StartOrchestra extends Command {
       new C_EndEffectorDirect().start();
       new C_FrontClimberDirect().start();
       new C_RearClimberDirect().start();
+      new C_CrabDrive().start();;
 
     }
     else{
 
-      new C_ElevatorToInch(1);
+      new C_ElevatorToInch(1).start();;
       new C_FrontClimber(0).start();;
     }
 
     //TODO: start PID commands after this
+  }
+
+  @Override
+  public synchronized boolean isInterruptible() {
+    return false;
   }
 
 }

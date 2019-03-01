@@ -40,7 +40,7 @@ public class SS_Elevator extends Subsystem {
   private boolean initialized = false;
 
   private final double SAFE_FLIP_TOP = 12;
-  private final double SAFE_FLIP_BOT = 2;
+  private final double SAFE_FLIP_BOT = .5;
   private final double LEVEL_1 = 5;
   private final double LEVEL_2 = 26;
   private final double LEVEL_3 = 60;
@@ -87,6 +87,13 @@ public class SS_Elevator extends Subsystem {
       masterMotor.set(speed * speedMultiplier);
   }
 
+  public double getMVoltage(){
+    return masterMotor.getOutputCurrent();
+  }
+  public double getSVoltage(){
+    return slaveMotor.getOutputCurrent();
+  }
+
   public void goToPos(double pos){
     
     masterMotor.getPIDController().setReference(pos, ControlType.kPosition);
@@ -130,8 +137,12 @@ public class SS_Elevator extends Subsystem {
     }
   }
 
-  public double getSafeFlipHeight(){
+  public double getSafeFlipTop(){
     return SAFE_FLIP_TOP;
+  }
+  
+  public double getSafeFlipBot(){
+    return SAFE_FLIP_BOT;
   }
 
 
