@@ -132,7 +132,7 @@ public class SS_Elevator extends Subsystem {
       else if (selectedLevel == 3){
         return LEVEL_3_B;
       }
-      else if (selectedLevel ==15){
+      else if (selectedLevel == 15){
         return LEVEL_15_B;
       }
       else{
@@ -148,6 +148,10 @@ public class SS_Elevator extends Subsystem {
       }
       else if (selectedLevel == 3){
         return LEVEL_3_H;
+      }
+      //this is only run if unintended by operator, its a safety
+      else if (selectedLevel == 15){
+        return LEVEL_1_H;
       }
       else{
         return 0;

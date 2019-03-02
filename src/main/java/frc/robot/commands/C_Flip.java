@@ -18,6 +18,7 @@ public class C_Flip extends Command {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
+    requires(Robot.getHatch());
     this.isFront = isFront;
     this.elevatorEnd = Robot.getElevator().getSafeFlipTop();
   }
@@ -30,7 +31,7 @@ public class C_Flip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isFliped(isFront)){
+    if(!Robot.getEndEffectorAngle().isFliped(isFront) && !Robot.getHatch().isPresent()){
 
       if(Robot.getFrontClimber().safeToFlip()){
         Robot.getElevator().goToInch(elevatorEnd);
@@ -44,13 +45,17 @@ public class C_Flip extends Command {
         Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop()); 
       }
     }
-
+  
+    else if(Robot.getHatch().isPresent()){
+      Robot.getEndEffectorAngle().setHatchMode(true);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.getEndEffectorAngle().isFliped(isFront);
+    
+    return Robot.getEndEffectorAngle().isFliped(isFront) || Robot.getHatch().isPresent();
   }
 
   // Called once after isFinished returns true

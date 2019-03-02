@@ -34,10 +34,6 @@ public class OI {
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
-        primaryController.getYButton().whenPressed(new CG_GetHatch());
-        primaryController.getAButton().whenPressed(new CG_PlaceHatch());
-
-
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
         
@@ -53,12 +49,19 @@ public class OI {
 
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
-        secondaryController.getRightBumperButton().whenPressed(new CG_DownAll());
+        secondaryController.getLeftBumperButton().whenReleased(new C_DownSelect());
+
+        secondaryController.getBackButton().whenPressed(new C_ToggleHatchMode());
+        secondaryController.getBackButton().whenReleased(new C_ModeSelect());
 
         secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
 
-        secondaryController.getXButton().whileHeld(new C_Climb());
+        secondaryController.getBButton().whenPressed(new CG_HatchDrop());
+
+        secondaryController.getYButton().whenPressed(new CG_HatchHold());
+
+        secondaryController.getStartButton().whileHeld(new C_Climb());
 
         
         //

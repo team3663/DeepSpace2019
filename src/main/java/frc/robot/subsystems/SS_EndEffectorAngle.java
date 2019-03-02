@@ -24,6 +24,7 @@ import com.revrobotics.CANPIDController.AccelStrategy;
 public class SS_EndEffectorAngle extends Subsystem {
 
   private boolean initialized = false;
+
   private CANSparkMax angleMotor;
   private DigitalInput angleResetSwitch;
   private CANPIDController PID;
@@ -40,6 +41,8 @@ public class SS_EndEffectorAngle extends Subsystem {
 
   private double SAFE_FLIP_BACK_ANGLE = -80;
   private double SAFEFLIP_FRONT_ANGLE = 90;
+
+  private boolean hatchMode = true;
 
   public SS_EndEffectorAngle() {
     angleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
@@ -79,6 +82,14 @@ public class SS_EndEffectorAngle extends Subsystem {
 
   public double getBackAngleLimit() {
     return BACK_ANGLE_LIMIT;
+  }
+
+  public boolean isHatchMode(){
+    return hatchMode;
+  }
+
+  public void setHatchMode(boolean hatchMode){
+    this.hatchMode = hatchMode;
   }
 
   public void goToDegree(double degree) {

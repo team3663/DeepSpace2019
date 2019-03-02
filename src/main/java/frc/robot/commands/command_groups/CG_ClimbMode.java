@@ -13,15 +13,12 @@ import frc.robot.commands.C_DriveDistance;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_RearClimber;
 
-public class CG_ClimbDown extends CommandGroup {
+public class CG_ClimbMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_ClimbDown() {
-    addParallel(new C_RearClimber(105));
-    addParallel(new C_FrontClimber(180));
-    addSequential(new C_DriveDistance(25, 0.3));
-    //addSequential(new C_Climb(0));
-    addSequential(new C_RearClimber(0));
+  public CG_ClimbMode() {
+    addParallel(new C_RearClimber(100));
+    addParallel(new C_FrontClimber(60));
   }
 }

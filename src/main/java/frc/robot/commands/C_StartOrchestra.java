@@ -142,11 +142,8 @@ public class C_StartOrchestra extends Command {
       new C_EndEffectorDirect().start();
       new C_FrontClimberDirect().start();
       new C_RearClimberDirect().start();
-      
-
     }
     else{
-
       new C_ElevatorToInch(1).start();;
       new C_FrontClimber(0).start();;
     }

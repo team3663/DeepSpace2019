@@ -5,36 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.test_commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-/**
- * ONLY FOR TESTING, LIMITS NOT SET
- */
-public class C_FrontClimberDirect extends Command {
-  public final double DEAD_BAND = 0.1;
-  public C_FrontClimberDirect() {
-    requires(Robot.getFrontClimber());
+public class C_ToggleHatchMode extends Command {
+  public C_ToggleHatchMode() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.getEndEffectorAngle());
   }
 
-  public double ignoreDeadBand(double input){
-    if(Math.abs(input) < DEAD_BAND){
-      return 0;
-    }
-    return input;
-  }
+
+  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getTestController().getLeftYValue();
-    Robot.getFrontClimber().setSpeed(ignoreDeadBand(speed));
+    Robot.getEndEffectorAngle().setHatchMode(!Robot.getEndEffectorAngle().isHatchMode());
   }
 
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
-
 
 }

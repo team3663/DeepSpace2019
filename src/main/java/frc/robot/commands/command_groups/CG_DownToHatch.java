@@ -9,17 +9,16 @@ package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.C_Flip;
-import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class CG_DownAll extends CommandGroup {
+public class CG_DownToHatch extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_DownAll() {
-    addParallel(new C_FrontClimber(90));
-    addSequential(new C_Flip(true));
-    addParallel(new C_ElevatorToInch(.2));
-    addSequential(new C_FrontClimber(0));
+  public CG_DownToHatch() {
+
+    addSequential(new C_Flip(false));
+    addParallel(new C_ElevatorToInch(4));
+  
   }
 }
