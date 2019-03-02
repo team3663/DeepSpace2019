@@ -10,14 +10,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_WaitForBall extends Command {
-  public C_WaitForBall() {
-    requires(Robot.getBall());
+public class C_SetSelectedLevel extends Command {
+  private int level;
+  public C_SetSelectedLevel(int level) {
+    this.level = level;
+    requires(Robot.getElevator());
   }
-
+  @Override
+  protected void execute() {
+    Robot.getElevator().setSelectedLevel(level);
+  }
   @Override
   protected boolean isFinished() {
-    return Robot.getBall().isPresent();
+    return true;
   }
 
 }

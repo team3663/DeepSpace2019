@@ -52,7 +52,6 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
     frontClimberReset = new DigitalInput(RobotMap.FRONT_CLIMBER_LIMIT_SWITCH);
 
-    frontClimberMotor.setClosedLoopRampRate(0);
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
     frontClimberMotor.setInverted(true);
     //TODO: tweak PID values
@@ -60,7 +59,7 @@ public class SS_FrontClimber extends Subsystem {
     PID.setP(.4);    //.4  for music use commented pid values
     PID.setI(.00001);  //.0001
     PID.setD(0);     //10
-    PID.setOutputRange(-.6, .6);
+    PID.setOutputRange(-.75, .75);
     
     
     PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
@@ -75,7 +74,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public boolean isReset(){
-    return frontClimberReset.get();
+    return !frontClimberReset.get();
   }
   
 
@@ -108,7 +107,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void resetEncoder(){
-    frontClimberMotor.getEncoder().setPosition(0);
+    frontClimberMotor.getEncoder().setPosition(27.2);
   }
 
 
@@ -151,6 +150,17 @@ public class SS_FrontClimber extends Subsystem {
   public boolean safeToFlip(){
     return getAngle() > SAFE_FLIP_TOP && getAngle() < SAFE_FLIP_BOT;
   }
+  
+  public double getSafeTop(){
+    return SAFE_FLIP_TOP;
+  }
 
+  public double getSafeBot(){
+    return SAFE_FLIP_BOT;
+  }
+
+  public double getGearRatio() {
+    return GEAR_RATIO;
+  }
 
 }

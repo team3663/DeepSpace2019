@@ -5,19 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.command_groups;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_Climb;
+import frc.robot.commands.C_DriveDistance;
+import frc.robot.commands.C_FrontClimber;
+import frc.robot.commands.C_RearClimber;
 
-public class C_WaitForBall extends Command {
-  public C_WaitForBall() {
-    requires(Robot.getBall());
+public class CG_ClimbMode extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public CG_ClimbMode() {
+    addParallel(new C_RearClimber(100));
+    addParallel(new C_FrontClimber(60));
   }
-
-  @Override
-  protected boolean isFinished() {
-    return Robot.getBall().isPresent();
-  }
-
 }

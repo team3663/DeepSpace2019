@@ -5,19 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.command_groups;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_EndEffectorHold;
+import frc.robot.commands.C_SetHatchClosed;
 
-public class C_WaitForBall extends Command {
-  public C_WaitForBall() {
-    requires(Robot.getBall());
+public class CG_HatchHold extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public CG_HatchHold() {
+    addSequential(new C_SetHatchClosed(true));
+    addSequential(new C_EndEffectorHold());
   }
-
-  @Override
-  protected boolean isFinished() {
-    return Robot.getBall().isPresent();
-  }
-
 }

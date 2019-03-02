@@ -30,15 +30,23 @@ public class C_EndEffectorAngle extends Command {
     }
   }
 
-  protected void execute() {
-    if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipHeight()){
-      Robot.getEndEffectorAngle().goToDegree(angle);
+  @Override
+  protected void initialize() {
+    if(!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()){
+      new C_EFRestart().start();
     }
-    
+  }
+
+  protected void execute() {
+    if(Robot.getEndEffectorAngle().isInitialized()){
+      if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop()){
+        Robot.getEndEffectorAngle().goToDegree(angle);
+      }
+    }
   }
   @Override
   protected boolean isFinished() {
-    return Robot.getEndEffectorAngle().atTarget(angle);
+    return Robot.getEndEffectorAngle().atTarget(angle) || !Robot.getEndEffectorAngle().isInitialized(); 
   }
 
 

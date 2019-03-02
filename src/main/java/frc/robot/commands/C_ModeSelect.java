@@ -9,15 +9,27 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.command_groups.CG_BallMode;
+import frc.robot.commands.command_groups.CG_HatchMode;
 
-public class C_WaitForBall extends Command {
-  public C_WaitForBall() {
-    requires(Robot.getBall());
+public class C_ModeSelect extends Command {
+  public C_ModeSelect() {
+    requires(Robot.getEndEffectorAngle());
+  }
+
+  @Override
+  protected void execute() {
+    if(Robot.getEndEffectorAngle().isHatchMode()){
+      new CG_HatchMode().start();
+    }
+    else{
+      new CG_BallMode().start();
+    }
   }
 
   @Override
   protected boolean isFinished() {
-    return Robot.getBall().isPresent();
+    return true;
   }
 
 }

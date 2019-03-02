@@ -5,19 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.command_groups;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_Flip;
+import frc.robot.commands.C_FrontClimber;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class C_WaitForBall extends Command {
-  public C_WaitForBall() {
-    requires(Robot.getBall());
+public class CG_BallMode extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public CG_BallMode() {
+    addSequential(new C_Flip(true));
+    addSequential(new C_ElevatorToInch(.5));
+    addSequential(new C_FrontClimber(0));
   }
-
-  @Override
-  protected boolean isFinished() {
-    return Robot.getBall().isPresent();
-  }
-
 }

@@ -10,14 +10,24 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_WaitForBall extends Command {
-  public C_WaitForBall() {
-    requires(Robot.getBall());
+public class C_ToggleHatchMode extends Command {
+  public C_ToggleHatchMode() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.getEndEffectorAngle());
   }
 
+
+  // Called repeatedly when this Command is scheduled to run
+  @Override
+  protected void execute() {
+    Robot.getEndEffectorAngle().setHatchMode(!Robot.getEndEffectorAngle().isHatchMode());
+  }
+
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.getBall().isPresent();
+    return true;
   }
 
 }

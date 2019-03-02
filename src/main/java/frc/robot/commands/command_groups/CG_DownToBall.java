@@ -8,20 +8,22 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.C_Climb;
-import frc.robot.commands.C_DriveDistance;
+import frc.robot.Robot;
+import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
-import frc.robot.commands.C_RearClimber;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class CG_ClimbDown extends CommandGroup {
+public class CG_DownToBall extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_ClimbDown() {
-    addParallel(new C_RearClimber(105));
-    addParallel(new C_FrontClimber(180));
-    addSequential(new C_DriveDistance(25, 0.3));
-    addSequential(new C_Climb(0));
-    addSequential(new C_RearClimber(0));
+  public CG_DownToBall() {
+
+  
+    addParallel(new C_FrontClimber(Robot.getFrontClimber().getSafeTop()));
+    addSequential(new C_Flip(true));
+    addParallel(new C_ElevatorToInch(.2));
+    addSequential(new C_FrontClimber(0));
+    
   }
 }

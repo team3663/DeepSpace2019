@@ -9,19 +9,26 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.command_groups.CG_DownToBall;
+import frc.robot.commands.command_groups.CG_DownToHatch;
 
-public class C_ChangeSelectedLevel extends Command {
-  private int level;
-  public C_ChangeSelectedLevel(int level) {
-    this.level = level;
-    requires(Robot.getElevator());
+public class C_DownSelect extends Command {
+  public C_DownSelect() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.getEndEffectorAngle());
   }
+
   @Override
   protected void execute() {
-    int totalLevel = Robot.getElevator().getSelectedLevel() + level;
-    if (totalLevel >= 1 && totalLevel <= 3)
-    Robot.getElevator().setSelectedLevel( totalLevel );
+    if(Robot.getEndEffectorAngle().isHatchMode()){
+      new CG_DownToHatch().start();
+    }
+    else{
+      new CG_DownToBall().start();
+    }
   }
+
   @Override
   protected boolean isFinished() {
     return true;

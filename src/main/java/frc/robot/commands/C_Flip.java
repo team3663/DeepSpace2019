@@ -12,13 +12,15 @@ import frc.robot.Robot;
 
 public class C_Flip extends Command {
   private boolean isFront;
+  private double elevatorEnd;
+
   public C_Flip(boolean isFront) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
+    requires(Robot.getHatch());
     this.isFront = isFront;
+    this.elevatorEnd = Robot.getElevator().getSafeFlipTop();
   }
 
   // Called just before this Command runs the first time
@@ -29,24 +31,31 @@ public class C_Flip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isFliped(isFront)){
+    if(!Robot.getEndEffectorAngle().isFliped(isFront) && !Robot.getHatch().isPresent()){
+
       if(Robot.getFrontClimber().safeToFlip()){
-        Robot.getElevator().goToInch(Robot.getElevator().getSafeFlipHeight());
-        if(Robot.getElevator().atTarget(Robot.getElevator().getSafeFlipHeight())){
+        Robot.getElevator().goToInch(elevatorEnd);
+
+        if(Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipBot() && Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop()){
           Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
         }
+        
       }
       else{
-        Robot.getFrontClimber().goToDegree(90); 
+        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop()); 
       }
     }
-
+  
+    else if(Robot.getHatch().isPresent()){
+      Robot.getEndEffectorAngle().setHatchMode(true);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.getEndEffectorAngle().isFliped(isFront);
+    
+    return Robot.getEndEffectorAngle().isFliped(isFront) || Robot.getHatch().isPresent();
   }
 
   // Called once after isFinished returns true

@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -5,15 +6,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.test_commands;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_EndEffectorDirect extends Command {
-  private static final double DEAD_BAND = 0.5;
-  public C_EndEffectorDirect() {
+public class C_EFRestart extends Command {
+  
+  public C_EFRestart() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.getEndEffectorAngle());
+    requires(Robot.getElevator());
+    requires(Robot.getHatch());
   }
 
   // Called just before this Command runs the first time
@@ -21,28 +26,32 @@ public class C_EndEffectorDirect extends Command {
   protected void initialize() {
   }
 
-  public double ignoreDeadBand(double input){
-    if(Math.abs(input) < DEAD_BAND){
-      return 0;
-    }
-    return input;
-  }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getTestController().getRightXValue();
-    if(Robot.getEndEffectorAngle().isReset()){
-      if(speed < 0){
-        speed = 0;
+    if(!Robot.getEndEffectorAngle().isInitialized()){
+
+      if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop() && Robot.getFrontClimber().safeToFlip()){
+        if(!Robot.getEndEffectorAngle().isReset()){
+          Robot.getEndEffectorAngle().setAngleSpeed(-.6);
+        }
+        else{
+          Robot.getEndEffectorAngle().resetEncoder();
+          Robot.getEndEffectorAngle().setAngleSpeed(0);
+          Robot.getEndEffectorAngle().setInitialized(true);
+        }
+      }
+      else{
+        Robot.getElevator().goToInch(1);
+        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
       }
     }
-    Robot.getEndEffectorAngle().setAngleSpeed(ignoreDeadBand(speed));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.getEndEffectorAngle().isReset() || Robot.getHatch().isPresent();
   }
 
   // Called once after isFinished returns true
@@ -51,9 +60,8 @@ public class C_EndEffectorDirect extends Command {
   }
 
   // Called when another command which requires one or more of the same
-  // subsystems is scheduled to runp
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

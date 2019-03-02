@@ -30,13 +30,9 @@ public class OI {
         //
         //primary controller
         //
-        //primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
+        primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
-
-        primaryController.getYButton().whenPressed(new CG_GetHatch());
-        primaryController.getAButton().whenPressed(new CG_PlaceHatch());
-
 
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
@@ -45,28 +41,27 @@ public class OI {
         //
         //secondary controller
         //
-        // secondaryController.getBackButton().whenPressed(new C_RearClimber(90));
 
-        // secondaryController.getDPadButton(Direction.UP).whenPressed(new C_FrontClimber(0));
-        // secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_FrontClimber(90));
-        // secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_FrontClimber(180));
+        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_SetSelectedLevel(3));
+        secondaryController.getDPadButton(Direction.LEFT).whenPressed(new C_SetSelectedLevel(2));
+        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_SetSelectedLevel(1));
+        secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_SetSelectedLevel(15));
 
-        // secondaryController.getAButton().whenPressed(new C_SetFrontClimberIntake(-.5));
-        // secondaryController.getAButton().whenReleased(new C_SetFrontClimberIntake(0));
-
-        // secondaryController.getBButton().whenPressed(new C_SetFrontClimberIntake(.5));
-        // secondaryController.getBButton().whenReleased(new C_SetFrontClimberIntake(0));
-
-        // secondaryController.getYButton().whenPressed(new C_FrontClimberHold());
-
-        secondaryController.getDPadButton(Direction.UP).whenPressed(new C_ChangeSelectedLevel(1));
-        secondaryController.getDPadButton(Direction.DOWN).whenPressed(new C_ChangeSelectedLevel(-1));
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
-        secondaryController.getRightBumperButton().whenPressed(new CG_DownAll());
+        secondaryController.getLeftBumperButton().whenReleased(new C_DownSelect());
+
+        secondaryController.getBackButton().whenPressed(new C_ToggleHatchMode());
+        secondaryController.getBackButton().whenReleased(new C_ModeSelect());
 
         secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
+
+        secondaryController.getBButton().whenPressed(new CG_HatchDrop());
+
+        secondaryController.getYButton().whenPressed(new CG_HatchHold());
+
+        secondaryController.getStartButton().whileHeld(new C_Climb());
 
         
         //
@@ -78,8 +73,9 @@ public class OI {
         // testingController.getLeftBumperButton().whenReleased(new C_SetHatchClose(false));
 
 
-        testingController.getBackButton().whileHeld(new C_Climb(10));
+        //testingController.getBackButton().whileHeld(new C_Climb(10));
 
+        testingController.getYButton().whenPressed(new C_VisionAlign());
     }
     
     public IGamepad getTestController(){

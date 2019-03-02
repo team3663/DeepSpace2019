@@ -8,18 +8,23 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_EndEffectorHold;
+import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
+import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class CG_DownAll extends CommandGroup {
+public class CG_HatchMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_DownAll() {
-    addParallel(new C_FrontClimber(90));
-    addSequential(new C_Flip(true));
-    addParallel(new C_ElevatorToInch(.2));
+  public CG_HatchMode() {
+    addSequential(new C_Flip(false));
+   // addParallel(new C_EndEffectorHold());
+    addParallel(new C_ElevatorToInch(4.5));
+    addSequential(new C_ExtendHatch(true));
+    addSequential(new C_SetHatchClosed(false));
     addSequential(new C_FrontClimber(0));
   }
 }

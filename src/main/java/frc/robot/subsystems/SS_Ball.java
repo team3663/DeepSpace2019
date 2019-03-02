@@ -70,7 +70,7 @@ public class SS_Ball extends Subsystem {
   public DigitalInput getCagroSwitch(){
     return cargoSwitch;
   }
-  public boolean cargoIsPresent(){
+  public boolean isPresent(){
     return !cargoSwitch.get();
   }
 
