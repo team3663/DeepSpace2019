@@ -15,7 +15,7 @@ public class C_HolonomicDrive extends Command {
 	private static final double ANGLE_ERROR = 2.5;
 
 	private PIDCont PIDController;
-  	private double kP = 0;
+  	private double kP = 1;
 	private double kI = 0;
 	private double kD = 0;
 	private double maxSpeed = 0.4;  
