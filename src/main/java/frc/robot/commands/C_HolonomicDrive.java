@@ -75,12 +75,12 @@ public class C_HolonomicDrive extends Command {
 		} else {
 			// set target angle to current angle so robot doesn't spin unexpectedly when left bumper is pressed and right joystick
 			// is not moved
-			targetAngle = Robot.getNavX().getGyroAngle();
+			targetAngle = Robot.getDrivetrain().getGyroAngle();
 		}
 
 		SmartDashboard.putNumber("snap power", rotation);
 		SmartDashboard.putNumber("snap angle ", targetAngle);
-		SmartDashboard.putNumber("current angle", Robot.getNavX().getGyroAngle());
+		SmartDashboard.putNumber("current angle", Robot.getDrivetrain().getGyroAngle());
 
 		Robot.getDrivetrain().holonomicDrive(forward, strafe, rotation);
 	}
@@ -127,14 +127,14 @@ public class C_HolonomicDrive extends Command {
         } else if(Math.abs(rotation) == 135) {
             rotation = 150 * Math.signum(rotation);
         }
-		return rotation;
+		return (int) rotation;
 	}
 
 	/**
 	 * Returns the angle to rotate to in order to rotate the least distance
 	 */
 	private int getShortestPath(int targetAngle) {
-		int path = targetAngle - (int)Robot.getNavX().getGyroAngle();
+		int path = targetAngle - (int)Robot.getDrivetrain().getGyroAngle();
 		if(Math.abs(path) > 180) {
 			return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
 		}
