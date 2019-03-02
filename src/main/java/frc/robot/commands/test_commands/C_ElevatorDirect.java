@@ -8,7 +8,6 @@
 package frc.robot.commands.test_commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class C_ElevatorDirect extends Command {

@@ -8,10 +8,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
@@ -19,8 +17,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
-import frc.robot.commands.test_commands.C_RearClimberDirect;
-import frc.robot.util.PIDCont;
 
 /**
  * Add your docs here.

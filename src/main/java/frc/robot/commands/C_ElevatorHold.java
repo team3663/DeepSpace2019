@@ -13,8 +13,6 @@ import frc.robot.Robot;
 public class C_ElevatorHold extends Command {
   private double holdPos;
 
-  //TODO: implement exit code
-
   public C_ElevatorHold() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

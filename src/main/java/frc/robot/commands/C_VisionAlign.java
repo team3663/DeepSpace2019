@@ -59,7 +59,8 @@ public class C_VisionAlign extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || vision.getTargetArea() > 30 || Robot.getOI().getPrimaryController().getRightBumperButton().get(); //TODO find the proper area for it to be hitting
+    return !vision.validTarget() || vision.getTargetArea() > 30 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
+    //TODO find the proper area for it to be hitting
   }
 
   // Called once after isFinished returns true

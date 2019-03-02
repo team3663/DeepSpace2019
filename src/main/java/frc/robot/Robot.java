@@ -14,19 +14,13 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
 import frc.robot.commands.C_StartOrchestra;
-import frc.robot.commands.test_commands.*;
-
 
 public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = false;
@@ -131,7 +125,7 @@ public class Robot extends TimedRobot {
     //Gyro
     SmartDashboard.putNumber("Gyro angle", ss_Swerve.getGyroAngle());
     SmartDashboard.putNumber("Gyro pitch", ss_Swerve.getNavX().getPitch());
-    //TODO: decide how to refrence the gyro properly
+
     SmartDashboard.putNumber("Selected Level", ss_Elevator.getSelectedLevel());
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());

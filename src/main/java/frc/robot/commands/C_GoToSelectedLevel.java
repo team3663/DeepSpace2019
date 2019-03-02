@@ -8,11 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_Elevator;
-import frc.robot.subsystems.SS_EndEffectorAngle;
-import frc.robot.subsystems.SS_FrontClimber;
 
 public class C_GoToSelectedLevel extends Command {
   SS_Elevator elevator;

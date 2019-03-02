@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -52,11 +51,11 @@ public class C_HolonomicDrive extends Command {
 		SmartDashboard.putNumber("Rotation", rotation);
 
 		if(Robot.getOI().getPrimaryController().getRightBumperButton().get()){
-			Robot.getDrivetrain().setFieldOriented(false);
+			mDrivetrain.setFieldOriented(false);
 
 		}
 		else{
-			Robot.getDrivetrain().setFieldOriented(true);
+			mDrivetrain.setFieldOriented(true);
 			forward = -forward;
 			strafe = - strafe;
 		}
@@ -75,14 +74,14 @@ public class C_HolonomicDrive extends Command {
 		} else {
 			// set target angle to current angle so robot doesn't spin unexpectedly when left bumper is pressed and right joystick
 			// is not moved
-			targetAngle = Robot.getNavX().getGyroAngle();
+			targetAngle = mDrivetrain.getGyroAngle();
 		}
 
 		SmartDashboard.putNumber("snap power", rotation);
 		SmartDashboard.putNumber("snap angle ", targetAngle);
-		SmartDashboard.putNumber("current angle", Robot.getNavX().getGyroAngle());
+		SmartDashboard.putNumber("current angle", mDrivetrain.getGyroAngle());
 
-		Robot.getDrivetrain().holonomicDrive(forward, strafe, rotation);
+		mDrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
 
 	private boolean reachedTargetAngle(double targetAngle) {
@@ -90,11 +89,11 @@ public class C_HolonomicDrive extends Command {
 	}
 
 	private double getAngleError(double targetAngle) {
-		return targetAngle - Robot.getDrivetrain().getGyroAngle();
+		return targetAngle - mDrivetrain.getGyroAngle();
 	}
 	@Override
 	protected void end() {
-		Robot.getDrivetrain().stopDriveMotors();
+		mDrivetrain.stopDriveMotors();
 	}
 
 	@Override
@@ -127,14 +126,14 @@ public class C_HolonomicDrive extends Command {
         } else if(Math.abs(rotation) == 135) {
             rotation = 150 * Math.signum(rotation);
         }
-		return rotation;
+		return (int)rotation;
 	}
 
 	/**
 	 * Returns the angle to rotate to in order to rotate the least distance
 	 */
 	private int getShortestPath(int targetAngle) {
-		int path = targetAngle - (int)Robot.getNavX().getGyroAngle();
+		int path = targetAngle - (int)mDrivetrain.getGyroAngle();
 		if(Math.abs(path) > 180) {
 			return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
 		}

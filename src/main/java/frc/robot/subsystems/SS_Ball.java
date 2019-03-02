@@ -8,26 +8,16 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANDigitalInput.LimitSwitch;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.sun.jdi.Value;
-
-import java.util.Optional;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.*;
 
-import edu.wpi.first.hal.sim.SimHooks;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.test_commands.C_EndEffectorDirect;
 
 /**
  * Add your docs here.

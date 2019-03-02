@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
@@ -147,8 +146,6 @@ public class C_StartOrchestra extends Command {
       new C_ElevatorToInch(1).start();;
       new C_FrontClimber(0).start();;
     }
-
-    //TODO: start PID commands after this
   }
 
   @Override

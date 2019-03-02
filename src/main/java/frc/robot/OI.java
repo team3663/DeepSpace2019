@@ -2,9 +2,6 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.commands.command_groups.*;
-import frc.robot.commands.test_commands.C_ElevatorDirect;
-import frc.robot.commands.test_commands.C_ElevatorToInch;
-import frc.robot.input.AxisButton;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
 import frc.robot.input.DPadButton.Direction;
@@ -30,6 +27,7 @@ public class OI {
         //
         //primary controller
         //
+
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new C_IntakeSelect()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());

@@ -10,7 +10,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.command_groups.CG_BallIntake;
-import frc.robot.commands.command_groups.CG_BallMode;
 
 public class C_IntakeSelect extends Command {
   public C_IntakeSelect() {

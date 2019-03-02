@@ -54,7 +54,7 @@ public class SS_FrontClimber extends Subsystem {
 
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
     frontClimberMotor.setInverted(true);
-    //TODO: tweak PID values
+
     PID = new CANPIDController(frontClimberMotor);
     PID.setP(.4);    //.4  for music use commented pid values
     PID.setI(.00001);  //.0001

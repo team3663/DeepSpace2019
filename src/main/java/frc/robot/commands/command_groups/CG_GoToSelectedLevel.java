@@ -9,15 +9,12 @@ package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.C_ElevatorHold;
-import frc.robot.commands.C_EndEffectorAngle;
 import frc.robot.commands.C_EndEffectorHold;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.C_SetEndEffectorIntakeSpeed;
 import frc.robot.commands.C_SetFrontClimberIntake;
-import frc.robot.commands.C_Wait;
-import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_GoToSelectedLevel extends CommandGroup {
   /**
