@@ -55,9 +55,18 @@ public class C_Climb extends Command {
     double joystickInput = Robot.getOI().getSecondaryController().getRightYValue();
     double pitch = Robot.getDrivetrain().getOffsetPitch();
 
-    Robot.getRearClimber().setSpeed(joystickInput * WOAH_THERE);
-    
-    Robot.getFrontClimber().setSpeed((joystickInput + calcAdjustmentSpeed(pitch)) * FRONT_CLIMBER_SCALAR * WOAH_THERE);
+    if (Math.abs(pitch) <= ABSOLUTE_PITCH_LIMIT) {
+      Robot.getRearClimber().setSpeed(joystickInput * WOAH_THERE);
+      Robot.getFrontClimber().setSpeed((joystickInput + calcAdjustmentSpeed(pitch)) * FRONT_CLIMBER_SCALAR * WOAH_THERE);
+    } else {
+      if(pitch > ABSOLUTE_PITCH_LIMIT) {
+        Robot.getRearClimber().setSpeed(joystickInput * WOAH_THERE);
+        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getAngle());
+      } else {
+        Robot.getRearClimber().goToDegree(Robot.getRearClimber().getAngle());
+        Robot.getFrontClimber().setSpeed(joystickInput * WOAH_THERE);
+      }
+    }
 
     /*
       I have made 3 different ways to climb, im not sure which one works, wrote them just in case one doesn't work
@@ -124,27 +133,16 @@ public class C_Climb extends Command {
     return Robot.getDrivetrain().getOffsetPitch();
   }
 
-  private double calcAdjustmentSpeed(double pitch) {
-    if(Math.abs(pitch) > ABSOLUTE_PITCH_LIMIT) pitch = Math.signum(pitch) * ABSOLUTE_PITCH_LIMIT;
-    double adjSpeed = pitch / ABSOLUTE_PITCH_LIMIT;
+  private double calcAdjustmentSpeed(double pickles) {
+    double adjSpeed = pickles / ABSOLUTE_PITCH_LIMIT;
     return -adjSpeed;
 
   }
 
   @Override
   protected boolean isFinished() {
-    return (targetAngle - Robot.getFrontClimber().getAngle()) * direction < 0;
+    //return (targetAngle - Robot.getFrontClimber().getAngle()) * direction < 0;
+    return Robot.getFrontClimber().getAngle() >= 180;
   }
 
-  @Override
-  protected void end() {
-    Robot.getFrontClimber().setSpeed(0);
-    Robot.getRearClimber().setSpeed(0);
-  }
-
-  @Override
-  protected void interrupted() {
-    Robot.getFrontClimber().setSpeed(0);
-    Robot.getRearClimber().setSpeed(0);    
-  }
 }
