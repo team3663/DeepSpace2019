@@ -31,7 +31,7 @@ public class OI {
         //primary controller
         //
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
-        primaryController.getXButton().whenPressed(new CG_BallIntake()); 
+        primaryController.getXButton().whenPressed(new C_IntakeSelect()); 
         primaryController.getBButton().whenPressed(new CG_CancelIntake());
 
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
