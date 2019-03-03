@@ -33,7 +33,7 @@ public class C_Climb extends Command {
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
     requires(Robot.getBall());
-    Robot.getDrivetrain().softReset();
+    Robot.getDrivetrain().softReset(); //TODO chekc and make sure the angle offset is being set only once
     //this.targetAngle = targetAngle;
   }
   

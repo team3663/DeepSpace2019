@@ -10,15 +10,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SetHatchMode extends Command {
-  private boolean hatchMode;
-  public C_SetHatchMode(boolean hatchMode) {
+public class C_SmartHatchClose extends Command {
+  private boolean close;
+  private boolean wait;
+  public C_SmartHatchClose() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getHatch());
-    this.hatchMode = hatchMode;
+    wait = true;
   }
-
+  public C_SmartHatchClose(boolean close) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.getHatch());
+    this.wait = false;
+    this.close = close;
+  }
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -27,15 +34,20 @@ public class C_SetHatchMode extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getHatch().isPresent()){
-      Robot.getHatch().setHatchMode(hatchMode);
+    if(wait){
+      if(Robot.getHatch().isPresent()){
+        Robot.getHatch().setHatchClosed(true);
+      }
+    }
+    else{
+      Robot.getHatch().setHatchClosed(close);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return !wait;
   }
 
   // Called once after isFinished returns true

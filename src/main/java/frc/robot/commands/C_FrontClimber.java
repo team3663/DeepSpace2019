@@ -13,25 +13,52 @@ import frc.robot.Robot;
 public class C_FrontClimber extends Command {
   private double angle;
 
+  private boolean hatchAware;
+
   private double topAngleLimit;
   private double bottomAngleLimit;
 
   public C_FrontClimber(double angle) {
     requires(Robot.getFrontClimber());
     this.angle = angle;
+    this.hatchAware = false;
+
+    topAngleLimit = Robot.getFrontClimber().getTopAngleLimit();
+    bottomAngleLimit = Robot.getFrontClimber().getBottomAngleLimit();
+  }
+
+  public C_FrontClimber(double angle, boolean hatchAware) {
+    requires(Robot.getFrontClimber());
+    requires(Robot.getHatch());
+    this.angle = angle;
+    this.hatchAware = hatchAware;
 
     topAngleLimit = Robot.getFrontClimber().getTopAngleLimit();
     bottomAngleLimit = Robot.getFrontClimber().getBottomAngleLimit();
   }
 
   protected void execute() {
-    if(angle < topAngleLimit) {
-      Robot.getFrontClimber().goToDegree(topAngleLimit);
-    } else if (angle > bottomAngleLimit) {
-      Robot.getFrontClimber().goToDegree(bottomAngleLimit);
-    } else {
-      Robot.getFrontClimber().goToDegree(angle);
+    if(hatchAware){
+      if(!Robot.getHatch().isPresent()){
+        if(angle < topAngleLimit) {
+          Robot.getFrontClimber().goToDegree(topAngleLimit);
+        } else if (angle > bottomAngleLimit) {
+          Robot.getFrontClimber().goToDegree(bottomAngleLimit);
+        } else {
+          Robot.getFrontClimber().goToDegree(angle);
+        }
+      }
     }
+    else{
+      if(angle < topAngleLimit) {
+        Robot.getFrontClimber().goToDegree(topAngleLimit);
+      } else if (angle > bottomAngleLimit) {
+        Robot.getFrontClimber().goToDegree(bottomAngleLimit);
+      } else {
+        Robot.getFrontClimber().goToDegree(angle);
+      }
+    }
+
   }
 
   /**
@@ -40,7 +67,12 @@ public class C_FrontClimber extends Command {
    */
   @Override
   protected boolean isFinished() {
-    return Robot.getFrontClimber().atTarget(angle);
+    if(hatchAware){
+      return Robot.getFrontClimber().atTarget(angle) || Robot.getHatch().isPresent();
+    }
+    else{
+      return Robot.getFrontClimber().atTarget(angle);
+    }
   }
   
 
