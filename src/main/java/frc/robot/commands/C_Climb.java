@@ -13,7 +13,7 @@ import frc.robot.Robot;
 
 public class C_Climb extends Command {
   private double direction;
-  private double targetAngle;
+  private double targetAngle = 0;
   private static final double THRESHOLD_MIN = 100;
   private static final double THRESHOLD_MAX = 160;
   private double ANGLE_ERROR_AMOUNT = 3;
@@ -33,6 +33,7 @@ public class C_Climb extends Command {
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
     requires(Robot.getBall());
+    Robot.getDrivetrain().softReset();
     //this.targetAngle = targetAngle;
   }
   
@@ -41,13 +42,11 @@ public class C_Climb extends Command {
   protected void initialize() {
     new C_CrabDrive().start();
 
-    Robot.getDrivetrain().softReset();
     direction = Math.signum(targetAngle - Robot.getFrontClimber().getAngle());
     Robot.getFrontClimber().setBrakeMode();
     Robot.getRearClimber().setBrakeMode();
     Robot.getBall().setBrakeMode();
   }
-
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {

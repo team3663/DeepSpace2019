@@ -158,7 +158,7 @@ public class SS_Swerve extends Subsystem {
 
     private AHRS mNavX = new AHRS(Port.kUSB);
     private double offset = 0;
-
+    private boolean firstTime = true;
     /**
      * @deprecated
      * @param forward
@@ -232,10 +232,13 @@ public class SS_Swerve extends Subsystem {
     }
 
     public void softReset(){
-        offset = -getPitch();
+        if(firstTime){
+            offset = -getPitch();
+            firstTime = false;
+        }
     }
 
-      public double getOffsetPitch(){
+    public double getOffsetPitch(){
         SmartDashboard.putNumber("Pitch", getPitch() + offset);
         return getPitch() + offset;
     }
