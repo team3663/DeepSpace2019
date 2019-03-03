@@ -40,6 +40,8 @@ public class C_StartOrchestra extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getHatch().extendHatchPickup(false);
+    Robot.getHatch().setHatchClosed(true);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -83,21 +85,21 @@ public class C_StartOrchestra extends Command {
       else{
         frontClimber.goToDegree(frontClimber.getSafeTop());
       }
-      if(Robot.getHatch().isPresent()){
-        //does nothing if there is a hatch on startup
-      }
-      else if(!efAngle.isInitialized() && frontClimber.isInitialized()){
+      if(!efAngle.isInitialized() && frontClimber.isInitialized()){
         /*
         end effector
         */
-        if(elevator.getAverageInch() < elevator.getSafeFlipTop()){
-          if(!efAngle.isReset()){
-            efAngle.setAngleSpeed(-.6);
-          }
-          else{
-            efAngle.resetEncoder();
-            efAngle.setAngleSpeed(0);
-            efAngle.setInitialized(true);
+        if(!Robot.getHatch().isPresent()){
+
+          if(elevator.getAverageInch() < elevator.getSafeFlipTop()){
+            if(!efAngle.isReset()){
+              efAngle.setAngleSpeed(-.6);
+            }
+            else{
+              efAngle.resetEncoder();
+              efAngle.setAngleSpeed(0);
+              efAngle.setInitialized(true);
+            }
           }
         }
       }

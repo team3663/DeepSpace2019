@@ -46,10 +46,10 @@ public class SS_Elevator extends Subsystem {
   private final double LEVEL_1_B = 5;
   private final double LEVEL_2_B = 26;
   private final double LEVEL_3_B = 60;
-  private final double LEVEL_15_B = 16;
+  private final double LEVEL_15_B = 20;
 
   private final double LEVEL_1_H = 5;
-  private final double LEVEL_2_H = 26;
+  private final double LEVEL_2_H = 37.5;
   private final double LEVEL_3_H = 60;
 
   private CANPIDController PID;
@@ -72,7 +72,7 @@ public class SS_Elevator extends Subsystem {
     PID.setP(.06);
     PID.setI(.0);
     PID.setD(1);
-    PID.setOutputRange(-1, 1);
+    PID.setOutputRange(-.8, .8);
     masterMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
 
@@ -116,12 +116,18 @@ public class SS_Elevator extends Subsystem {
     goToInch(getSelectedLevelInch());
   }
 
+  
+  public void goToSelectedMinusOne(){
+
+    goToInch(getSelectedLevelInch() - 1);
+  }
+
   public CANPIDController elevatorPID(){
     return masterMotor.getPIDController();
   }
 
   public double getSelectedLevelInch(){
-    if(Robot.getBall().isPresent()){
+    if(!Robot.getHatch().isHatchMode()){
 
       if(selectedLevel == 1){
         return LEVEL_1_B;

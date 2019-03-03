@@ -10,18 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_Flip extends Command {
-  private boolean isFront;
-  private double elevatorEnd;
-
-  public 
-  C_Flip(boolean isFront) {
-    requires(Robot.getEndEffectorAngle());
-    requires(Robot.getElevator());
-    requires(Robot.getFrontClimber());
+public class C_SetHatchMode extends Command {
+  private boolean hatchMode;
+  public C_SetHatchMode(boolean hatchMode) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.getHatch());
-    this.isFront = isFront;
-    this.elevatorEnd = Robot.getElevator().getSafeFlipTop() - 1;
+    this.hatchMode = hatchMode;
   }
 
   // Called just before this Command runs the first time
@@ -32,37 +27,18 @@ public class C_Flip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isFlipped(isFront) && !Robot.getHatch().isPresent()){
-
-      if(Robot.getFrontClimber().safeToFlip()){
-        Robot.getElevator().goToInch(elevatorEnd);
-
-        if(Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipBot() && Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop()){
-          Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
-        }
-        
-      }
-      else{
-        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop()); 
-      }
-    }
-  
-    else if(Robot.getHatch().isPresent()){
-      Robot.getHatch().setHatchMode(true);
-    }
+    Robot.getHatch().setHatchMode(hatchMode);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent();
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-
   }
 
   // Called when another command which requires one or more of the same

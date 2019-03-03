@@ -13,13 +13,15 @@ import frc.robot.commands.command_groups.CG_BallIntake;
 
 public class C_IntakeSelect extends Command {
   public C_IntakeSelect() {
-    requires(Robot.getEndEffectorAngle());
+      requires(Robot.getHatch());
+    
   }
 
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isHatchMode()) {
+    if(!Robot.getHatch().isHatchMode() && Robot.getEndEffectorAngle().isFlipped(true) && Robot.getElevator().getAverageInch() < 2) {
       new CG_BallIntake().start();
+      //TODO
     }
   }
 

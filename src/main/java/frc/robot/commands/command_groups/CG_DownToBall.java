@@ -18,12 +18,17 @@ public class CG_DownToBall extends CommandGroup {
    * Add your docs here.
    */
   public CG_DownToBall() {
+    setInterruptible(false);
 
-  
-    addParallel(new C_FrontClimber(Robot.getFrontClimber().getSafeTop()));
     addSequential(new C_Flip(true));
     addParallel(new C_ElevatorToInch(.2));
     addSequential(new C_FrontClimber(0));
     
+
+  }
+
+  @Override
+  protected synchronized void setInterruptible(boolean interruptible) {
+    super.setInterruptible(interruptible);
   }
 }

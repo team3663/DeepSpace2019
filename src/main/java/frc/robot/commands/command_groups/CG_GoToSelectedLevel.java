@@ -9,6 +9,7 @@ package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.C_ElevatorHold;
+import frc.robot.commands.C_EndEffectorAngle;
 import frc.robot.commands.C_EndEffectorHold;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
@@ -24,6 +25,7 @@ public class CG_GoToSelectedLevel extends CommandGroup {
     addSequential(new C_SetFrontClimberIntake(0));
     addSequential(new C_SetEndEffectorIntakeSpeed(0));
     addSequential(new C_Flip(false));
+    addSequential(new C_EndEffectorAngle(-75));
     addParallel(new C_EndEffectorHold());
     addParallel(new C_FrontClimber(0));
     addSequential(new C_GoToSelectedLevel());

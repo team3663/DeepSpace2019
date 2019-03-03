@@ -8,7 +8,10 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_GoToSelectedLevel;
+import frc.robot.commands.C_HatchDownRelease;
 import frc.robot.commands.C_SetHatchClosed;
+import frc.robot.commands.C_Wait;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_HatchDrop extends CommandGroup {
@@ -17,6 +20,8 @@ public class CG_HatchDrop extends CommandGroup {
    */
   public CG_HatchDrop() {
     addSequential(new C_SetHatchClosed(false));
-    addSequential(new C_ElevatorToInch(4));
+    addSequential(new C_HatchDownRelease());
+    addSequential(new C_Wait(1000));
+    addSequential(new C_GoToSelectedLevel());
   }
 }

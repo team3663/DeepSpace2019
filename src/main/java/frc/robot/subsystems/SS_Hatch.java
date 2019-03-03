@@ -21,28 +21,33 @@ public class SS_Hatch extends Subsystem {
   private DoubleSolenoid hatchExtendSolenoid;
 
   private DigitalInput hatchSwitch;
+  private DigitalInput hatchPressedSwitch;
+
+  private boolean hatchMode = false;
 
   public SS_Hatch(){
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_PICKUP_SOLENOID_FORWARD, RobotMap.HATCH_PICKUP_SOLENOID_REVERSE);
     hatchExtendSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_SOLENOID_FORWARD, RobotMap.HATCH_EXTEND_SOLENOID_REVERSE);
 
-    //hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
+    //TODO put back
+    hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
+    hatchPressedSwitch = new DigitalInput(RobotMap.HATCH_PRESSED_SWITCH);
   }
 
   
   public void setHatchClosed(boolean state) {
     if(state){
-      hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
-    }else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }else{
+      hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
     }
   }
 
   public void extendHatchPickup(boolean state) {
     if(state){
-      hatchExtendSolenoid.set(DoubleSolenoid.Value.kForward);
-    } else {
       hatchExtendSolenoid.set(DoubleSolenoid.Value.kReverse);
+    } else {
+      hatchExtendSolenoid.set(DoubleSolenoid.Value.kForward);
     }
   }
 
@@ -55,6 +60,23 @@ public class SS_Hatch extends Subsystem {
   
   public boolean isPresent(){
     return !hatchSwitch.get();
+  }
+
+  public DigitalInput getPressedSwitch(){
+    return hatchPressedSwitch;
+  }
+
+  public boolean isPressed(){
+    return !hatchPressedSwitch.get();
+  }
+
+  
+  public boolean isHatchMode(){
+    return hatchMode;
+  }
+
+  public void setHatchMode(boolean hatchMode){
+    this.hatchMode = hatchMode;
   }
 
   @Override

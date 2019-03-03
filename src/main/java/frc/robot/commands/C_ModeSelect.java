@@ -14,12 +14,12 @@ import frc.robot.commands.command_groups.CG_HatchMode;
 
 public class C_ModeSelect extends Command {
   public C_ModeSelect() {
-    requires(Robot.getEndEffectorAngle());
+    requires(Robot.getHatch());
   }
 
   @Override
   protected void execute() {
-    if(Robot.getEndEffectorAngle().isHatchMode()){
+    if(Robot.getHatch().isHatchMode()){
       new CG_HatchMode().start();
     }
     else{

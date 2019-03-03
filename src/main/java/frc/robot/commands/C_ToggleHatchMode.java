@@ -14,14 +14,14 @@ public class C_ToggleHatchMode extends Command {
   public C_ToggleHatchMode() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.getEndEffectorAngle());
+    requires(Robot.getHatch());
   }
 
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getEndEffectorAngle().setHatchMode(!Robot.getEndEffectorAngle().isHatchMode());
+    Robot.getHatch().setHatchMode(!Robot.getHatch().isHatchMode());
   }
 
   // Make this return true when this Command no longer needs to run execute()

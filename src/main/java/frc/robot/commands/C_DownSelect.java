@@ -8,30 +8,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.command_groups.CG_DownToBall;
 import frc.robot.commands.command_groups.CG_DownToHatch;
 
 public class C_DownSelect extends Command {
+
+  private CommandGroup down;
   public C_DownSelect() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.getEndEffectorAngle());
+    requires(Robot.getHatch());
   }
 
   @Override
-  protected void execute() {
-    if(Robot.getEndEffectorAngle().isHatchMode()){
-      new CG_DownToHatch().start();
+  protected void initialize() {
+    if(Robot.getHatch().isHatchMode()){
+      down = new CG_DownToHatch();
+      
     }
     else{
-      new CG_DownToBall().start();
+      down = new CG_DownToBall();
     }
+    
+    down.start();
+  }
+  @Override
+  protected void execute() {
+    
   }
 
   @Override
   protected boolean isFinished() {
-    return true;
+    return down.isCompleted();
   }
 
 }

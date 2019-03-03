@@ -53,24 +53,27 @@ public static final int getDriveMotor(int module){
   public static final int PRESSURE_SENSOR = 0;
 
   //DIO
+  public static final int CARGO_SWITCH = 0;
+  public static final int ANGLE_RESET_SWITCH = 2;
+
   public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 3; 
   public static final int ELEVATOR_TOP_LIMIT_SWITCH = 1; 
 
   public static final int REAR_CLIMBER_LIMIT_SWITCH = 4;
   public static final int FRONT_CLIMBER_LIMIT_SWITCH = 5;
   
-  //public static final int HATCH_SWITCH = 2; 
+  public static final int HATCH_SWITCH = 6;         
+  public static final int HATCH_PRESSED_SWITCH = 7; 
 
-  public static final int ANGLE_RESET_SWITCH = 2;
-  public static final int CARGO_SWITCH = 0;
+
 
 
   //Pneumatics
-  public static final int HATCH_PICKUP_SOLENOID_FORWARD = 0;
-  public static final int HATCH_PICKUP_SOLENOID_REVERSE = 1;
-  public static final int HATCH_EXTEND_SOLENOID_FORWARD = 2;
-  public static final int HATCH_EXTEND_SOLENOID_REVERSE = 3;
-  
-  public static final int CSS_FORWARD = 0;
-  public static final int CSS_REVERSE = 1;
+  public static final int CSS_SOLENOID_FORWARD = 0;
+  public static final int CSS_SOLENOID_REVERSE = 1;
+
+  public static final int HATCH_PICKUP_SOLENOID_FORWARD = 2;  
+  public static final int HATCH_PICKUP_SOLENOID_REVERSE = 3;
+  public static final int HATCH_EXTEND_SOLENOID_FORWARD = 4;
+  public static final int HATCH_EXTEND_SOLENOID_REVERSE = 5;
 }

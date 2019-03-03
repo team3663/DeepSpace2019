@@ -42,7 +42,7 @@ public class SS_EndEffectorAngle extends Subsystem {
   private double SAFE_FLIP_BACK_ANGLE = -80;
   private double SAFEFLIP_FRONT_ANGLE = 90;
 
-  private boolean hatchMode = true;
+  private boolean hatchMode = false;
 
   public SS_EndEffectorAngle() {
     angleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
@@ -84,14 +84,6 @@ public class SS_EndEffectorAngle extends Subsystem {
     return BACK_ANGLE_LIMIT;
   }
 
-  public boolean isHatchMode(){
-    return hatchMode;
-  }
-
-  public void setHatchMode(boolean hatchMode){
-    this.hatchMode = hatchMode;
-  }
-
   public void goToDegree(double degree) {
     angleMotor.getPIDController().setReference(degree / 360 * (1 / GEAR_RATIO), 
       ControlType.kPosition);
@@ -109,10 +101,10 @@ public class SS_EndEffectorAngle extends Subsystem {
   }
 
   public boolean atTarget(double angle){
-    return getAngle() < angle + 1 && getAngle() > angle - 1;
+    return getAngle() < angle + 3 && getAngle() > angle - 3;
   }
 
-  public boolean isFliped(boolean toFront){
+  public boolean isFlipped(boolean toFront){
     if(toFront){
       return getAngle() > 85;
     }

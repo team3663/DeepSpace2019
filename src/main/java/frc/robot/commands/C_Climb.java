@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class C_Climb extends Command {
@@ -21,7 +22,7 @@ public class C_Climb extends Command {
   private static final double REAR_SHORT_SIDE_LENGTH = 4;
   private static final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(REAR_LONG_SIDE_LENGTH, 2) + Math.pow(REAR_SHORT_SIDE_LENGTH, 2));
   private static final double FRONT_REAR_RATIO = FRONT_CLIMBER_RADIUS/REAR_CLIMBER_RADIUS;
-  private static final double ABSOLUTE_PITCH_LIMIT = 30;
+  private static final double ABSOLUTE_PITCH_LIMIT = 15;
   private static final double WOAH_THERE = .45;
 
   private final double FRONT_CLIMBER_SCALAR = (Robot.getRearClimber().getGearRatio() / Robot.getFrontClimber().getGearRatio())
@@ -50,75 +51,44 @@ public class C_Climb extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
+
+    double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
+    double pitch = Robot.getDrivetrain().getPitch();
+    Robot.getRearClimber().setSpeed(-joystickInput);
+    if(pitch < 0){
+      Robot.getFrontClimber().setSpeed(joystickInput);
+    }
 
 
-    double joystickInput = Robot.getOI().getSecondaryController().getRightYValue();
-    double pitch = Robot.getDrivetrain().getOffsetPitch();
-
+/*
+    //balanceed climb
     if (Math.abs(pitch) <= ABSOLUTE_PITCH_LIMIT) {
-      Robot.getRearClimber().setSpeed(joystickInput * WOAH_THERE);
+      Robot.getRearClimber().setSpeed(-joystickInput * WOAH_THERE);
       Robot.getFrontClimber().setSpeed((joystickInput + calcAdjustmentSpeed(pitch)) * FRONT_CLIMBER_SCALAR * WOAH_THERE);
-    } else {
-      if(pitch > ABSOLUTE_PITCH_LIMIT) {
-        Robot.getRearClimber().setSpeed(joystickInput * WOAH_THERE);
+    }
+    //compensated climb
+    else {
+      //tilted back
+      if(pitch > 0) {
+        Robot.getRearClimber().setSpeed(-joystickInput * WOAH_THERE);
         Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getAngle());
-      } else {
+      } 
+      //tilted forward
+      else {
         Robot.getRearClimber().goToDegree(Robot.getRearClimber().getAngle());
         Robot.getFrontClimber().setSpeed(joystickInput * WOAH_THERE);
       }
     }
-
-    /*
-      I have made 3 different ways to climb, im not sure which one works, wrote them just in case one doesn't work
     */
+  }
 
-    //1.)Climbs up or down based on speed(front climber speed is always constant, back climber adjust)
+  private void markClimb(){
+    double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
+    double pitch = Robot.getDrivetrain().getOffsetPitch();
 
-    /*
-    ANGLE_ERROR_AMOUNT = 0;
-		double tilt = Math.signum(getAngleError());
-	  double maxSpeed = 1;
-    double controlSpeed = Math.abs(Math.signum(direction + tilt));
-  
-    Robot.getFrontClimber().setSpeed(0.5 * speedMultiplier * direction);
-    Robot.getRearClimber().setSpeed(controlSpeed * speedMultiplier);
-    */
 
-    //2.) Climbs based on Angle(front climber target angle is constant, back must make up for the errors)
-    // ANGLE_ERROR_AMOUNT = 3;
-    // double currentFrontAngle = Robot.getFrontClimber().getAngle();
-    // double currentRearAngle = Robot.getRearClimber().getAngle();
-		// double direction = Math.signum(targetAngle - currentFrontAngle);
-    // double tilt = Math.signum(getAngleError());    
-    // double angleError = Math.abs(Math.signum(direction + tilt)) * Math.abs(getAngleError());
 
-    // if(Math.signum(angleError) > 0){
-    //   Robot.getFrontClimber().setClimberMotorSpeed(0);
-    // }else{
-    //   Robot.getFrontClimber().goToDegree(targetAngle);
-    //   Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (currentRearAngle + (angleError * direction)));
-    // }
-    
-
-    /*3.) Both climbers climb to target angle, if the robot is tilted, pause the climb and autoBalances
-    ANGLE_ERROR_AMOUNT = 3;
-    double currentFrontAngle = Robot.getFrontClimber().getAngle();
-    double currentRearAngle = Robot.getRearClimber().getAngle();
-    if(Math.abs(getAngleError()) > 0){
-      Robot.getFrontClimber().goToDegree(currentFrontAngle + -getAngleError());
-      Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO  * (currentRearAngle + getAngleError()));
-    }else{
-      Robot.getFrontClimber().goToDegree(targetAngle + -getAngleError());
-      Robot.getRearClimber().goToDegree(FRONT_REAR_RATIO * (targetAngle + getAngleError()));
-    }
-    
-
-    //rotate the front climber intake wheels
-    if(isInIntakeArea()){
-      Robot.getBall().setCargoIntakeSpeed(maxSpeed * 0.5 * direction);
-    }else{
-      Robot.getBall().setCargoIntakeSpeed(0);
-    } */
   }
   
 

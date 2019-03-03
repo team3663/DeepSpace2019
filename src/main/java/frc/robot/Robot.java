@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     camera.setResolution(320, 240);
     camera.setPixelFormat(PixelFormat.kMJPEG);
     
-    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "HALF"));
+    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "NONE")); //HALF
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
@@ -136,9 +136,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
+    SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.isHatchMode());
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
-    SmartDashboard.putBoolean("Angle Switch", ss_Ball.isPresent());    
- 
+    SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    
+    SmartDashboard.putBoolean("Hatch Switch", ss_Hatch.isPresent());    
+    SmartDashboard.putBoolean("Hatch Press Switch", ss_Hatch.isPressed());    
+
+    SmartDashboard.putBoolean("ef init", ss_EndEffectorAngle.isInitialized());
+    SmartDashboard.putBoolean("ele init", ss_Elevator.isInitialized());    
+    SmartDashboard.putBoolean("fclimb init", ss_FrontClimber.isInitialized());    
+    SmartDashboard.putBoolean("rclimb init", ss_RearClimber.isInitilized());   
+    
     SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
     SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
@@ -204,29 +212,6 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString code to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional commands to the
-   * chooser code above (like the commented example) or additional comparisons
-   * to the switch structure below with additional strings & commands.
-   */
-  @Override
-  public void autonomousInit() {
-    
-  
-  }
-
-  /**
-   * This function is called periodically during autonomous.
-   */
-  @Override
-  public void autonomousPeriodic() {
-  }
 
   @Override
   public void teleopInit() {
@@ -236,4 +221,15 @@ public class Robot extends TimedRobot {
     getVision().setLightMode(0);
     new C_StartOrchestra().start();
   }
+
+  @Override
+  public void autonomousInit() {
+    teleopInit();
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+    teleopPeriodic();
+  }
+  
 }

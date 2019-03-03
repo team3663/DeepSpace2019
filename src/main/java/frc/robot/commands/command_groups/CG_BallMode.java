@@ -8,8 +8,10 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
+import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_BallMode extends CommandGroup {
@@ -17,6 +19,8 @@ public class CG_BallMode extends CommandGroup {
    * Add your docs here.
    */
   public CG_BallMode() {
+    addSequential(new C_ExtendHatch(false));
+    addSequential(new C_SetHatchClosed(true));
     addSequential(new C_Flip(true));
     addSequential(new C_ElevatorToInch(.5));
     addSequential(new C_FrontClimber(0));

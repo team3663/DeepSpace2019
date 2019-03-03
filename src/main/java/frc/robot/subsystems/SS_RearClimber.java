@@ -65,7 +65,13 @@ public class SS_RearClimber extends Subsystem {
   }
   
   public void setSpeed(double speed){
-    rearClimberMotor.set( -speed * speedMultiplier);
+    if(isReset()){
+      rearClimberMotor.set(0);
+    }
+    else{
+      rearClimberMotor.set( -speed * speedMultiplier);
+    }
+ 
   }
 
   public void setSpeedMultiplier(double speedMultiplier){

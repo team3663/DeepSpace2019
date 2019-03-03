@@ -46,6 +46,7 @@ public class C_EndEffectorAngle extends Command {
   }
   @Override
   protected boolean isFinished() {
+
     return Robot.getEndEffectorAngle().atTarget(angle) || !Robot.getEndEffectorAngle().isInitialized(); 
   }
 

@@ -30,8 +30,7 @@ public class OI {
 
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new C_IntakeSelect()); 
-        primaryController.getBButton().whenPressed(new CG_CancelIntake());
-
+        primaryController.getBackButton().whenPressed(new CG_CancelIntake());
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
         // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
         
@@ -47,10 +46,11 @@ public class OI {
 
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
-        secondaryController.getLeftBumperButton().whenReleased(new C_DownSelect());
 
-        secondaryController.getBackButton().whenPressed(new C_ToggleHatchMode());
-        secondaryController.getBackButton().whenReleased(new C_ModeSelect());
+        secondaryController.getRightBumperButton().whenPressed(new C_DownSelect());
+
+        secondaryController.getXButton().whenPressed(new C_ToggleHatchMode());
+        secondaryController.getXButton().whenReleased(new C_ModeSelect());
 
         secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
@@ -67,9 +67,6 @@ public class OI {
         //
 
         testingController.getAButton().whenPressed(new C_RearClimber(15));
-        // testingController.getLeftBumperButton().whenPressed(new C_SetHatchClose(true));
-        // testingController.getLeftBumperButton().whenReleased(new C_SetHatchClose(false));
-
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 

@@ -16,9 +16,14 @@ public class CG_DownToHatch extends CommandGroup {
    * Add your docs here.
    */
   public CG_DownToHatch() {
-
+    setInterruptible(false);
+    
     addSequential(new C_Flip(false));
     addParallel(new C_ElevatorToInch(4));
   
+  }
+  @Override
+  protected synchronized void setInterruptible(boolean interruptible) {
+    super.setInterruptible(interruptible);
   }
 }
