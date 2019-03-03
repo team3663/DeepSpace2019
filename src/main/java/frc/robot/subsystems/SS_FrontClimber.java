@@ -55,13 +55,18 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
     frontClimberMotor.setInverted(true);
 
+
+
     PID = new CANPIDController(frontClimberMotor);
     PID.setP(.4);    //.4  for music use commented pid values
     PID.setI(.00001);  //.0001
     PID.setD(0);     //10
     PID.setOutputRange(-.75, .75);
     
-    
+    // PID.setSmartMotionMaxVelocity(2000, 0);
+    // PID.setSmartMotionMaxAccel(1500, 0);
+    // PID.setSmartMotionAllowedClosedLoopError(0.02, 0);
+    // PID.setSmartMotionMinOutputVelocity(0, 0);
     PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
   }
   @Override
@@ -125,8 +130,9 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void goToDegree(double degree) {
-    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * (1/GEAR_RATIO), 
-      ControlType.kPosition);
+    frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * (1/GEAR_RATIO), ControlType.kPosition);
+    // frontClimberMotor.getPIDController().setReference(degreeToRotation(degree) * (1/GEAR_RATIO), ControlType.kSmartMotion);
+
   }
 
 

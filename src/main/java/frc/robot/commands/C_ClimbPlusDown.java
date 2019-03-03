@@ -12,7 +12,7 @@ import frc.robot.*;
 import frc.robot.subsystems.SS_FrontClimber;
 import frc.robot.subsystems.SS_RearClimber;
 
-public class C_JoystickClimb extends Command {
+public class C_ClimbPlusDown extends Command {
 
   private static final double FRONT_CLIMBER_RADIUS = 16.5;
   private static final double REAR_LONG_SIDE_LENGTH = 27;
@@ -26,7 +26,7 @@ public class C_JoystickClimb extends Command {
   private SS_FrontClimber ss_FrontClimber;
   private SS_RearClimber ss_RearClimber;
 
-  public C_JoystickClimb() {
+  public C_ClimbPlusDown() {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
