@@ -8,6 +8,8 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
+import frc.robot.commands.C_EndEffectorAngle;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
@@ -19,7 +21,8 @@ public class CG_DownToHatch extends CommandGroup {
     setInterruptible(false);
     
     addSequential(new C_Flip(false));
-    addParallel(new C_ElevatorToInch(4));
+    addParallel(new C_EndEffectorAngle(-75));
+    addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(1, true)));
   
   }
   @Override

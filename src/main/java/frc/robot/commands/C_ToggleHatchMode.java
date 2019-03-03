@@ -15,13 +15,16 @@ public class C_ToggleHatchMode extends Command {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getHatch());
+    requires(Robot.getBall());
   }
 
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getHatch().setHatchMode(!Robot.getHatch().isHatchMode());
+    if(!Robot.getBall().isPresent() && !Robot.getHatch().isPresent()){
+      Robot.getHatch().setHatchMode(!Robot.getHatch().isHatchMode());
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

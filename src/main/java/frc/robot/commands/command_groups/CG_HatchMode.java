@@ -8,6 +8,7 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.Robot;
 import frc.robot.commands.C_EndEffectorAngle;
 import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_Flip;
@@ -22,7 +23,7 @@ public class CG_HatchMode extends CommandGroup {
   public CG_HatchMode() {
     addSequential(new C_Flip(false));
     addParallel(new C_EndEffectorAngle(-75));
-    addParallel(new C_ElevatorToInch(6.5));
+    addParallel(new C_ElevatorToInch(Robot.getElevator().getSelectedLevelInch()));
     addSequential(new C_ExtendHatch(true));
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_FrontClimber(0));

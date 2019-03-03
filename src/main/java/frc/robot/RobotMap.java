@@ -62,7 +62,8 @@ public static final int getDriveMotor(int module){
   public static final int REAR_CLIMBER_LIMIT_SWITCH = 4;
   public static final int FRONT_CLIMBER_LIMIT_SWITCH = 5;
   
-  public static final int HATCH_SWITCH = 6;         
+  public static final int HATCH_SWITCH = 6;      
+  public static final int HATCH_OPTICAL_SWITCH = 8;   
   public static final int HATCH_PRESSED_SWITCH = 7; 
 
 

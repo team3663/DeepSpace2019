@@ -164,6 +164,46 @@ public class SS_Elevator extends Subsystem {
       }
     }
   }
+
+  public double getLevelInch(int level, boolean hatchMode){
+    if(!hatchMode){
+
+      if(level == 1){
+        return LEVEL_1_B;
+      }
+      else if (level == 2){
+        return LEVEL_2_B;
+      }
+      else if (level == 3){
+        return LEVEL_3_B;
+      }
+      else if (level == 15){
+        return LEVEL_15_B;
+      }
+      else{
+        return 0;
+      }
+    }
+    else{
+      if(level == 1){
+        return LEVEL_1_H;
+      }
+      else if (level == 2){
+        return LEVEL_2_H;
+      }
+      else if (level == 3){
+        return LEVEL_3_H;
+      }
+      //this is only run if unintended by operator, its a safety
+      else if (level == 15){
+        return LEVEL_1_H;
+      }
+      else{
+        return 0;
+      }
+    }
+  }
+
   public double getSafeFlipTop(){
     return SAFE_FLIP_TOP;
   }

@@ -13,18 +13,18 @@ public class C_HolonomicDrive extends Command {
 	//variables for snap to rotate
 	private static final double ANGLE_ERROR = 2.5;
 
-	private PIDCont PIDController;
+	private PIDCont PIDCont;
   	private double kP = 1;
 	private double kI = 0;
 	private double kD = 0;
-	private double maxSpeed = 0.4;  
+	private double maxPIDSpeed = 0.4;  
 
 	private double targetAngle = 0;
 
 	public C_HolonomicDrive() {
 		requires(Robot.getDrivetrain());
 		mDrivetrain = Robot.getDrivetrain();
-		PIDController = new PIDCont(maxSpeed, kP, kI, kD); //kP, kI, and kD need tuning
+		PIDCont = new PIDCont(maxPIDSpeed, kP, kI, kD); //TODO kP, kI, and kD need tuning
 	}
 
 	private double deadband(double input) {
@@ -57,18 +57,18 @@ public class C_HolonomicDrive extends Command {
 		else{
 			mDrivetrain.setFieldOriented(true);
 			forward = -forward;
-			strafe = - strafe;
+			strafe = -strafe;
 		}
 		
 		if(Robot.getOI().getPrimaryController().getLeftBumperButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
-			if(deadband(Robot.getOI().getPrimaryController().getRightXValue()) > 0 || deadband(Robot.getOI().getPrimaryController().getRightYValue()) > 0) {
+			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
 				targetAngle = getShortestPath(getSnappedRotation());
 			}
 
 			//if robot has not reached the target angle, set the power for that rotation that is being inputed to holonomic drive
 			if(!reachedTargetAngle(targetAngle)) {
-				rotation = PIDController.get(getAngleError(targetAngle));
+				rotation = PIDCont.get(getAngleError(targetAngle));
 			}
 			
 		} else {

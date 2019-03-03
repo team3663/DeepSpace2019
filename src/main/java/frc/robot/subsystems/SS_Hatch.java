@@ -21,6 +21,7 @@ public class SS_Hatch extends Subsystem {
   private DoubleSolenoid hatchExtendSolenoid;
 
   private DigitalInput hatchSwitch;
+  private DigitalInput hatchOpticalSwitch;
   private DigitalInput hatchPressedSwitch;
 
   private boolean hatchMode = false;
@@ -32,6 +33,7 @@ public class SS_Hatch extends Subsystem {
     //TODO put back
     hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
     hatchPressedSwitch = new DigitalInput(RobotMap.HATCH_PRESSED_SWITCH);
+    hatchOpticalSwitch = new DigitalInput(RobotMap.HATCH_OPTICAL_SWITCH);
   }
 
   
@@ -59,7 +61,19 @@ public class SS_Hatch extends Subsystem {
   }
   
   public boolean isPresent(){
+    return isPhysicalPresent() || isOpticalPresent();
+  }
+
+  public boolean isPhysicalPresent(){
     return !hatchSwitch.get();
+  }
+
+  public DigitalInput getHatchOptitcalSwitch(){
+    return hatchOpticalSwitch;
+  }
+
+  public boolean isOpticalPresent(){
+    return hatchOpticalSwitch.get();
   }
 
   public DigitalInput getPressedSwitch(){

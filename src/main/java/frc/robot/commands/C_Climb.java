@@ -82,14 +82,6 @@ public class C_Climb extends Command {
     */
   }
 
-  private void markClimb(){
-    double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
-    double pitch = Robot.getDrivetrain().getOffsetPitch();
-
-
-
-  }
-  
 
   private boolean isInIntakeArea(){
     return Robot.getFrontClimber().getAngle() > THRESHOLD_MIN && Robot.getFrontClimber().getAngle() < THRESHOLD_MAX;
