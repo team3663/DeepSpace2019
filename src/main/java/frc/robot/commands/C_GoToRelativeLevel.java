@@ -12,19 +12,17 @@ import frc.robot.Robot;
 
 public class C_GoToRelativeLevel extends Command {
   private double adjustment;
+
+  /**
+   * move to inchaes relative of selected level
+   * 
+   * @param adjustment inches to move from selected level
+   */
   public C_GoToRelativeLevel(double adjustment) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getElevator());
     this.adjustment = adjustment;
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-  }
-
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.getElevator().goToSelectedWithAdjustment(adjustment);
@@ -33,7 +31,7 @@ public class C_GoToRelativeLevel extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.getElevator().atTarget(Robot.getElevator().getAverageInch() - 1);
+    return Robot.getElevator().atTarget(Robot.getElevator().getAverageInch() + adjustment);
   }
 
   // Called once after isFinished returns true

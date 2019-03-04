@@ -14,41 +14,27 @@ public class C_FrontClimberHold extends Command {
 
   private double holdPos;
   public C_FrontClimberHold() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getFrontClimber());
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    isInterruptible();
     holdPos = Robot.getFrontClimber().getAngle();
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.getFrontClimber().goToDegree(holdPos);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
-  @Override
-  public synchronized boolean isInterruptible() {
-    return true;
-  }
+ @Override
+ public synchronized boolean isInterruptible() {
+   return true;
+ }
 }

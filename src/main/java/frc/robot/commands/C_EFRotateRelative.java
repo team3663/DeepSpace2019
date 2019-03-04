@@ -14,13 +14,19 @@ public class C_EFRotateRelative extends Command {
   private boolean isFront;
   private double absAdjustmentAngle;
   private double adjustment; 
+
+  /**
+   * rotates relative to the default flip angles
+   * 
+   * @param isFront check wether it thinks it is before running
+   * @param absAdjustmentAngle angle to adjust to
+   */
   public C_EFRotateRelative(boolean isFront, double absAdjustmentAngle) {
    requires(Robot.getEndEffectorAngle());
    this.isFront = isFront;
    this.absAdjustmentAngle = Math.abs(absAdjustmentAngle);
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     if(isFront){
@@ -32,8 +38,6 @@ public class C_EFRotateRelative extends Command {
 
     }
   }
-
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
 
@@ -42,21 +46,9 @@ public class C_EFRotateRelative extends Command {
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     System.out.println(" C EF ROTATE RELTAVITE IS RUNNING");
     return Robot.getEndEffectorAngle().atTarget(adjustment) || !Robot.getEndEffectorAngle().isFlipped(isFront);
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

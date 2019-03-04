@@ -16,6 +16,13 @@ public class C_EFToAngle extends Command {
   private double forwardAngleLimit;
   private double backwardAngleLimit;
 
+  /**
+   * 
+   * goes to end effector angle
+   * 
+   * @param angle target angle
+   */
+
   public  C_EFToAngle(double angle) {
     requires(Robot.getEndEffectorAngle());
     this.angle = angle;

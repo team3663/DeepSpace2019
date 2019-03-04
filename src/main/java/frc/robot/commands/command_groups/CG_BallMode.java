@@ -16,7 +16,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_BallMode extends CommandGroup {
   /**
-   * Add your docs here.
+   * go to ball mode
    */
   public CG_BallMode() {
     addSequential(new C_ExtendHatch(false));

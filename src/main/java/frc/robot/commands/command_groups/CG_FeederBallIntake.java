@@ -17,7 +17,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_FeederBallIntake extends CommandGroup {
   /**
-   * Add your docs here.
+   * aligns to intake from feeder station
    */
   public CG_FeederBallIntake() {
     addSequential(new C_Flip(true));

@@ -18,7 +18,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_HatchMode extends CommandGroup {
   /**
-   * Add your docs here.
+   * goes to hatch default position
    */
   public CG_HatchMode() {
     addSequential(new C_Flip(false));

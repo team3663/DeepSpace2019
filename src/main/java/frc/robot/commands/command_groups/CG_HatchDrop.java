@@ -16,7 +16,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_HatchDrop extends CommandGroup {
   /**
-   * Add your docs here.
+   * releases hatch and goes down an inch for a second
    */
   public CG_HatchDrop() {
     addSequential(new C_SetHatchClosed(false));

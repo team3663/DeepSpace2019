@@ -15,7 +15,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_DownToHatch extends CommandGroup {
   /**
-   * Add your docs here.
+   * goes down to the hatch default position
    */
   public CG_DownToHatch() {
     setInterruptible(false);

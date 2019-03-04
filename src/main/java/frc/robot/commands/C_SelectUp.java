@@ -14,6 +14,9 @@ import frc.robot.commands.command_groups.CG_GoToSelectedLevelFront;
 
 public class C_SelectUp extends Command {
 
+  /**
+   * selectes the CG to go to selected level based on what is the selected side
+   */
   
   public C_SelectUp() {
 

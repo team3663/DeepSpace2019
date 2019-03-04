@@ -15,37 +15,24 @@ public class C_GoToSelectedLevel extends Command {
   SS_Elevator elevator;
 
   public C_GoToSelectedLevel() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
     requires(Robot.getElevator());
 
     elevator = Robot.getElevator();
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-
-  }
-
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     elevator.goToSelectedLevel();
 
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     System.out.println("GO TO LEVEL RUNNING");
+    //ends if current inch is within range of target level
     return elevator.atTarget(elevator.getSelectedLevelInch());
   }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  
-  }
 
 }

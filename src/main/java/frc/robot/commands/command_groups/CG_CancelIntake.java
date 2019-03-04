@@ -15,7 +15,7 @@ import frc.robot.commands.C_SetFrontClimberIntake;
 
 public class CG_CancelIntake extends CommandGroup {
   /**
-   * Add your docs here.
+   * stops all intake wheels
    */
   public CG_CancelIntake() {
     addSequential(new C_Flip(true));

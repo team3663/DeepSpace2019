@@ -12,15 +12,17 @@ import frc.robot.Robot;
 
 public class C_EndEffectorHold extends Command {
   private double holdAngle;
+  /**
+   * grabs the current encoder position and sets the PID in an infinate loop until interrupted
+   */
   public C_EndEffectorHold() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getEndEffectorAngle());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    isInterruptible();
     holdAngle = Robot.getEndEffectorAngle().getAngle();
   }
 
@@ -36,8 +38,8 @@ public class C_EndEffectorHold extends Command {
     return false;
   }
 
-  // Called once after isFinished returns true
   @Override
-  protected void end() {
+  public synchronized boolean isInterruptible() {
+    return true;
   }
 }

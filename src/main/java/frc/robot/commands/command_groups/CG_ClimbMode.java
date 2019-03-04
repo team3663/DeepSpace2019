@@ -13,7 +13,7 @@ import frc.robot.commands.C_RearClimberToAngle;
 
 public class CG_ClimbMode extends CommandGroup {
   /**
-   * Add your docs here.
+   * readies climbers to climb
    */
   public CG_ClimbMode() {
     addParallel(new C_RearClimberToAngle(100));

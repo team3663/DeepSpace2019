@@ -14,6 +14,11 @@ public class C_ExtendHatch extends Command {
 
   private boolean state;
 
+  /**
+   * extends the hatch pickup
+   * 
+   * @param state extend (true) retract (false)
+   */
   public C_ExtendHatch(boolean state) {
     requires(Robot.getHatch());
     this.state = state;

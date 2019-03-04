@@ -13,25 +13,23 @@ import frc.robot.Robot;
 public class C_ElevatorHold extends Command {
   private double holdPos;
 
+  /**
+   * grabs the current encoder position and sets the PID in an infinate loop until interrupted
+   */
   public C_ElevatorHold() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getElevator());
   }
 
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     holdPos = Robot.getElevator().getAverageEncoder();
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     Robot.getElevator().goToPos(holdPos);
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;

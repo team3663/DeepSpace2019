@@ -13,6 +13,9 @@ import frc.robot.commands.command_groups.CG_BallMode;
 import frc.robot.commands.command_groups.CG_HatchMode;
 
 public class C_SelectMode extends Command {
+  /**
+   * goes to selected mode, hatch (true) or ball (false)
+   */
   public C_SelectMode() {
     requires(Robot.getHatch());
   }

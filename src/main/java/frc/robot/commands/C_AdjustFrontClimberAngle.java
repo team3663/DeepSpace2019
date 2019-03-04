@@ -13,6 +13,9 @@ import frc.robot.Robot;
 public class C_AdjustFrontClimberAngle extends Command {
   private static final double DEADBAND = 0.1;
 
+  /**
+   * makes small adjustments to the front climber angle
+   */
   public C_AdjustFrontClimberAngle() {
     requires(Robot.getFrontClimber());
   }
@@ -21,6 +24,7 @@ public class C_AdjustFrontClimberAngle extends Command {
   protected void initialize() {
   }
 
+  //TODO make while its held then revert back to whatever it was
   private double ignoreDeadband(double input){
     if(Math.abs(input) < DEADBAND){
       return 0;

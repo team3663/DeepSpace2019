@@ -15,7 +15,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_DownToBall extends CommandGroup {
   /**
-   * Add your docs here.
+   * elevator goes down to ball default position
    */
   public CG_DownToBall() {
     setInterruptible(false);

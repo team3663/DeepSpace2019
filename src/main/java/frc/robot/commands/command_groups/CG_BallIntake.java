@@ -21,7 +21,7 @@ import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_BallIntake extends CommandGroup {
   /**
-   * Add your docs here.
+   * goes to ball mode and waits for ball , then goes resets
    */
   public CG_BallIntake() {
     addSequential(new C_FrontClimber(95, true));

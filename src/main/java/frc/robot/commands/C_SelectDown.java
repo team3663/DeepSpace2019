@@ -15,10 +15,13 @@ import frc.robot.commands.command_groups.CG_DownToHatch;
 
 public class C_SelectDown extends Command {
 
+  
   private CommandGroup down;
+  /**
+   * Selects elevator down based on hatch mode
+   */
   public C_SelectDown() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
     requires(Robot.getHatch());
   }
 

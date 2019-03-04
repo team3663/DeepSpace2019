@@ -16,9 +16,12 @@ public class C_Flip extends Command {
   private double defaultElevatorEndTop = Robot.getElevator().getSafeFlipTop() - 1;
   private double defaultElevatorEndBot = Robot.getElevator().getSafeFlipBot() + .5;
 
-
-  public 
-  C_Flip(boolean isFront) {
+/**
+ * cooridinates the end effector with the elevator to make sure it flips saefly
+ * 
+ * @param isFront which side the end effector is being flipped to 
+ */
+  public C_Flip(boolean isFront) {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
@@ -27,6 +30,12 @@ public class C_Flip extends Command {
     this.elevatorEnd = defaultElevatorEndTop;
   }
 
+  /**
+   * cooridinates the end effector with the elevator to make sure it flips saefly
+   * 
+   * @param isFront which side the end effector is being flipped to 
+   * @param elevatorEnd the height the elevator will end at
+   */
   C_Flip(boolean isFront, double elevatorEnd) {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());

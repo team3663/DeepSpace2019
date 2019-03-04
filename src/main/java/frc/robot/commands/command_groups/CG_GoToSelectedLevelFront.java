@@ -17,7 +17,7 @@ import frc.robot.commands.C_SetFrontClimberIntake;
 
 public class CG_GoToSelectedLevelFront extends CommandGroup {
   /**
-   * Add your docs here.
+   * goes to selected level on the front side
    */
   public CG_GoToSelectedLevelFront() {
     setInterruptible(false);
