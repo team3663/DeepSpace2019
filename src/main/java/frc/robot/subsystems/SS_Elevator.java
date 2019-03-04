@@ -35,9 +35,11 @@ public class SS_Elevator extends Subsystem {
   private DigitalInput topLimitSwitch;
 
   public double speedMultiplier = .3  ;
-  private int selectedLevel = 1;
   private double TICKS_PER_INCH = 1.6;
   private double GEAR_RATIO = 1.0/10.0;
+
+  private int selectedLevel = 1;
+  private boolean frontSide = true;
 
   private boolean initialized = false;
 
@@ -128,42 +130,7 @@ public class SS_Elevator extends Subsystem {
   }
 
   public double getSelectedLevelInch(){
-    if(!Robot.getHatch().isHatchMode()){
-
-      if(selectedLevel == 1){
-        return LEVEL_1_B;
-      }
-      else if (selectedLevel == 2){
-        return LEVEL_2_B;
-      }
-      else if (selectedLevel == 3){
-        return LEVEL_3_B;
-      }
-      else if (selectedLevel == 15){
-        return LEVEL_15_B;
-      }
-      else{
-        return 0;
-      }
-    }
-    else{
-      if(selectedLevel == 1){
-        return LEVEL_1_H;
-      }
-      else if (selectedLevel == 2){
-        return LEVEL_2_H;
-      }
-      else if (selectedLevel == 3){
-        return LEVEL_3_H;
-      }
-      //this is only run if unintended by operator, its a safety
-      else if (selectedLevel == 15){
-        return LEVEL_1_H;
-      }
-      else{
-        return 0;
-      }
-    }
+    return getLevelInch(getSelectedLevel(), Robot.getHatch().isHatchMode());
   }
 
   public double getLevelInch(int level, boolean hatchMode){
@@ -259,6 +226,15 @@ public class SS_Elevator extends Subsystem {
   public void setSelectedLevel(int level){
     selectedLevel = level;
   }
+
+  public void setSelectedSide(boolean frontSide){
+    this.frontSide = frontSide;
+  }
+
+  public boolean getSelectedSide(){
+    return frontSide;
+  }
+
   
   public boolean isInitialized(){
     return initialized;

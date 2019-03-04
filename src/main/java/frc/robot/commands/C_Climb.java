@@ -107,7 +107,7 @@ public class C_Climb extends Command {
   @Override
   protected boolean isFinished() {
     //return (targetAngle - Robot.getFrontClimber().getAngle()) * direction < 0;
-    return Robot.getFrontClimber().getAngle() >= 180;
+    return Robot.getFrontClimber().getAngle() >= 180 || !Robot.getOI().getSecondaryController().getStartButton().get();
   }
 
   @Override

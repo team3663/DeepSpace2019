@@ -80,7 +80,7 @@ public class C_ClimbPlusDown extends Command {
 
 
   protected boolean isFinished() {
-    return ss_FrontClimber.getAngle() >= 180;
+    return ss_FrontClimber.getAngle() >= 180 || !Robot.getOI().getSecondaryController().getStartButton().get();
   }
   
   @Override

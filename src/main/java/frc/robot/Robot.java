@@ -125,6 +125,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Gyro pitch", ss_Swerve.getNavX().getPitch());
 
     SmartDashboard.putNumber("Selected Level", ss_Elevator.getSelectedLevel());
+    SmartDashboard.putBoolean("Selected Side", ss_Elevator.getSelectedSide());
+
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
@@ -133,8 +135,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("slave Volt", ss_Elevator.getSVoltage());
     SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());//TODO 
 
-    SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.isHatchMode());
+    SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    
     SmartDashboard.putBoolean("Hatch Present", ss_Hatch.isPresent());    

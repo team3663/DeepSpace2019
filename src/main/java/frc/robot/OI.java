@@ -31,8 +31,9 @@ public class OI {
         primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro(mRobot.getDrivetrain()));
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBackButton().whenPressed(new CG_CancelIntake());
-        // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(false));
-        // primaryController.getRightTriggerButton().whenPressed(new C_SetFieldOriented(true));
+
+        //primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
+    
         
 
         //
@@ -45,12 +46,12 @@ public class OI {
         secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_SetSelectedLevel(15));
 
 
-        secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
+        secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevelBack());
 
         secondaryController.getRightBumperButton().whenPressed(new C_SelectDown());
 
         secondaryController.getXButton().whenPressed(new C_SetHatchMode());
-        secondaryController.getXButton().whenReleased(new C_ModeSelect());
+        secondaryController.getXButton().whenReleased(new C_SelectMode());
 
         secondaryController.getAButton().whenPressed(new C_SetEFIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEFIntakeSpeed(0));
@@ -62,7 +63,7 @@ public class OI {
         secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
         secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
 
-        secondaryController.getStartButton().whileHeld(new C_Climb());
+        secondaryController.getStartButton().whenPressed(new C_Climb());
 
         
         //

@@ -9,24 +9,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.command_groups.CG_BallMode;
+import frc.robot.commands.command_groups.CG_HatchMode;
 
-public class C_SetSelectedLevel extends Command {
-  private int level;
-  public C_SetSelectedLevel(int level) {
-    this.level = level;
-    requires(Robot.getElevator());
+public class C_SelectMode extends Command {
+  public C_SelectMode() {
+    requires(Robot.getHatch());
   }
+
   @Override
   protected void execute() {
-    if(Robot.getOI().getSecondaryController().getLeftTriggerButton().get()){
-      Robot.getElevator().setSelectedSide(true);
+    if(Robot.getHatch().isHatchMode()){
+      new CG_HatchMode().start();
     }
     else{
-      Robot.getElevator().setSelectedSide(false);
+      new CG_BallMode().start();
     }
-
-    Robot.getElevator().setSelectedLevel(level);
   }
+
   @Override
   protected boolean isFinished() {
     return true;

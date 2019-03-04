@@ -18,11 +18,11 @@ import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.C_SetEFIntakeSpeed;
 import frc.robot.commands.C_SetFrontClimberIntake;
 
-public class CG_GoToSelectedLevel extends CommandGroup {
+public class CG_GoToSelectedLevelBack extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_GoToSelectedLevel() {
+  public CG_GoToSelectedLevelBack() {
     setInterruptible(false);
 
     addSequential(new C_SetFrontClimberIntake(0));
