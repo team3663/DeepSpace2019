@@ -10,39 +10,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_RearClimber extends Command {
-  private double angle;
+public class C_SetEFIntakeSpeed extends Command {
+  private double speed;
 
-  private double limit;
-
-  /**
-   * 
-   * @param angle 0-180
-   */
-  public C_RearClimber(double angle) {
-    requires(Robot.getRearClimber());
-    this.angle = angle;
-    limit = Robot.getRearClimber().getAngleLimit();
+  public C_SetEFIntakeSpeed(double speed) {
+    requires(Robot.getBall());
+    this.speed = speed;
   }
-
 
   @Override
   protected void execute() {
-    if(angle < 0) {
-      Robot.getRearClimber().goToDegree(0);
-    } else if (angle > limit) {
-      Robot.getRearClimber().goToDegree(limit);
-    } else {
-      Robot.getRearClimber().goToDegree(angle);
-    }
-  }
-  /**
-   * limit = 180 degrees
-   */
-  @Override
-  protected boolean isFinished() {
-    return Robot.getRearClimber().atTarget(angle);
+    Robot.getBall().setIntakeSpeed(speed);
   }
 
+  @Override
+  protected boolean isFinished() {
+    return true;
+  }
 
 }

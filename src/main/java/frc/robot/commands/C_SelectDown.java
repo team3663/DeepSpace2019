@@ -13,10 +13,10 @@ import frc.robot.Robot;
 import frc.robot.commands.command_groups.CG_DownToBall;
 import frc.robot.commands.command_groups.CG_DownToHatch;
 
-public class C_DownSelect extends Command {
+public class C_SelectDown extends Command {
 
   private CommandGroup down;
-  public C_DownSelect() {
+  public C_SelectDown() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getHatch());

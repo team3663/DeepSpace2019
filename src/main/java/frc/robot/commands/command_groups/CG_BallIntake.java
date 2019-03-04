@@ -8,7 +8,7 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.C_EndEffectorAngle;
+import frc.robot.commands.C_EFToAngle;
 import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
@@ -18,6 +18,7 @@ import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.C_SetHatchMode;
 import frc.robot.commands.C_ToggleHatchMode;
 import frc.robot.commands.C_WaitForBall;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class CG_BallIntake extends CommandGroup {
   /**
@@ -30,6 +31,7 @@ public class CG_BallIntake extends CommandGroup {
     addSequential(new C_ExtendHatch(false));
     addSequential(new C_SetHatchClosed(true));
     addSequential(new C_Flip(true));
+    addParallel(new C_ElevatorToInch(.5));
 
     addSequential(new C_SetEndEffectorIntakeSpeed(-.3));  
     addSequential(new C_SetFrontClimberIntake(-1));

@@ -19,6 +19,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.C_ElevatorHold;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.util.PIDCont;
@@ -45,12 +46,12 @@ public class SS_Elevator extends Subsystem {
 
   private final double LEVEL_1_B = 5;
   private final double LEVEL_2_B = 26;
-  private final double LEVEL_3_B = 60;
+  private final double LEVEL_3_B = 65;
   private final double LEVEL_15_B = 20;
 
   private final double LEVEL_1_H = 5;
   private final double LEVEL_2_H = 37.5;
-  private final double LEVEL_3_H = 60;
+  private final double LEVEL_3_H = 65;
 
   private CANPIDController PID;
 
@@ -83,7 +84,7 @@ public class SS_Elevator extends Subsystem {
   }
   @Override
   public void initDefaultCommand() {
-    // setDefaultCommand(new C_ElevatorDirect());
+     setDefaultCommand(new C_ElevatorHold());
   }
 
   public void setElevatorSpeedMultiplier(double speedMultiplier) {

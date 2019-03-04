@@ -37,6 +37,7 @@ public class C_GoToSelectedLevel extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    System.out.println("GO TO LEVEL RUNNING");
     return elevator.atTarget(elevator.getSelectedLevelInch());
   }
 

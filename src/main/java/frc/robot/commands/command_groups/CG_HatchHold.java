@@ -17,6 +17,6 @@ public class CG_HatchHold extends CommandGroup {
    */
   public CG_HatchHold() {
     addSequential(new C_SetHatchClosed(true));
-    addSequential(new C_EndEffectorHold());
+    //addSequential(new C_EndEffectorHold());
   }
 }

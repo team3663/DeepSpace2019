@@ -27,8 +27,4 @@ public class CG_DownToBall extends CommandGroup {
 
   }
 
-  @Override
-  protected synchronized void setInterruptible(boolean interruptible) {
-    super.setInterruptible(interruptible);
-  }
 }

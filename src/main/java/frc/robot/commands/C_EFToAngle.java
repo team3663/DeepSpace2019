@@ -10,15 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_EndEffectorAngle extends Command {
+public class C_EFToAngle extends Command {
   private double angle;
 
   private double forwardAngleLimit;
   private double backwardAngleLimit;
 
-  public C_EndEffectorAngle(double angle) {
+  public  C_EFToAngle(double angle) {
     requires(Robot.getEndEffectorAngle());
     this.angle = angle;
+
 
     forwardAngleLimit = Robot.getEndEffectorAngle().getFrontAngleLimit();
     backwardAngleLimit = Robot.getEndEffectorAngle().getBackAngleLimit();
@@ -28,6 +29,7 @@ public class C_EndEffectorAngle extends Command {
     if(angle < backwardAngleLimit){
       angle = backwardAngleLimit;
     }
+
   }
 
   @Override
@@ -35,6 +37,7 @@ public class C_EndEffectorAngle extends Command {
     if(!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()){
       new C_EFRestart().start();
     }
+    setTimeout(3);
   }
 
   protected void execute() {
@@ -46,8 +49,10 @@ public class C_EndEffectorAngle extends Command {
   }
   @Override
   protected boolean isFinished() {
-
-    return Robot.getEndEffectorAngle().atTarget(angle) || !Robot.getEndEffectorAngle().isInitialized(); 
+    System.out.println("C END EFFECOT ANGLE");
+    return Robot.getEndEffectorAngle().atTarget(angle) || !Robot.getEndEffectorAngle().isInitialized() || isTimedOut() ||
+    //this is a temp fix for the PID controller
+    (angle + 3 > Robot.getEndEffectorAngle().getAngle() && angle - 3 < Robot.getEndEffectorAngle().getAngle()); 
   }
 
 

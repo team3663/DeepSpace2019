@@ -27,6 +27,7 @@ public class C_Flip extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    setTimeout(4);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -55,8 +56,10 @@ public class C_Flip extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-
-    return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent();
+    System.out.println("C FLIP IS GOING");
+    return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent()|| isTimedOut() || 
+    //this is a temp fix for the PID controller
+    (Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) + 3 > Robot.getEndEffectorAngle().getAngle() && Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) - 3 < Robot.getEndEffectorAngle().getAngle());
   }
 
   // Called once after isFinished returns true

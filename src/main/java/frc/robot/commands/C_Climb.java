@@ -54,9 +54,13 @@ public class C_Climb extends Command {
 
     double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
     double pitch = Robot.getDrivetrain().getPitch();
+    
     Robot.getRearClimber().setSpeed(-joystickInput);
     if(pitch < 0){
-      Robot.getFrontClimber().setSpeed(joystickInput);
+      Robot.getFrontClimber().setSpeed(1);
+    }
+    else{
+      Robot.getFrontClimber().setSpeed(0);
     }
 
 
@@ -106,4 +110,9 @@ public class C_Climb extends Command {
     return Robot.getFrontClimber().getAngle() >= 180;
   }
 
+  @Override
+  protected void end() {
+    Robot.getFrontClimber().setSpeed(0);
+    Robot.getRearClimber().setSpeed(0);
+  }
 }

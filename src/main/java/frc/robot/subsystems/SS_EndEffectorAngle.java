@@ -39,7 +39,7 @@ public class SS_EndEffectorAngle extends Subsystem {
   private double VERTICAL_ANGLE = 0;
   private double BACK_ANGLE_LIMIT = -80;
 
-  private double SAFE_FLIP_BACK_ANGLE = -80;
+  private double SAFE_FLIP_BACK_ANGLE = -85;
   private double SAFEFLIP_FRONT_ANGLE = 90;
 
   private boolean hatchMode = false;
@@ -52,10 +52,17 @@ public class SS_EndEffectorAngle extends Subsystem {
     angleResetSwitch = new DigitalInput(RobotMap.ANGLE_RESET_SWITCH);
 
     PID = new CANPIDController(angleMotor);
-    PID.setP(.5);
-    PID.setI(.00001); 
-    PID.setD(0);     
-    PID.setOutputRange(-.85, .85);
+    // PID.setP(.5);
+    // PID.setI(.00001); 
+    // PID.setD(0);     
+    // PID.setOutputRange(-.85, .85);
+
+    PID.setP(2);
+    PID.setI(.00003); //.00003
+    PID.setD(.00005);    //.04 
+    PID.setOutputRange(-.4, .4);
+    
+    
     
     
     PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
@@ -63,7 +70,7 @@ public class SS_EndEffectorAngle extends Subsystem {
   }
   @Override
   public void initDefaultCommand() {
-    //setDefaultCommand(new C_EndEffectorAngle(0));
+    // setDefaultCommand(new C_EndEffectorHold());
   }
 
   public double getSafeFlipAngle(boolean isFront){

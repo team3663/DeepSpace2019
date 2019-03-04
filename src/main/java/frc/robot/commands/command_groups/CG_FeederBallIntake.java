@@ -8,7 +8,7 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.robot.commands.C_EndEffectorAngle;
+import frc.robot.commands.C_EFToAngle;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_SetEndEffectorIntakeSpeed;
@@ -23,7 +23,7 @@ public class CG_FeederBallIntake extends CommandGroup {
     addSequential(new C_Flip(true));
     addSequential(new C_ElevatorToInch(4));
     addSequential(new C_FrontClimber(60));
-    addSequential(new C_EndEffectorAngle(45));
+    addSequential(new C_EFToAngle(45));
     addSequential(new C_SetFrontClimberIntake(-1));
     addSequential(new C_SetEndEffectorIntakeSpeed(-.3));
   }

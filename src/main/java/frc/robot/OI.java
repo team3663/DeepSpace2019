@@ -57,10 +57,10 @@ public class OI {
 
         secondaryController.getBButton().whenPressed(new CG_HatchDrop());
 
-        secondaryController.getYButton().whenPressed(new CG_HatchHold());
+        // secondaryController.getYButton().whenPressed(new CG_HatchHold());
 
-        // secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
-        // secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
+        secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
+        secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
 
         secondaryController.getStartButton().whileHeld(new C_Climb());
 
@@ -69,7 +69,7 @@ public class OI {
         //testing controller: BE CAREFUL
         //
 
-        testingController.getAButton().whenPressed(new C_RearClimber(15));
+        testingController.getAButton().whenPressed(new C_RearClimberToAngle(15));
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 

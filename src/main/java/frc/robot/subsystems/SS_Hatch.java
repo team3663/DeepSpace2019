@@ -61,7 +61,7 @@ public class SS_Hatch extends Subsystem {
   }
   
   public boolean isPresent(){
-    return isPhysicalPresent() || isOpticalPresent();
+    return isOpticalPresent(); //|| isOpticalPresent();
   }
 
   public boolean isPhysicalPresent(){
@@ -73,7 +73,7 @@ public class SS_Hatch extends Subsystem {
   }
 
   public boolean isOpticalPresent(){
-    return hatchOpticalSwitch.get();
+    return !hatchOpticalSwitch.get();
   }
 
   public DigitalInput getPressedSwitch(){

@@ -39,7 +39,7 @@ public class SS_FrontClimber extends Subsystem {
   private final double SAFE_FLIP_TOP = 45;
   private final double SAFE_FLIP_BOT = 125;
 
-
+  private final double MAX_RPM = 5900;
   private final double GEAR_RATIO = 1.0/147.0;
   private final double TICKS_PER_DEGREE = 1.0/360.0;
   private double fakeEncoder = 0;
@@ -63,11 +63,19 @@ public class SS_FrontClimber extends Subsystem {
     PID.setD(0);     //10
     PID.setOutputRange(-.75, .75);
     
-    // PID.setSmartMotionMaxVelocity(2000, 0);
-    // PID.setSmartMotionMaxAccel(1500, 0);
-    // PID.setSmartMotionAllowedClosedLoopError(0.02, 0);
-    // PID.setSmartMotionMinOutputVelocity(0, 0);
-    PID.setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
+    
+    // //max RPM 5900
+
+    // frontClimberMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
+
+    // frontClimberMotor.getPIDController().setSmartMotionMaxVelocity((MAX_RPM*GEAR_RATIO)*.75, 0);
+
+    // //lower the value the slower it will ramp
+
+    // frontClimberMotor.getPIDController().setSmartMotionMaxAccel(1500, 0);
+    // //2 degree error
+    // frontClimberMotor.getPIDController().setSmartMotionAllowedClosedLoopError(GEAR_RATIO*360*2, 0);
+    // frontClimberMotor.getPIDController().setSmartMotionMinOutputVelocity(0, 0);
   }
   @Override
   public void initDefaultCommand() {

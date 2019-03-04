@@ -9,14 +9,14 @@ package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.C_FrontClimber;
-import frc.robot.commands.C_RearClimber;
+import frc.robot.commands.C_RearClimberToAngle;
 
 public class CG_ClimbMode extends CommandGroup {
   /**
    * Add your docs here.
    */
   public CG_ClimbMode() {
-    addParallel(new C_RearClimber(100));
+    addParallel(new C_RearClimberToAngle(100));
     addParallel(new C_FrontClimber(60));
   }
 }
