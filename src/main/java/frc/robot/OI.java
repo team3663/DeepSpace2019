@@ -47,13 +47,13 @@ public class OI {
 
         secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevel());
 
-        secondaryController.getRightBumperButton().whenPressed(new C_DownSelect());
+        secondaryController.getRightBumperButton().whenPressed(new C_SelectDown());
 
-        secondaryController.getXButton().whenPressed(new C_ToggleHatchMode());
+        secondaryController.getXButton().whenPressed(new C_SetHatchMode());
         secondaryController.getXButton().whenReleased(new C_ModeSelect());
 
-        secondaryController.getAButton().whenPressed(new C_SetEndEffectorIntakeSpeed(1));
-        secondaryController.getAButton().whenReleased(new C_SetEndEffectorIntakeSpeed(0));
+        secondaryController.getAButton().whenPressed(new C_SetEFIntakeSpeed(1));
+        secondaryController.getAButton().whenReleased(new C_SetEFIntakeSpeed(0));
 
         secondaryController.getBButton().whenPressed(new CG_HatchDrop());
 

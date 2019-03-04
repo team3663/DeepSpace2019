@@ -11,25 +11,15 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_WaitForHatch extends Command {
-
-  private boolean waitForHatchDeploy;
-
-  /**
-   * 
-   */
-  public C_WaitForHatch() {
+  private boolean isDeploying;
+  public C_WaitForHatch(boolean isDeploying) {
     requires(Robot.getHatch());
-    this.waitForHatchDeploy = false;
-  }
-
-  public C_WaitForHatch(boolean waitForHatchDeploy) {
-    requires(Robot.getHatch());
-    this.waitForHatchDeploy = waitForHatchDeploy;
+    this.isDeploying = isDeploying;
   }
 
   @Override
   protected boolean isFinished() {
-    if (waitForHatchDeploy) {
+    if(isDeploying){
       return !Robot.getHatch().isPresent();
     }
     return Robot.getHatch().isPresent();

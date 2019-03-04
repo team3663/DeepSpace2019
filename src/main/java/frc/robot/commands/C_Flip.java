@@ -13,6 +13,9 @@ import frc.robot.Robot;
 public class C_Flip extends Command {
   private boolean isFront;
   private double elevatorEnd;
+  private double defaultElevatorEndTop = Robot.getElevator().getSafeFlipTop() - 1;
+  private double defaultElevatorEndBot = Robot.getElevator().getSafeFlipBot() + .5;
+
 
   public 
   C_Flip(boolean isFront) {
@@ -21,9 +24,25 @@ public class C_Flip extends Command {
     requires(Robot.getFrontClimber());
     requires(Robot.getHatch());
     this.isFront = isFront;
-    this.elevatorEnd = Robot.getElevator().getSafeFlipTop() - 1;
+    this.elevatorEnd = defaultElevatorEndTop;
   }
 
+  C_Flip(boolean isFront, double elevatorEnd) {
+    requires(Robot.getEndEffectorAngle());
+    requires(Robot.getElevator());
+    requires(Robot.getFrontClimber());
+    requires(Robot.getHatch());
+    this.isFront = isFront;
+
+    if(elevatorEnd > Robot.getElevator().getSafeFlipTop()){
+      elevatorEnd = defaultElevatorEndTop;
+    }
+    else if(elevatorEnd < Robot.getElevator().getSafeFlipBot()){
+      elevatorEnd = defaultElevatorEndBot;
+    }
+    
+    this.elevatorEnd = elevatorEnd;
+  }
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {

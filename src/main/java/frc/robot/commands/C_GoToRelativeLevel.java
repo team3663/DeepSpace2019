@@ -10,11 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_HatchDownRelease extends Command {
-  public C_HatchDownRelease() {
+public class C_GoToRelativeLevel extends Command {
+  private double adjustment;
+  public C_GoToRelativeLevel(double adjustment) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getElevator());
+    this.adjustment = adjustment;
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +27,7 @@ public class C_HatchDownRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getElevator().goToSelectedMinusOne();
+    Robot.getElevator().goToSelectedWithAdjustment(adjustment);
   }
 
   // Make this return true when this Command no longer needs to run execute()

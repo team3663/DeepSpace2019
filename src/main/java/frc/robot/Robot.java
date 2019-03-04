@@ -57,9 +57,7 @@ public class Robot extends TimedRobot {
     ss_Ball = new SS_Ball();
     ss_Hatch = new SS_Hatch();
 
-		m_oi.registerControls();
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    
+		m_oi.registerControls();    
     driver = Shuffleboard.getTab("driver");
 
     //show cameras on the driver tab of shuffleboard
@@ -133,23 +131,21 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure());
 
     SmartDashboard.putNumber("slave Volt", ss_Elevator.getSVoltage());
-    SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());
+    SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());//TODO 
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.isHatchMode());
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    
-    SmartDashboard.putBoolean("Hatch Switch", ss_Hatch.isPresent());    
-    SmartDashboard.putBoolean("Hatch Press Switch", ss_Hatch.isPressed());    
+    SmartDashboard.putBoolean("Hatch Present", ss_Hatch.isPresent());    
+    SmartDashboard.putBoolean("Hatch Pressed", ss_Hatch.isPressed());    
 
     SmartDashboard.putBoolean("ef init", ss_EndEffectorAngle.isInitialized());
     SmartDashboard.putBoolean("ele init", ss_Elevator.isInitialized());    
     SmartDashboard.putBoolean("fclimb init", ss_FrontClimber.isInitialized());    
     SmartDashboard.putBoolean("rclimb init", ss_RearClimber.isInitilized());   
     
-    SmartDashboard.putNumber("Rear RawEncoder", ss_RearClimber.getRawEncoder());
-    SmartDashboard.putNumber("Rear Encoder", ss_RearClimber.getEncoder());
-    SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
+    SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());

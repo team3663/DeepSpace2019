@@ -12,40 +12,36 @@ import frc.robot.Robot;
 
 public class C_SetHatchMode extends Command {
   private boolean hatchMode;
+  private boolean toggle;
   public C_SetHatchMode(boolean hatchMode) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
     requires(Robot.getHatch());
     this.hatchMode = hatchMode;
+    toggle = false;
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
+  public C_SetHatchMode() {
+    requires(Robot.getHatch());
+    requires(Robot.getBall());
+    toggle = true;
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getHatch().isPresent()){
-      Robot.getHatch().setHatchMode(hatchMode);
+    if(toggle){
+      if(!Robot.getBall().isPresent() && !Robot.getHatch().isPresent()){
+        Robot.getHatch().setHatchMode(!Robot.getHatch().isHatchMode());
+      }
+    }
+    else{
+      if(!Robot.getHatch().isPresent()){
+        Robot.getHatch().setHatchMode(hatchMode);
+      }
     }
   }
 
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return true;
   }
 
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-  }
 }

@@ -118,9 +118,9 @@ public class SS_Elevator extends Subsystem {
   }
 
   
-  public void goToSelectedMinusOne(){
+  public void goToSelectedWithAdjustment(double adjustment){
 
-    goToInch(getSelectedLevelInch() - 1);
+    goToInch(getSelectedLevelInch() + adjustment);
   }
 
   public CANPIDController elevatorPID(){
