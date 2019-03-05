@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.command_groups.CG_BallMode;
 import frc.robot.commands.command_groups.CG_HatchMode;
+import frc.robot.util.Mode;
 
 public class C_SelectMode extends Command {
   /**
@@ -22,7 +23,7 @@ public class C_SelectMode extends Command {
 
   @Override
   protected void execute() {
-    if(Robot.getHatch().isHatchMode()){
+    if(Robot.getHatch().getMode() == Mode.kHatch){
       new CG_HatchMode().start();
     }
     else{

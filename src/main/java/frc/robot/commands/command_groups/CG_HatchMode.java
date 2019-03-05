@@ -15,6 +15,7 @@ import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
+import frc.robot.util.Mode;
 
 public class CG_HatchMode extends CommandGroup {
   /**
@@ -23,7 +24,7 @@ public class CG_HatchMode extends CommandGroup {
   public CG_HatchMode() {
     addSequential(new C_Flip(false));
     addParallel(new C_EFToAngle(-75));
-    addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(1, true)));
+    addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(1, Mode.kHatch)));
     addSequential(new C_ExtendHatch(true));
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_FrontClimber(0));

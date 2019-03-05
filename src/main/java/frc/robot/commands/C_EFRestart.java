@@ -24,23 +24,26 @@ public class C_EFRestart extends Command {
 
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isInitialized()){
+    if(!Robot.getHatch().isPresent()){
+      if(!Robot.getEndEffectorAngle().isInitialized()){
 
-      if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop() && Robot.getFrontClimber().safeToFlip()){
-        if(!Robot.getEndEffectorAngle().isReset()){
-          Robot.getEndEffectorAngle().setAngleSpeed(-.6);
+        if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop() && Robot.getFrontClimber().safeToFlip()){
+          if(!Robot.getEndEffectorAngle().isReset()){
+            Robot.getEndEffectorAngle().setAngleSpeed(-.6);
+          }
+          else{
+            Robot.getEndEffectorAngle().resetEncoder();
+            Robot.getEndEffectorAngle().setAngleSpeed(0);
+            Robot.getEndEffectorAngle().setInitialized(true);
+          }
         }
         else{
-          Robot.getEndEffectorAngle().resetEncoder();
-          Robot.getEndEffectorAngle().setAngleSpeed(0);
-          Robot.getEndEffectorAngle().setInitialized(true);
+          Robot.getElevator().goToInch(1);
+          Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
         }
       }
-      else{
-        Robot.getElevator().goToInch(1);
-        Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
-      }
     }
+
   }
 
   @Override

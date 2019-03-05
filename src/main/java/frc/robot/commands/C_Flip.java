@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.util.Mode;
 
 public class C_Flip extends Command {
   private boolean isFront;
@@ -26,6 +27,11 @@ public class C_Flip extends Command {
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
     requires(Robot.getHatch());
+
+    if(!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()){
+      new C_EFRestart().start();
+    }
+
     this.isFront = isFront;
     this.elevatorEnd = defaultElevatorEndTop;
   }
@@ -41,7 +47,11 @@ public class C_Flip extends Command {
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
     requires(Robot.getHatch());
-    this.isFront = isFront;
+
+    if(!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()){
+      new C_EFRestart().start();
+    }
+
 
     if(elevatorEnd > Robot.getElevator().getSafeFlipTop()){
       elevatorEnd = defaultElevatorEndTop;
@@ -49,7 +59,8 @@ public class C_Flip extends Command {
     else if(elevatorEnd < Robot.getElevator().getSafeFlipBot()){
       elevatorEnd = defaultElevatorEndBot;
     }
-    
+
+    this.isFront = isFront;
     this.elevatorEnd = elevatorEnd;
   }
   // Called just before this Command runs the first time
@@ -75,17 +86,21 @@ public class C_Flip extends Command {
         Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop()); 
       }
     }
-  
     else if(Robot.getHatch().isPresent()){
-      Robot.getHatch().setHatchMode(true);
+      Robot.getHatch().setMode(Mode.kHatch);
     }
+    //stops the motor if not initilized
+    if(!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()){
+      Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getAngle());
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     System.out.println("C FLIP IS GOING");
-    return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent()|| isTimedOut() || 
+    return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent()|| isTimedOut() || (!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()) || 
     //this is a temp fix for the PID controller
     (Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) + 3 > Robot.getEndEffectorAngle().getAngle() && Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) - 3 < Robot.getEndEffectorAngle().getAngle());
   }

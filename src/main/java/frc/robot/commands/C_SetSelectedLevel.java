@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.util.Side;
 
 public class C_SetSelectedLevel extends Command {
   private int level;
@@ -19,10 +20,10 @@ public class C_SetSelectedLevel extends Command {
   @Override
   protected void execute() {
     if(Robot.getOI().getSecondaryController().getLeftTriggerButton().get()){
-      Robot.getElevator().setSelectedSide(true);
+      Robot.getElevator().setSelectedSide(Side.kFront);
     }
     else{
-      Robot.getElevator().setSelectedSide(false);
+      Robot.getElevator().setSelectedSide(Side.kBack);
     }
 
     Robot.getElevator().setSelectedLevel(level);

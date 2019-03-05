@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.util.Mode;
+import frc.robot.util.Side;
 
 /**
  * Add your docs here.
@@ -25,6 +27,7 @@ public class SS_Hatch extends Subsystem {
   private DigitalInput hatchPressedSwitch;
 
   private boolean hatchMode = false;
+  private Mode mode = Mode.kBall;
 
   public SS_Hatch(){
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_PICKUP_SOLENOID_FORWARD, RobotMap.HATCH_PICKUP_SOLENOID_REVERSE);
@@ -85,12 +88,12 @@ public class SS_Hatch extends Subsystem {
   }
 
   
-  public boolean isHatchMode(){
-    return hatchMode;
+  public Mode getMode(){
+    return mode;
   }
 
-  public void setHatchMode(boolean hatchMode){
-    this.hatchMode = hatchMode;
+  public void setMode(Mode mode){
+    this.mode = mode;
   }
 
   @Override

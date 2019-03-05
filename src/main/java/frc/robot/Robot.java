@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
+import frc.robot.util.Mode;
+import frc.robot.util.Side;
 import frc.robot.commands.C_StartOrchestra;
 
 public class Robot extends TimedRobot {
@@ -125,7 +127,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Gyro pitch", ss_Swerve.getNavX().getPitch());
 
     SmartDashboard.putNumber("Selected Level", ss_Elevator.getSelectedLevel());
-    SmartDashboard.putBoolean("Selected Side", ss_Elevator.getSelectedSide());
+    SmartDashboard.putBoolean("Selected Side Front", ss_Elevator.getSelectedSide() == Side.kFront);
 
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
@@ -135,7 +137,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("slave Volt", ss_Elevator.getSVoltage());
     SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());//TODO 
 
-    SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.isHatchMode());
+    SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.getMode() == Mode.kHatch);
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    

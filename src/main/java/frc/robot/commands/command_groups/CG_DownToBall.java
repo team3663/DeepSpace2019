@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
+import frc.robot.util.Mode;
 
 public class CG_DownToBall extends CommandGroup {
   /**
@@ -19,9 +20,8 @@ public class CG_DownToBall extends CommandGroup {
    */
   public CG_DownToBall() {
     setInterruptible(false);
-
     addSequential(new C_Flip(true));
-    addParallel(new C_ElevatorToInch(.2));
+    addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(0, Mode.kBall)));
     addSequential(new C_FrontClimber(0));
     
 

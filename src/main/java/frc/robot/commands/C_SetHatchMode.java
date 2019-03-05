@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.util.Mode;
 
 public class C_SetHatchMode extends Command {
   private boolean hatchMode;
@@ -29,12 +30,19 @@ public class C_SetHatchMode extends Command {
   protected void execute() {
     if(toggle){
       if(!Robot.getBall().isPresent() && !Robot.getHatch().isPresent()){
-        Robot.getHatch().setHatchMode(!Robot.getHatch().isHatchMode());
+        if(Robot.getHatch().getMode() == Mode.kBall){
+          Robot.getHatch().setMode(Mode.kHatch);
+        }
+        else{
+          Robot.getHatch().setMode(Mode.kBall);
+        }
       }
     }
+
+    //TODO go over this again, dont know why this here
     else{
       if(!Robot.getHatch().isPresent()){
-        Robot.getHatch().setHatchMode(hatchMode);
+        Robot.getHatch().setMode(Mode.kHatch);
       }
     }
   }

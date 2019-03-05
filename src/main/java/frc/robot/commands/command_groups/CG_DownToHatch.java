@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.commands.C_EFToAngle;
 import frc.robot.commands.C_Flip;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
+import frc.robot.util.Mode;
 
 public class CG_DownToHatch extends CommandGroup {
   /**
@@ -22,7 +23,7 @@ public class CG_DownToHatch extends CommandGroup {
     
     addSequential(new C_Flip(false));
     addParallel(new C_EFToAngle(-75));
-    addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(1, true)));
+    addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(0, Mode.kHatch)));
   
   }
 

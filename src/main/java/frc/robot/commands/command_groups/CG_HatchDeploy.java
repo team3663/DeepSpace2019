@@ -14,11 +14,11 @@ import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.C_Wait;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 
-public class CG_HatchDrop extends CommandGroup {
+public class CG_HatchDeploy extends CommandGroup {
   /**
    * releases hatch and goes down an inch for a second
    */
-  public CG_HatchDrop() {
+  public CG_HatchDeploy() {
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_GoToRelativeLevel(-1));
     addSequential(new C_Wait(1000));

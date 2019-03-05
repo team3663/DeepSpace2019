@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.command_groups.CG_DownToBall;
 import frc.robot.commands.command_groups.CG_DownToHatch;
+import frc.robot.util.Mode;
 
 public class C_SelectDown extends Command {
 
@@ -27,7 +28,7 @@ public class C_SelectDown extends Command {
 
   @Override
   protected void initialize() {
-    if(Robot.getHatch().isHatchMode()){
+    if(Robot.getHatch().getMode() == Mode.kHatch){
       down = new CG_DownToHatch();
       
     }

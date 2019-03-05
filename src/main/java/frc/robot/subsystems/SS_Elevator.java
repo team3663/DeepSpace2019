@@ -22,7 +22,9 @@ import frc.robot.RobotMap;
 import frc.robot.commands.C_ElevatorHold;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
+import frc.robot.util.Mode;
 import frc.robot.util.PIDCont;
+import frc.robot.util.Side;
 
 /**
  * Add your docs here.
@@ -41,10 +43,15 @@ public class SS_Elevator extends Subsystem {
   private int selectedLevel = 1;
   private boolean frontSide = true;
 
+  private Side selectSide = Side.kFront;
+
   private boolean initialized = false;
 
   private final double SAFE_FLIP_TOP = 12;
   private final double SAFE_FLIP_BOT = .5;
+
+  private final double DEFAULT_BALL = 1;
+  private final double DEFAULT_HATCH = 5;
 
   private final double LEVEL_1_B = 5;
   private final double LEVEL_2_B = 26;
@@ -130,11 +137,11 @@ public class SS_Elevator extends Subsystem {
   }
 
   public double getSelectedLevelInch(){
-    return getLevelInch(getSelectedLevel(), Robot.getHatch().isHatchMode());
+    return getLevelInch(getSelectedLevel(), Robot.getHatch().getMode());
   }
 
-  public double getLevelInch(int level, boolean hatchMode){
-    if(!hatchMode){
+  public double getLevelInch(int level, Mode hatchMode){
+    if(hatchMode == Mode.kBall){
 
       if(level == 1){
         return LEVEL_1_B;
@@ -148,8 +155,11 @@ public class SS_Elevator extends Subsystem {
       else if (level == 15){
         return LEVEL_15_B;
       }
+      else if (level == 0){
+        return DEFAULT_BALL;
+      }
       else{
-        return 0;
+        return getAverageInch();
       }
     }
     else{
@@ -166,8 +176,11 @@ public class SS_Elevator extends Subsystem {
       else if (level == 15){
         return LEVEL_1_H;
       }
+      else if (level == 0){
+        return DEFAULT_HATCH;
+      }
       else{
-        return 0;
+        return getAverageInch();
       }
     }
   }
@@ -227,12 +240,12 @@ public class SS_Elevator extends Subsystem {
     selectedLevel = level;
   }
 
-  public void setSelectedSide(boolean frontSide){
-    this.frontSide = frontSide;
+  public void setSelectedSide(Side side){
+    selectSide = side;
   }
 
-  public boolean getSelectedSide(){
-    return frontSide;
+  public Side getSelectedSide(){
+    return selectSide;
   }
 
   

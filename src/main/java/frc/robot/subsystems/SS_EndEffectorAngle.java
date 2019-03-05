@@ -42,8 +42,6 @@ public class SS_EndEffectorAngle extends Subsystem {
   private double SAFE_FLIP_BACK_ANGLE = -85;
   private double SAFEFLIP_FRONT_ANGLE = 90;
 
-  private boolean hatchMode = false;
-
   public SS_EndEffectorAngle() {
     angleMotor = new CANSparkMax(RobotMap.ENDEFFECTOR_ANGLE_MOTOR, MotorType.kBrushless);
     angleMotor.setIdleMode(IdleMode.kBrake);
