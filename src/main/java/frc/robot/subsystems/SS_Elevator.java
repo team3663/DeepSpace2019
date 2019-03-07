@@ -142,7 +142,14 @@ public class SS_Elevator extends Subsystem {
 
   public double getLevelInch(int level, Mode hatchMode){
     if(hatchMode == Mode.kBall){
-
+      // switch (level){
+      //   case 1: return LEVEL_1_B;
+      //   case 2: return LEVEL_2_B;
+      //   case 3: return LEVEL_3_B;
+      //   case 15: return LEVEL_15_B;
+      //   default: return DEFAULT_BALL;
+      // }
+      
       if(level == 1){
         return LEVEL_1_B;
       }
@@ -163,6 +170,14 @@ public class SS_Elevator extends Subsystem {
       }
     }
     else{
+
+      // switch (level){
+      //   case 1: return LEVEL_1_H;
+      //   case 2: return LEVEL_2_H;
+      //   case 3: return LEVEL_3_H;
+      //   default: return DEFAULT_HATCH;
+      // }
+
       if(level == 1){
         return LEVEL_1_H;
       }
