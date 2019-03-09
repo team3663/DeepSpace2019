@@ -140,8 +140,8 @@ public class SS_Elevator extends Subsystem {
     return getLevelInch(getSelectedLevel(), Robot.getHatch().getMode());
   }
 
-  public double getLevelInch(int level, Mode hatchMode){
-    if(hatchMode == Mode.kBall){
+  public double getLevelInch(int level, Mode mode){
+    if(mode == Mode.kBall){
       // switch (level){
       //   case 1: return LEVEL_1_B;
       //   case 2: return LEVEL_2_B;

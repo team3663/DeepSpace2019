@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.util.Mode;
 
-public class C_SetHatchMode extends Command {
-  private boolean hatchMode;
+public class C_SetMode extends Command {
+  private Mode mode;
   private boolean toggle;
-  public C_SetHatchMode(boolean hatchMode) {
+  public C_SetMode(Mode mode) {
     requires(Robot.getHatch());
-    this.hatchMode = hatchMode;
+    this.mode = mode;
     toggle = false;
   }
 
-  public C_SetHatchMode() {
+  public C_SetMode() {
     requires(Robot.getHatch());
     requires(Robot.getBall());
     toggle = true;
@@ -31,18 +31,18 @@ public class C_SetHatchMode extends Command {
     if(toggle){
       if(!Robot.getBall().isPresent() && !Robot.getHatch().isPresent()){
         if(Robot.getHatch().getMode() == Mode.kBall){
-          Robot.getHatch().setMode(Mode.kHatch);
+          mode = Mode.kHatch;
         }
         else{
-          Robot.getHatch().setMode(Mode.kBall);
+          mode = Mode.kBall;
         }
+        Robot.getHatch().setMode(mode);
       }
     }
 
-    //TODO go over this again, dont know why this here
     else{
       if(!Robot.getHatch().isPresent()){
-        Robot.getHatch().setMode(Mode.kHatch);
+        Robot.getHatch().setMode(mode);
       }
     }
   }

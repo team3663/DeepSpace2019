@@ -15,9 +15,10 @@ import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_SetEFIntakeSpeed;
 import frc.robot.commands.C_SetFrontClimberIntake;
 import frc.robot.commands.C_SetHatchClosed;
-import frc.robot.commands.C_SetHatchMode;
+import frc.robot.commands.C_SetMode;
 import frc.robot.commands.C_WaitForBall;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
+import frc.robot.util.Mode;
 
 public class CG_BallIntake extends CommandGroup {
   /**
@@ -26,7 +27,7 @@ public class CG_BallIntake extends CommandGroup {
   public CG_BallIntake() {
     addSequential(new C_FrontClimber(95, true));
 
-    addSequential(new C_SetHatchMode(false));
+    addSequential(new C_SetMode(Mode.kBall));
     addSequential(new C_ExtendHatch(false));
     addSequential(new C_SetHatchClosed(true));
     addSequential(new C_Flip(true));

@@ -50,7 +50,7 @@ public class OI {
 
         secondaryController.getRightBumperButton().whenPressed(new C_SelectDown());
 
-        secondaryController.getXButton().whenPressed(new C_SetHatchMode());
+        secondaryController.getXButton().whenPressed(new C_SetMode());
         secondaryController.getXButton().whenReleased(new C_SelectMode());
 
         secondaryController.getAButton().whenPressed(new C_SetEFIntakeSpeed(1));
