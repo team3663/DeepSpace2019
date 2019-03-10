@@ -194,11 +194,8 @@ public class SS_Swerve extends Subsystem {
         angle %= 360;
         if (angle < 0) angle += 360;
 
-        if (Robot.PRACTICE_BOT) {
-            return angle;
-        } else {
-            return 360 - angle;
-        }
+        return 360 - angle;
+    
     }
 
     public double getGyroRate() {

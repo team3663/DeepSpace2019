@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -14,18 +13,18 @@ public class C_HolonomicDrive extends Command {
 	//variables for snap to rotate
 	private static final double ANGLE_ERROR = 2.5;
 
-	private PIDCont PIDController;
-  	private double kP = 0;
+	private PIDCont PIDCont;
+  	private double kP = .005;
 	private double kI = 0;
 	private double kD = 0;
-	private double maxSpeed = 0.4;  
+	private double maxPIDSpeed = 0.4;  
 
 	private double targetAngle = 0;
 
 	public C_HolonomicDrive() {
 		requires(Robot.getDrivetrain());
 		mDrivetrain = Robot.getDrivetrain();
-		PIDController = new PIDCont(maxSpeed, kP, kI, kD); //kP, kI, and kD need tuning
+		PIDCont = new PIDCont(maxPIDSpeed, kP, kI, kD); //TODO kP, kI, and kD need tuning
 	}
 
 	private double deadband(double input) {
@@ -37,7 +36,7 @@ public class C_HolonomicDrive extends Command {
 	protected void execute() {
 		double forward = -Robot.getOI().getPrimaryController().getLeftYValue();
 		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();
-		double rotation = -Robot.getOI().getPrimaryController().getRightXValue();
+		double rotation = Robot.getOI().getPrimaryController().getRightXValue();
 
 		forward *= Math.abs(forward);
 		strafe *= Math.abs(strafe);
@@ -52,33 +51,39 @@ public class C_HolonomicDrive extends Command {
 		SmartDashboard.putNumber("Rotation", rotation);
 
 		if(Robot.getOI().getPrimaryController().getRightBumperButton().get()){
-			Robot.getDrivetrain().setFieldOriented(false);
+			mDrivetrain.setFieldOriented(false);
 
 		}
 		else{
-			Robot.getDrivetrain().setFieldOriented(true);
+			mDrivetrain.setFieldOriented(true);
 			forward = -forward;
-			strafe = - strafe;
+			strafe = -strafe;
 		}
 		
 		if(Robot.getOI().getPrimaryController().getLeftBumperButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
-			if(deadband(Robot.getOI().getPrimaryController().getRightXValue()) > 0 || deadband(Robot.getOI().getPrimaryController().getRightYValue()) > 0) {
-				targetAngle = getShortestPath(getSnappedRotation());
+			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
+				// targetAngle = getShortestPath(getSnappedRotation());
+				targetAngle = getShortestPathTwo(getSnappedJoystick());
 			}
 
 			//if robot has not reached the target angle, set the power for that rotation that is being inputed to holonomic drive
-			if(!reachedTargetAngle(targetAngle)) {
-				rotation = PIDController.get(getAngleError(targetAngle));
-			}
+			// if(!reachedTargetAngle(targetAngle)) {
+			// 	rotation = PIDCont.get(getAngleError(targetAngle));
+			// }
+			rotation = PIDCont.get(getAngleError(targetAngle));
 			
 		} else {
 			// set target angle to current angle so robot doesn't spin unexpectedly when left bumper is pressed and right joystick
 			// is not moved
-			targetAngle = Robot.getDrivetrain().getGyroAngle();
+			targetAngle = mDrivetrain.getGyroAngle();
 		}
 
-		Robot.getDrivetrain().holonomicDrive(forward, strafe, rotation);
+		SmartDashboard.putNumber("rotation", rotation);
+		SmartDashboard.putNumber("target angle ", targetAngle);
+		SmartDashboard.putNumber("current angle", mDrivetrain.getNavX().getAngle());
+
+		mDrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
 
 	private boolean reachedTargetAngle(double targetAngle) {
@@ -86,11 +91,11 @@ public class C_HolonomicDrive extends Command {
 	}
 
 	private double getAngleError(double targetAngle) {
-		return targetAngle - Robot.getDrivetrain().getGyroAngle();
+		return targetAngle - mDrivetrain.getGyroAngle();
 	}
 	@Override
 	protected void end() {
-		Robot.getDrivetrain().stopDriveMotors();
+		mDrivetrain.stopDriveMotors();
 	}
 
 	@Override
@@ -123,18 +128,74 @@ public class C_HolonomicDrive extends Command {
         } else if(Math.abs(rotation) == 135) {
             rotation = 150 * Math.signum(rotation);
         }
-		return rotation;
+		return (int)rotation;
 	}
 
 	/**
 	 * Returns the angle to rotate to in order to rotate the least distance
 	 */
 	private int getShortestPath(int targetAngle) {
-		int path = targetAngle - (int)Robot.getNavX().getGyroAngle();
-		if(Math.abs(path) > 180) {
-			return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
+		// int path = targetAngle - (int)mDrivetrain.getNavX().getAngle();
+		// if(Math.abs(path) > 180) {
+		// 	return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
+		// }
+		// return targetAngle;
+		return (int)((mDrivetrain.getNavX().getAngle() + 180 - targetAngle) / 360 * 360 + targetAngle);
+	}
+	
+	private double getSnappedJoystick(){
+		double x = Robot.getOI().getPrimaryController().getRightXValue();
+		double y = Robot.getOI().getPrimaryController().getRightYValue();
+
+		// find the angle of the joystick (x and y are flipped to make forwards be 0 degrees)
+		double rotation = Math.atan2(x, y);
+
+		rotation = -rotation / Math.PI * 180;
+
+		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;
+		SmartDashboard.putNumber("joystick angle", rotation);
+
+		// if(rotation < 0){
+		// 	rotation *= -1;
+		// 	rotation += 180;
+		// }
+		SmartDashboard.putNumber("joystick angle", rotation);
+
+
+        if(rotation == 45) {
+            rotation = 30;
+        } else if(rotation == 135) {
+            rotation = 150;
+		} else if (rotation == -180){
+			rotation = Math.abs(rotation);
+		} else if (rotation == -45){
+			rotation = 330;
+		} else if (rotation == -135){
+			rotation = 210;
 		}
+		else if (rotation == -90){
+			rotation = 270;
+		} 
+		SmartDashboard.putNumber("joystick snap", rotation);
+
+		return rotation;
+
+	}
+
+	private double getShortestPathTwo(double targetAngle) {
+		double currentAngle = mDrivetrain.getGyroAngle();
+		double currentAngleMod = currentAngle % 360;
+        if (currentAngleMod < 0) currentAngleMod += 360;
+
+        double delta = currentAngleMod - targetAngle;
+
+        if (delta > 180) {
+            targetAngle += 360;
+        } else if (delta < -180) {
+            targetAngle -= 360;
+        }
+		targetAngle += currentAngle - currentAngleMod;
 		return targetAngle;
 	}
-	}
+
 }
