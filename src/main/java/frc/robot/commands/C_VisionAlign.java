@@ -11,10 +11,17 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_Swerve;
 import frc.robot.subsystems.SS_Vision;
+import frc.robot.util.PIDCont;
 
 public class C_VisionAlign extends Command {
   private SS_Vision vision;
   private SS_Swerve drivetrain;
+
+	private PIDCont PIDCont;
+  private double kP = .05;
+	private double kI = 0;
+	private double kD = 0;
+	private double maxPIDSpeed = 0.4;  
 
   private double angleToSnap = 0;
 
@@ -25,6 +32,9 @@ public class C_VisionAlign extends Command {
     requires(Robot.getDrivetrain());
     vision = Robot.getVision();
     drivetrain = Robot.getDrivetrain();
+
+    PIDCont = new PIDCont(maxPIDSpeed, kP, kI, kD); //TODO kP, kI, and kD need tuning
+
   }
 
   // Called just before this Command runs the first time
@@ -34,7 +44,7 @@ public class C_VisionAlign extends Command {
     drivetrain.setFieldOriented(false);
     
     double angle = drivetrain.getGyroAngle();
-    angleToSnap = (int)(angle) / 45 * 45;
+    angleToSnap = (int)(angle / 45) * 45;
     if(angleToSnap == 45){
       angleToSnap = 30;
     }
@@ -53,7 +63,7 @@ public class C_VisionAlign extends Command {
   @Override
   protected void execute() {
     
-    drivetrain.holonomicDrive(.2, vision.getXOffset()/2, 0); //make Drive forward proportional to target area
+    drivetrain.holonomicDrive(.2, vision.getXOffset()/2, PIDCont.get(angleToSnap)); //make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -68,6 +78,7 @@ public class C_VisionAlign extends Command {
   protected void end() {
     vision.setLightMode(0);
     drivetrain.setFieldOriented(true);
+    drivetrain.holonomicDrive(0, 0, 0);
   }
 
   // Called when another command which requires one or more of the same

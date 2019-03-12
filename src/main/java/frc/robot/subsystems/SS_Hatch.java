@@ -22,9 +22,7 @@ public class SS_Hatch extends Subsystem {
   private DoubleSolenoid hatchPickupSolenoid;
   private DoubleSolenoid hatchExtendSolenoid;
 
-  private DigitalInput hatchSwitch;
   private DigitalInput hatchOpticalSwitch;
-  private DigitalInput hatchPressedSwitch;
 
   private boolean hatchMode = false;
   private Mode mode = Mode.kBall;
@@ -33,9 +31,7 @@ public class SS_Hatch extends Subsystem {
     hatchPickupSolenoid = new DoubleSolenoid(RobotMap.HATCH_PICKUP_SOLENOID_FORWARD, RobotMap.HATCH_PICKUP_SOLENOID_REVERSE);
     hatchExtendSolenoid = new DoubleSolenoid(RobotMap.HATCH_EXTEND_SOLENOID_FORWARD, RobotMap.HATCH_EXTEND_SOLENOID_REVERSE);
 
-    //TODO put back
-    hatchSwitch = new DigitalInput(RobotMap.HATCH_SWITCH);
-    hatchPressedSwitch = new DigitalInput(RobotMap.HATCH_PRESSED_SWITCH);
+  
     hatchOpticalSwitch = new DigitalInput(RobotMap.HATCH_OPTICAL_SWITCH);
   }
 
@@ -55,20 +51,9 @@ public class SS_Hatch extends Subsystem {
       hatchExtendSolenoid.set(DoubleSolenoid.Value.kForward);
     }
   }
-
-   /**
-   * @return the hatchSwitch
-   */
-  public DigitalInput getHatchSwitch() {
-   return hatchSwitch;
-  }
   
   public boolean isPresent(){
-    return isOpticalPresent(); //|| isOpticalPresent();
-  }
-
-  public boolean isPhysicalPresent(){
-    return !hatchSwitch.get();
+    return isOpticalPresent();
   }
 
   public DigitalInput getHatchOptitcalSwitch(){
@@ -77,14 +62,6 @@ public class SS_Hatch extends Subsystem {
 
   public boolean isOpticalPresent(){
     return !hatchOpticalSwitch.get();
-  }
-
-  public DigitalInput getPressedSwitch(){
-    return hatchPressedSwitch;
-  }
-
-  public boolean isPressed(){
-    return !hatchPressedSwitch.get();
   }
 
   

@@ -47,8 +47,8 @@ public class SS_Elevator extends Subsystem {
 
   private boolean initialized = false;
 
-  private final double SAFE_FLIP_TOP = 12;
-  private final double SAFE_FLIP_BOT = .5;
+  private final double SAFE_FLIP_TOP = 10;
+  private final double SAFE_FLIP_BOT = 1;
 
   private final double DEFAULT_BALL = 1;
   private final double DEFAULT_HATCH = 5;

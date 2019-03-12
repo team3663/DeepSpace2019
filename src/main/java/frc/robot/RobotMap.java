@@ -58,13 +58,8 @@ public class RobotMap {
 
   public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 0; 
   public static final int ELEVATOR_TOP_LIMIT_SWITCH = 1; 
-
-  public static final int REAR_CLIMBER_LIMIT_SWITCH = 4;
-  public static final int FRONT_CLIMBER_LIMIT_SWITCH = 5;
   
-  public static final int HATCH_SWITCH = 2;      
-  public static final int HATCH_OPTICAL_SWITCH = 8;   
-  public static final int HATCH_PRESSED_SWITCH = 7; 
+  public static final int HATCH_OPTICAL_SWITCH = 2;   
 
 
 

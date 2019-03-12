@@ -54,33 +54,19 @@ public class C_StartOrchestra extends Command {
         /*
         rear climber
         */
-        if(!rearClimber.isReset()){
-          rearClimber.setSpeed(.2);
-        }
-        else{
-          rearClimber.setSpeed(0);
-          rearClimber.resetEncoder();
+        rearClimber.resetEncoder();
 
-          rearClimber.setInitilized(true);
-        }
-      }
-      else{
-        rearClimber.goToDegree(5);
+        rearClimber.setInitilized(true);
       }
 
       if(!frontClimber.isInitialized()){
         /*
         frontClimber.
         */
-        if(!frontClimber.isReset()){
-          frontClimber.setSpeed(.5);
-        }
-        else{
-          frontClimber.setSpeed(0);
-          frontClimber.resetEncoder();
+    
+        frontClimber.resetEncoder();
 
-          frontClimber.setInitialized(true);
-        }
+        frontClimber.setInitialized(true);
       }
       else{
         frontClimber.goToDegree(frontClimber.getSafeTop());

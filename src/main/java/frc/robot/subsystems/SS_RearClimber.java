@@ -25,8 +25,6 @@ public class SS_RearClimber extends Subsystem {
   private CANSparkMax rearClimberMotor;
   private CANPIDController PID;
 
-  private DigitalInput rearClimberReset;
-
   private double fakeEncoder = 0;
   private double speedMultiplier = 0.3;
 
@@ -39,8 +37,6 @@ public class SS_RearClimber extends Subsystem {
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
-
-    rearClimberReset = new DigitalInput(RobotMap.REAR_CLIMBER_LIMIT_SWITCH);
 
     rearClimberMotor.setIdleMode(IdleMode.kBrake);
 
@@ -65,13 +61,7 @@ public class SS_RearClimber extends Subsystem {
   }
   
   public void setSpeed(double speed){
-    if(isReset()){
-      rearClimberMotor.set(0);
-    }
-    else{
-      rearClimberMotor.set( -speed * speedMultiplier);
-    }
- 
+    rearClimberMotor.set( -speed * speedMultiplier);
   }
 
   public void setSpeedMultiplier(double speedMultiplier){
@@ -122,14 +112,6 @@ public class SS_RearClimber extends Subsystem {
 
   public void resetEncoder(){
     rearClimberMotor.getEncoder().setPosition(-1.3); 
-  }
-
-  public DigitalInput getRearClimberReset(){
-    return rearClimberReset;
-  }
-
-  public boolean isReset(){
-    return rearClimberReset.get();
   }
 
   public double getGearRatio() {

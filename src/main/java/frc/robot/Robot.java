@@ -142,8 +142,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    
     SmartDashboard.putBoolean("Hatch Present", ss_Hatch.isPresent());    
-    SmartDashboard.putBoolean("Hatch Pressed", ss_Hatch.isPressed());    
-
     SmartDashboard.putBoolean("ef init", ss_EndEffectorAngle.isInitialized());
     SmartDashboard.putBoolean("ele init", ss_Elevator.isInitialized());    
     SmartDashboard.putBoolean("fclimb init", ss_FrontClimber.isInitialized());    
