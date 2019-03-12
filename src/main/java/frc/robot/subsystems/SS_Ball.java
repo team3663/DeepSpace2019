@@ -25,7 +25,7 @@ import frc.robot.RobotMap;
 public class SS_Ball extends Subsystem {
   
   private CANSparkMax EndEffectorIntakeMotor;
-  private CANSparkMax climberIntakeMotor;
+  private TalonSRX climberIntakeMotor;
 
   private DigitalInput cargoSwitch;
   
@@ -33,8 +33,8 @@ public class SS_Ball extends Subsystem {
 
 
   public SS_Ball() {
-    climberIntakeMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_CARGO_INTAKE, MotorType.kBrushless);
-    climberIntakeMotor.setIdleMode(IdleMode.kCoast);
+    climberIntakeMotor = new TalonSRX(RobotMap.CLIMBER_FRONT_CARGO_INTAKE);
+    climberIntakeMotor.setNeutralMode(NeutralMode.Coast);
     climberIntakeMotor.setInverted(true);
     EndEffectorIntakeMotor = new CANSparkMax(RobotMap.CARGO_MOTOR, MotorType.kBrushless);
     EndEffectorIntakeMotor.setIdleMode(IdleMode.kCoast);
@@ -50,11 +50,11 @@ public class SS_Ball extends Subsystem {
   }
 
   public void setCargoIntakeSpeed(double speed) {
-    climberIntakeMotor.set(speed);
+    climberIntakeMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setBrakeMode(){
-    climberIntakeMotor.setIdleMode(IdleMode.kBrake);
+    climberIntakeMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   public DigitalInput getCagroSwitch(){

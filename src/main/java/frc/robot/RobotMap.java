@@ -17,31 +17,31 @@ package frc.robot;
  */
 public class RobotMap {
  
-public static final int getDriveMotor(int module){
+  public static final int getDriveMotor(int module){
     int motors[] = {
-      4,1,
-      3,2
+      12,1,
+      9,3
     };
     return motors[module];
   }
   public static final int getAngleMotor(int module){
     int motors[] = {
-      8,5,
-      7,6
+      10,2,
+      14,5
     };
     return motors[module];
   }
 
-  public static final int CLIMBER_FRONT_MOTOR = 12;
+  public static final int CLIMBER_FRONT_MOTOR = 11;
   public static final int CLIMBER_FRONT_CARGO_INTAKE = 15;
 
-  public static final int CLIMBER_REAR_MOTOR = 13;
+  public static final int CLIMBER_REAR_MOTOR = 6;
 
-  public static final int CARGO_MOTOR = 14;
-  public static final int ENDEFFECTOR_ANGLE_MOTOR = 11;
+  public static final int CARGO_MOTOR = 8;
+  public static final int ENDEFFECTOR_ANGLE_MOTOR = 7;
 
-  public static final int ELEVATOR_MASTER_MOTOR = 9;
-  public static final int ELEVATOR_SLAVE_MOTOR = 10;
+  public static final int ELEVATOR_MASTER_MOTOR = 4;
+  public static final int ELEVATOR_SLAVE_MOTOR = 13;
 
 
   //Camera
@@ -53,16 +53,16 @@ public static final int getDriveMotor(int module){
   public static final int PRESSURE_SENSOR = 0;
 
   //DIO
-  public static final int CARGO_SWITCH = 0;
-  public static final int ANGLE_RESET_SWITCH = 2;
+  public static final int CARGO_SWITCH = 8;
+  public static final int ANGLE_RESET_SWITCH = 3;
 
-  public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 3; 
+  public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH = 0; 
   public static final int ELEVATOR_TOP_LIMIT_SWITCH = 1; 
 
   public static final int REAR_CLIMBER_LIMIT_SWITCH = 4;
   public static final int FRONT_CLIMBER_LIMIT_SWITCH = 5;
   
-  public static final int HATCH_SWITCH = 6;      
+  public static final int HATCH_SWITCH = 2;      
   public static final int HATCH_OPTICAL_SWITCH = 8;   
   public static final int HATCH_PRESSED_SWITCH = 7; 
 
@@ -70,11 +70,12 @@ public static final int getDriveMotor(int module){
 
 
   //Pneumatics
-  public static final int CSS_SOLENOID_FORWARD = 0;
-  public static final int CSS_SOLENOID_REVERSE = 1;
+  //public static final int CSS_SOLENOID_FORWARD = 0;
+  //public static final int CSS_SOLENOID_REVERSE = 1;
 
-  public static final int HATCH_PICKUP_SOLENOID_FORWARD = 2;  
-  public static final int HATCH_PICKUP_SOLENOID_REVERSE = 3;
-  public static final int HATCH_EXTEND_SOLENOID_FORWARD = 4;
-  public static final int HATCH_EXTEND_SOLENOID_REVERSE = 5;
+  public static final int HATCH_PICKUP_SOLENOID_FORWARD = 0;  
+  public static final int HATCH_PICKUP_SOLENOID_REVERSE = 1;
+
+  public static final int HATCH_EXTEND_SOLENOID_FORWARD = 2;
+  public static final int HATCH_EXTEND_SOLENOID_REVERSE = 3;
 }
