@@ -22,7 +22,7 @@ public class C_CrabDrive extends Command {
 
   @Override
   protected void execute() {
-    Robot.getBall().setCargoIntakeSpeed(-Robot.getOI().getSecondaryController().getRightTriggerValue());
+    Robot.getBall().setCargoIntakeSpeed(-Robot.getOI().getTestController().getRightTriggerValue());
   }
 
   @Override

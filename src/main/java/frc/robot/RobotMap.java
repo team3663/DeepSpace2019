@@ -46,7 +46,7 @@ public class RobotMap {
 
   //Camera
   public static final int CAMERA_MODE = 0;
-  public static final int CAMERA_LIGHT_MODE = 3;
+  public static final int CAMERA_LIGHT_MODE = 0;
   public static final int CAMERA_PIPELINE = 0;
 
   //Analog

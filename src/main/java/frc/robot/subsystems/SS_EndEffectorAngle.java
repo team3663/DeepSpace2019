@@ -30,7 +30,7 @@ public class SS_EndEffectorAngle extends Subsystem {
   private CANPIDController PID;
 
 
-  private double GEAR_RATIO = 1.0/147.0;
+  private double GEAR_RATIO = 1.0/63.0;
   private double TICKS_PER_DEGREE = 1.0/360.0;
   private double speedMultiplier = .5;
 
@@ -58,7 +58,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     PID.setP(2);
     PID.setI(.00003); //.00003
     PID.setD(.00005);    //.04 
-    PID.setOutputRange(-.4, .4);
+    PID.setOutputRange(-.2, .2);
     
     
     
@@ -119,7 +119,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     
   }
   public void resetEncoder(){
-    angleMotor.getEncoder().setPosition(39.1);
+    angleMotor.getEncoder().setPosition(16);
   }
 
   public void setAngleSpeed(double speed){
@@ -141,7 +141,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     return angleResetSwitch;
   }
   public boolean isReset(){
-    return !angleResetSwitch.get();
+    return angleResetSwitch.get();
   }  
 
   public boolean isInitialized(){

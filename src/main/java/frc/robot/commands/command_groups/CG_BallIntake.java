@@ -24,7 +24,7 @@ public class CG_BallIntake extends CommandGroup {
    * goes to ball mode and waits for ball , then goes resets
    */
   public CG_BallIntake() {
-    addSequential(new C_FrontClimber(95, true));
+    addSequential(new C_FrontClimber(95, false));
 
     addSequential(new C_SetHatchMode(false));
     addSequential(new C_ExtendHatch(false));

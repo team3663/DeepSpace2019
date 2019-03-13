@@ -37,7 +37,7 @@ public class SS_Elevator extends Subsystem {
   private DigitalInput topLimitSwitch;
 
   public double speedMultiplier = .3  ;
-  private double TICKS_PER_INCH = 1.6;
+  private double TICKS_PER_INCH = 2.6;
   private double GEAR_RATIO = 1.0/10.0;
 
   private int selectedLevel = 1;
@@ -47,7 +47,7 @@ public class SS_Elevator extends Subsystem {
 
   private boolean initialized = false;
 
-  private final double SAFE_FLIP_TOP = 10;
+  private final double SAFE_FLIP_TOP = 4;
   private final double SAFE_FLIP_BOT = 1;
 
   private final double DEFAULT_BALL = 1;

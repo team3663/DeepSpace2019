@@ -37,7 +37,7 @@ public class SS_Hatch extends Subsystem {
 
   
   public void setHatchClosed(boolean state) {
-    if(state){
+    if(!state){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
     }else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
@@ -45,7 +45,7 @@ public class SS_Hatch extends Subsystem {
   }
 
   public void extendHatchPickup(boolean state) {
-    if(state){
+    if(!state){
       hatchExtendSolenoid.set(DoubleSolenoid.Value.kReverse);
     } else {
       hatchExtendSolenoid.set(DoubleSolenoid.Value.kForward);

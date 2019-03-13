@@ -63,7 +63,7 @@ public class C_VisionAlign extends Command {
   @Override
   protected void execute() {
     
-    drivetrain.holonomicDrive(.2, vision.getXOffset()/2, PIDCont.get(angleToSnap)); //make Drive forward proportional to target area
+    drivetrain.holonomicDrive(.2, -vision.getXOffset()/2, 0); //make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
