@@ -37,7 +37,7 @@ public class SS_Elevator extends Subsystem {
   private DigitalInput topLimitSwitch;
 
   public double speedMultiplier = .3  ;
-  private double TICKS_PER_INCH = 2.6;
+  private double TICKS_PER_INCH = 1.6;
   private double GEAR_RATIO = 1.0/10.0;
 
   private int selectedLevel = 1;
@@ -51,15 +51,15 @@ public class SS_Elevator extends Subsystem {
   private final double SAFE_FLIP_BOT = 1;
 
   private final double DEFAULT_BALL = 1;
-  private final double DEFAULT_HATCH = 5;
+  private final double DEFAULT_HATCH = 6;
 
   private final double LEVEL_1_B = 5;
   private final double LEVEL_2_B = 26;
   private final double LEVEL_3_B = 65;
   private final double LEVEL_15_B = 20;
 
-  private final double LEVEL_1_H = 5;
-  private final double LEVEL_2_H = 37.5;
+  private final double LEVEL_1_H = 6;
+  private final double LEVEL_2_H = 39 ;
   private final double LEVEL_3_H = 65;
 
   private CANPIDController PID;

@@ -63,13 +63,13 @@ public class C_VisionAlign extends Command {
   @Override
   protected void execute() {
     
-    drivetrain.holonomicDrive(.2, -vision.getXOffset()/2, 0); //make Drive forward proportional to target area
+    drivetrain.holonomicDrive(-.2, vision.getXOffset()/15, 0); //make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || vision.getTargetArea() > 30 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
+    return !vision.validTarget() || vision.getTargetArea() > 20 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
     //TODO find the proper area for it to be hitting
   }
 

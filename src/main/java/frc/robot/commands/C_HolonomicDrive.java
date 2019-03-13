@@ -14,9 +14,9 @@ public class C_HolonomicDrive extends Command {
 	private static final double ANGLE_ERROR = 2.5;
 
 	private PIDCont PIDCont;
-  	private double kP = .5;
-	private double kI = 0;
-	private double kD = 0;
+  	private double kP = .005;
+	private double kI = .005;
+	private double kD = .0001;
 	private double maxPIDSpeed = 0.4;  
 
 	private double targetAngle = 0;
@@ -63,13 +63,15 @@ public class C_HolonomicDrive extends Command {
 		if(Robot.getOI().getPrimaryController().getLeftBumperButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
 			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
-				targetAngle = getShortestPath(getSnappedJoystick());
+				// targetAngle = getShortestPath(getSnappedRotation());
+				targetAngle = getShortestPathTwo(getSnappedJoystick());
 			}
 
 			//if robot has not reached the target angle, set the power for that rotation that is being inputed to holonomic drive
-			if(!reachedTargetAngle(targetAngle)) {
-				rotation = PIDCont.get(getAngleError(targetAngle));
-			}
+			// if(!reachedTargetAngle(targetAngle)) {
+			// 	rotation = PIDCont.get(getAngleError(targetAngle));
+			// }
+			rotation = PIDCont.get(getAngleError(targetAngle));
 			
 		} else {
 			// set target angle to current angle so robot doesn't spin unexpectedly when left bumper is pressed and right joystick
@@ -77,9 +79,9 @@ public class C_HolonomicDrive extends Command {
 			targetAngle = mDrivetrain.getGyroAngle();
 		}
 
-		SmartDashboard.putNumber("snap power", rotation);
-		SmartDashboard.putNumber("snap angle ", targetAngle);
-		SmartDashboard.putNumber("current angle", mDrivetrain.getGyroAngle());
+		SmartDashboard.putNumber("rotation", rotation);
+		SmartDashboard.putNumber("target angle ", targetAngle);
+		SmartDashboard.putNumber("current angle", mDrivetrain.getNavX().getAngle());
 
 		mDrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
@@ -106,6 +108,41 @@ public class C_HolonomicDrive extends Command {
 		return false;
 	}
 
+	/**
+	 * Updated the target angle to a rotation in 45 degree intervals based on the right joystick
+	 * @return the closest 45 degree angle increment to the joystick's angle
+	 */
+	private int getSnappedRotation() {
+		double x = Robot.getOI().getPrimaryController().getRightXValue();
+		double y = Robot.getOI().getPrimaryController().getRightYValue();
+
+		// find the angle of the joystick (x and y are flipped to make forwards be 0 degrees)
+		double rotation = Math.atan2(x, y);
+		// convert rotation to degrees
+		rotation = rotation / Math.PI * 180;
+		// snap to closest 45 degree interval
+		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;
+		//convert to correct angle for rockets
+        if(Math.abs(rotation) == 45) {
+            rotation = 30 * Math.signum(rotation);
+        } else if(Math.abs(rotation) == 135) {
+            rotation = 150 * Math.signum(rotation);
+        }
+		return (int)rotation;
+	}
+
+	/**
+	 * Returns the angle to rotate to in order to rotate the least distance
+	 */
+	private int getShortestPath(int targetAngle) {
+		// int path = targetAngle - (int)mDrivetrain.getNavX().getAngle();
+		// if(Math.abs(path) > 180) {
+		// 	return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
+		// }
+		// return targetAngle;
+		return (int)((mDrivetrain.getNavX().getAngle() + 180 - targetAngle) / 360 * 360 + targetAngle);
+	}
+	
 	private double getSnappedJoystick(){
 		double x = Robot.getOI().getPrimaryController().getRightXValue();
 		double y = Robot.getOI().getPrimaryController().getRightYValue();
@@ -145,7 +182,7 @@ public class C_HolonomicDrive extends Command {
 
 	}
 
-	private double getShortestPath(double targetAngle) {
+	private double getShortestPathTwo(double targetAngle) {
 		double currentAngle = mDrivetrain.getGyroAngle();
 		double currentAngleMod = currentAngle % 360;
         if (currentAngleMod < 0) currentAngleMod += 360;
@@ -160,4 +197,5 @@ public class C_HolonomicDrive extends Command {
 		targetAngle += currentAngle - currentAngleMod;
 		return targetAngle;
 	}
+
 }
