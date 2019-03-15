@@ -32,6 +32,12 @@ public class SS_RearClimber extends Subsystem {
   private double speedMultiplier = 0.3;
 
   private final double GEAR_RATIO = 1.0/300.0;
+  //TODO: need to find actual lengths
+  private final double ARM_BASE_DISTANCE = 2;
+  private final double REAR_LONG_SIDE_LENGTH = 27;
+  private final double REAR_SHORT_SIDE_LENGTH = 4;
+  private final double REAR_CLIMBER_RADIUS = Math.sqrt(Math.pow(REAR_LONG_SIDE_LENGTH, 2) + Math.pow(REAR_SHORT_SIDE_LENGTH, 2));
+  private final double REAR_RADIUS_ANGLE = Math.toDegrees(Math.acos(REAR_SHORT_SIDE_LENGTH/REAR_CLIMBER_RADIUS));
 
   private double ANGLE_LIMIT = 180;
 
@@ -93,10 +99,23 @@ public class SS_RearClimber extends Subsystem {
     return position;
   }
 
+  public double getHeight(double frontHeight, double pitch){
+    double heightError = 5 * Math.sin(Math.toRadians(pitch));
+    double rearTiltHeight = frontHeight - (heightError / Math.cos(Math.toRadians(pitch)));
+    return rearTiltHeight * Math.cos(Math.toRadians(pitch));
+    
+  }
+
   public boolean atTarget(double angle){
     return getAngle() < angle + 1 && getAngle() > angle - 1;
   }
   
+  public void goToInch(double inch){
+    double targetAngle = Math.toDegrees(Math.acos((ARM_BASE_DISTANCE + inch)/REAR_CLIMBER_RADIUS));
+    double angleToRotate = 90 + (180 -(REAR_RADIUS_ANGLE + targetAngle));
+    goToDegree(angleToRotate);
+  }
+
   public void goToDegree(double degrees){
     rearClimberMotor.getPIDController().setReference(gearMultiply(degrees) * 360, 
       ControlType.kPosition);

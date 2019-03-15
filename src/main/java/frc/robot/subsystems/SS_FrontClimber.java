@@ -40,6 +40,13 @@ public class SS_FrontClimber extends Subsystem {
 
   private final double GEAR_RATIO = 1.0/147.0;
   private final double TICKS_PER_DEGREE = 1.0/360.0;
+  //TODO: need to find actual lengths
+  private final double FRONT_CLIMBER_RADIUS = 16.5;
+  private final double ARM_BASE_DISTANCE = 4;
+  private final double LEVEL_THREE_INCH = 18;
+  private final double LEVEL_TWO_INCH = 6;
+  private double selectedLevel = 3;
+
   private double fakeEncoder = 0;
 
   private boolean initialized = false;
@@ -101,6 +108,18 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberMotor.getEncoder().setPosition(0);
   }
 
+  public double getSelectedLevelInch(){
+    if(selectedLevel == 2){
+      return LEVEL_TWO_INCH;
+    }
+    return LEVEL_THREE_INCH;
+  }
+
+  public double getHeight(double pitch){
+    double inchFromLevel = FRONT_CLIMBER_RADIUS * Math.cos(Math.toRadians(getAngle()));
+    double height = (getSelectedLevelInch() - ARM_BASE_DISTANCE) - Math.round(inchFromLevel * Math.pow(10, 7)) / Math.pow(10, 7);
+    return height - (FRONT_CLIMBER_RADIUS*Math.sin(Math.toRadians(pitch)));
+  }
 
   public double getAngle(){
     double position = getRawEncoder() * GEAR_RATIO * 360;
@@ -113,6 +132,15 @@ public class SS_FrontClimber extends Subsystem {
 
   public boolean atTarget(double angle){
     return getAngle() < angle + 1 && getAngle() > angle - 1;
+  }
+
+  public void goToInch(double level, double inch){
+    selectedLevel = level;
+    double targetInchHeigtDiff = inch - getSelectedLevelInch();
+    double targetInch = ARM_BASE_DISTANCE + targetInchHeigtDiff;
+    
+    double degreesToRotate = Math.toDegrees(Math.acos((double)(targetInch/FRONT_CLIMBER_RADIUS)));
+    goToDegree(180 - degreesToRotate);
   }
 
   public void goToDegree(double degree) {
