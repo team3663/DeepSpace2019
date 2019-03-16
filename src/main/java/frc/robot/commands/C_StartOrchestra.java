@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.Robot;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
@@ -139,6 +140,7 @@ public class C_StartOrchestra extends Command {
   @Override
   protected void end() {
     if(Robot.getOI().getTestController().getRightBumperButton().get()){
+      Scheduler.getInstance().removeAll();
       new C_ElevatorDirect().start();
       new C_EndEffectorDirect().start();
       new C_FrontClimberDirect().start();

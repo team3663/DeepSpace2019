@@ -56,7 +56,8 @@ public class OI {
         secondaryController.getAButton().whenPressed(new C_SetEFIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEFIntakeSpeed(0));
 
-        secondaryController.getBButton().whenPressed(new CG_HatchDeploy());
+        secondaryController.getBButton().whenPressed(new C_ExtendHatch(true));
+        secondaryController.getBButton().whenReleased(new CG_HatchDropManual());
 
         // secondaryController.getYButton().whenPressed(new CG_HatchHold());
 
@@ -64,6 +65,7 @@ public class OI {
         secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
 
         secondaryController.getStartButton().whenPressed(new C_Climb());
+        secondaryController.getBackButton().whenPressed(new C_CrabDrive());
 
         
         //

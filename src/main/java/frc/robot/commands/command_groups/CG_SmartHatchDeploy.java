@@ -8,18 +8,23 @@
 package frc.robot.commands.command_groups;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_GoToRelativeLevel;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.C_Wait;
+import frc.robot.commands.C_WaitForExtended;
 
 public class CG_SmartHatchDeploy extends CommandGroup {
   /**
    * Add your docs here.
    */
   public CG_SmartHatchDeploy() {
-    addSequential(new CG_SmartHatchDeploy());
+    addSequential(new C_ExtendHatch(true));
+    addSequential(new C_WaitForExtended(true));
+    addSequential(new C_WaitForExtended(false));
     addSequential(new C_SetHatchClosed(false));
+    addSequential(new C_ExtendHatch(false));
     addSequential(new C_GoToRelativeLevel(-1));
     addSequential(new C_Wait(1000));
     addSequential(new C_GoToSelectedLevel());

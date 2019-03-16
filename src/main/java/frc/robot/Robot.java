@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
     camera.setResolution(320, 240);
     camera.setPixelFormat(PixelFormat.kMJPEG);
     
-    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "NONE")); //HALF
+    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "HALF")); //NONE
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
@@ -151,6 +151,8 @@ public class Robot extends TimedRobot {
     
     SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
+    SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
+
 
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());

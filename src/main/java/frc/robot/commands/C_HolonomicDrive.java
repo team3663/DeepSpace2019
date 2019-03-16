@@ -34,7 +34,7 @@ public class C_HolonomicDrive extends Command {
 
 	@Override
 	protected void execute() {
-		double forward = -Robot.getOI().getPrimaryController().getLeftYValue();
+		double forward = Robot.getOI().getPrimaryController().getLeftYValue();
 		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();
 		double rotation = Robot.getOI().getPrimaryController().getRightXValue();
 
@@ -56,7 +56,6 @@ public class C_HolonomicDrive extends Command {
 		}
 		else{
 			mDrivetrain.setFieldOriented(true);
-			forward = -forward;
 			strafe = -strafe;
 		}
 		

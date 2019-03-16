@@ -31,20 +31,20 @@ public class C_Climb extends Command {
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
-    requires(Robot.getBall());
     Robot.getDrivetrain().softReset(); //TODO chekc and make sure the angle offset is being set only once
     //this.targetAngle = targetAngle;
-  }
-  
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    new C_CrabDrive().start();
+
 
     direction = Math.signum(targetAngle - Robot.getFrontClimber().getAngle());
     Robot.getFrontClimber().setBrakeMode();
     Robot.getRearClimber().setBrakeMode();
     Robot.getBall().setBrakeMode();
+  }
+  
+  // Called just before this Command runs the first time
+  @Override
+  protected void initialize() {
+
   }
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -54,12 +54,12 @@ public class C_Climb extends Command {
     double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
     double pitch = Robot.getDrivetrain().getPitch();
     
-    Robot.getRearClimber().setSpeed(-joystickInput);
-    if(pitch < 0){
-      Robot.getFrontClimber().setSpeed(1);
+    Robot.getFrontClimber().setSpeed(joystickInput);
+    if(pitch > 0){
+      Robot.getRearClimber().setSpeed(-1);
     }
     else{
-      Robot.getFrontClimber().setSpeed(0);
+      Robot.getRearClimber().setSpeed(0);
     }
 
 

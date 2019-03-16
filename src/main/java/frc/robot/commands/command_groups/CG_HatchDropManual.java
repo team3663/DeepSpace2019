@@ -5,19 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.command_groups;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_ExtendHatch;
+import frc.robot.commands.C_SetHatchClosed;
 
-public class C_WaitForHatchPress extends Command {
-  public C_WaitForHatchPress() {
-
-    requires(Robot.getHatch());
-  }
-
-  @Override
-  protected boolean isFinished() {
-    return Robot.getHatch().isPressed();
+public class CG_HatchDropManual extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public CG_HatchDropManual() {
+    addSequential(new C_SetHatchClosed(false));
+    addSequential(new C_ExtendHatch(false));
   }
 }
