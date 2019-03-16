@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_Swerve;
 import frc.robot.subsystems.SS_Vision;
@@ -21,7 +22,14 @@ public class C_VisionAlign extends Command {
   private double kP = .05;
 	private double kI = 0;
 	private double kD = 0;
-	private double maxPIDSpeed = 0.4;  
+  private double maxPIDSpeed = 0.4;  
+  
+
+  private PIDCont PIDVision;
+  private double kPv = .005;
+	private double kIv = 0;
+	private double kDv = 0;
+	private double maxPIDSpeedv = 0.9;  
 
   private double angleToSnap = 0;
 
@@ -34,6 +42,8 @@ public class C_VisionAlign extends Command {
     drivetrain = Robot.getDrivetrain();
 
     PIDCont = new PIDCont(maxPIDSpeed, kP, kI, kD); //TODO kP, kI, and kD need tuning
+
+    PIDVision = new PIDCont(maxPIDSpeedv, kPv, kIv, kDv);
 
   }
 
@@ -57,19 +67,21 @@ public class C_VisionAlign extends Command {
     else if(angleToSnap == 315){
       angleToSnap = 330;
     }
+    SmartDashboard.putNumber("Vangle Snap", angleToSnap);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     
-    drivetrain.holonomicDrive(-.2, vision.getXOffset()/15, 0); //make Drive forward proportional to target area
+    // SmartDashboard.putNumber("Vangle power", PIDCont.get(angleToSnap));
+    drivetrain.holonomicDrive(-.2, PIDVision.get(vision.getXOffset()), 0); //make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || vision.getTargetArea() > 20 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
+    return !vision.validTarget() || vision.getTargetArea() > 9 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
     //TODO find the proper area for it to be hitting
   }
 

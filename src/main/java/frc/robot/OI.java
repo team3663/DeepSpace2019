@@ -63,7 +63,7 @@ public class OI {
         secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
         secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
 
-        secondaryController.getStartButton().whenPressed(new C_Climb());
+        secondaryController.getStartButton().whileHeld(new C_Climb());
 
         
         //
@@ -75,6 +75,7 @@ public class OI {
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
         testingController.getYButton().whenPressed(new C_VisionAlign());
+        testingController.getStartButton().whenPressed(new C_CrabDrive());        
     }
     
     public IGamepad getTestController(){

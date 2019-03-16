@@ -14,9 +14,9 @@ public class C_HolonomicDrive extends Command {
 	private static final double ANGLE_ERROR = 2.5;
 
 	private PIDCont PIDCont;
-  	private double kP = .005;
-	private double kI = .005;
-	private double kD = .0001;
+  	private double kP = .004;
+	private double kI = .001;
+	private double kD = .000;
 	private double maxPIDSpeed = 0.4;  
 
 	private double targetAngle = 0;
@@ -148,7 +148,7 @@ public class C_HolonomicDrive extends Command {
 		double y = Robot.getOI().getPrimaryController().getRightYValue();
 
 		// find the angle of the joystick (x and y are flipped to make forwards be 0 degrees)
-		double rotation = Math.atan2(x, y);
+		double rotation = Math.atan2(-x, -y);
 
 		rotation = -rotation / Math.PI * 180;
 
