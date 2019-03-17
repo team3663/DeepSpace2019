@@ -10,6 +10,7 @@ package frc.robot.commands.command_groups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_SetHatchClosed;
+import frc.robot.commands.C_Wait;
 
 public class CG_HatchDropManual extends CommandGroup {
   /**
@@ -17,6 +18,7 @@ public class CG_HatchDropManual extends CommandGroup {
    */
   public CG_HatchDropManual() {
     addSequential(new C_SetHatchClosed(false));
+    addSequential(new C_Wait(200));
     addSequential(new C_ExtendHatch(false));
   }
 }

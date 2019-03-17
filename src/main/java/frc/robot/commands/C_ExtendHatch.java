@@ -26,9 +26,7 @@ public class C_ExtendHatch extends Command {
 
   @Override
   protected void execute() {
-    if(!Robot.getHatch().isPresent()){
-      Robot.getHatch().extendHatchPickup(state);
-    }
+    Robot.getHatch().extendHatchPickup(state);
   }
 
   @Override

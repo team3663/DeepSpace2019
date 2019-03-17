@@ -40,7 +40,7 @@ public class SS_FrontClimber extends Subsystem {
   private final double SAFE_FLIP_BOT = 125;
 
   private final double MAX_RPM = 5900;
-  private final double GEAR_RATIO = 1.0/108.0;
+  private final double GEAR_RATIO = 1.0/252.0;
   private final double TICKS_PER_DEGREE = 1.0/360.0;
   private double fakeEncoder = 0;
 
@@ -58,7 +58,7 @@ public class SS_FrontClimber extends Subsystem {
 
 
     PID = new CANPIDController(frontClimberMotor);
-    PID.setP(.4);    //.4  for music use commented pid values
+    PID.setP(.7);    //.4  for music use commented pid values
     PID.setI(.00001);  //.0001
     PID.setD(0);     //10
     PID.setOutputRange(-.75, .75);
@@ -120,7 +120,7 @@ public class SS_FrontClimber extends Subsystem {
   }
 
   public void resetEncoder(){
-    frontClimberMotor.getEncoder().setPosition(21);
+    frontClimberMotor.getEncoder().setPosition(43.7);
   }
 
 

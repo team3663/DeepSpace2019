@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_Climb extends Command {
+  private boolean end;
+
   private double direction;
   private double targetAngle = 0;
   private static final double THRESHOLD_MIN = 100;
@@ -27,11 +29,11 @@ public class C_Climb extends Command {
   private final double FRONT_CLIMBER_SCALAR = (Robot.getRearClimber().getGearRatio() / Robot.getFrontClimber().getGearRatio())
     * (REAR_CLIMBER_RADIUS / FRONT_CLIMBER_RADIUS);
 
-  public C_Climb() {
+  public C_Climb(boolean end) {
+    this.end = end;
     requires(Robot.getFrontClimber());
     requires(Robot.getRearClimber());
     requires(Robot.getDrivetrain());
-    Robot.getDrivetrain().softReset(); //TODO chekc and make sure the angle offset is being set only once
     //this.targetAngle = targetAngle;
 
 
@@ -54,13 +56,32 @@ public class C_Climb extends Command {
     double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
     double pitch = Robot.getDrivetrain().getPitch();
     
-    Robot.getFrontClimber().setSpeed(joystickInput);
-    if(pitch > 0){
-      Robot.getRearClimber().setSpeed(-1);
+    if(joystickInput > .8){
+      Robot.getFrontClimber().goToDegree(5);
+      Robot.getRearClimber().goToDegree(0);
     }
-    else{
-      Robot.getRearClimber().setSpeed(0);
+    else if (joystickInput < .1){
+      if(Robot.getFrontClimber().getAngle() > 155){
+        Robot.getFrontClimber().goToDegree(170);
+      }
+      else{
+        Robot.getFrontClimber().setSpeed(-joystickInput);
+      }
+
+
+      if(pitch > 0){
+        if(Robot.getRearClimber().getAngle() < 175){
+          Robot.getRearClimber().setSpeed(-1);
+        }
+
+      }
+      else{
+        Robot.getRearClimber().setSpeed(0);
+      }
+    
+
     }
+
 
 
 /*
@@ -106,7 +127,7 @@ public class C_Climb extends Command {
   @Override
   protected boolean isFinished() {
     //return (targetAngle - Robot.getFrontClimber().getAngle()) * direction < 0;
-    return Robot.getFrontClimber().getAngle() >= 180 || !Robot.getOI().getSecondaryController().getStartButton().get();
+    return end;
   }
 
   @Override

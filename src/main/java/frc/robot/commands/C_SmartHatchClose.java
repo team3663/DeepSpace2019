@@ -55,6 +55,7 @@ public class C_SmartHatchClose extends Command {
   @Override
   protected void end() {
     Robot.getHatch().extendHatchPickup(false);
+    Robot.getElevator().setSelectedLevel(1);
 
   }
 

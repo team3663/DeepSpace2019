@@ -64,7 +64,10 @@ public class OI {
         secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
         secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
 
-        secondaryController.getStartButton().whenPressed(new C_Climb());
+        secondaryController.getStartButton().whenPressed(new C_Climb(false));
+        secondaryController.getStartButton().whenReleased(new C_Climb(true));
+
+
         secondaryController.getBackButton().whenPressed(new C_CrabDrive());
 
         

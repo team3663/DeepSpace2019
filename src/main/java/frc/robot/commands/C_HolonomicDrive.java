@@ -52,6 +52,7 @@ public class C_HolonomicDrive extends Command {
 
 		if(Robot.getOI().getPrimaryController().getRightBumperButton().get()){
 			mDrivetrain.setFieldOriented(false);
+			strafe = -strafe;
 
 		}
 		else{
