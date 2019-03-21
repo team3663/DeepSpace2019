@@ -38,7 +38,7 @@ public class SS_FrontClimber extends Subsystem {
   private final double SAFE_FLIP_BOT = 115;
 
   private final double MAX_RPM = 5900;
-  private final double GEAR_RATIO = 1.0/240.0;
+  private final double GEAR_RATIO = 1.0/245.0;
   private final double TICKS_PER_DEGREE = 1.0/360.0;
   private double fakeEncoder = 0;
 
@@ -50,15 +50,15 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
 
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
-    frontClimberMotor.setInverted(true);
+    frontClimberMotor.setInverted(false);
 
 
 
     PID = new CANPIDController(frontClimberMotor);
-    PID.setP(.4);    //.4  for music use commented pid values
+    PID.setP(.6);    //.4  for music use commented pid values
     PID.setI(.00001);  //.0001
     PID.setD(0);     //10
-    PID.setOutputRange(-.75, .75);
+    PID.setOutputRange(-1, 1);
     
     
     // //max RPM 5900

@@ -56,7 +56,7 @@ public class SS_Elevator extends Subsystem {
   private final double LEVEL_1_B = 5;
   private final double LEVEL_2_B = 26;
   private final double LEVEL_3_B = 65;
-  private final double LEVEL_15_B = 20;
+  private final double LEVEL_15_B = 23;
 
   private final double LEVEL_1_H = 6;
   private final double LEVEL_2_H = 39 ;
@@ -142,61 +142,24 @@ public class SS_Elevator extends Subsystem {
 
   public double getLevelInch(int level, Mode hatchMode){
     if(hatchMode == Mode.kBall){
-      // switch (level){
-      //   case 1: return LEVEL_1_B;
-      //   case 2: return LEVEL_2_B;
-      //   case 3: return LEVEL_3_B;
-      //   case 15: return LEVEL_15_B;
-      //   default: return DEFAULT_BALL;
-      // }
-      
-      if(level == 1){
-        return LEVEL_1_B;
+      switch (level){
+        case 1: return LEVEL_1_B;
+        case 2: return LEVEL_2_B;
+        case 3: return LEVEL_3_B;
+        case 15: return LEVEL_15_B;
+        default: return DEFAULT_BALL;
       }
-      else if (level == 2){
-        return LEVEL_2_B;
-      }
-      else if (level == 3){
-        return LEVEL_3_B;
-      }
-      else if (level == 15){
-        return LEVEL_15_B;
-      }
-      else if (level == 0){
-        return DEFAULT_BALL;
-      }
-      else{
-        return getAverageInch();
-      }
+
     }
     else{
 
-      // switch (level){
-      //   case 1: return LEVEL_1_H;
-      //   case 2: return LEVEL_2_H;
-      //   case 3: return LEVEL_3_H;
-      //   default: return DEFAULT_HATCH;
-      // }
+      switch (level){
+        case 1: return LEVEL_1_H;
+        case 2: return LEVEL_2_H;
+        case 3: return LEVEL_3_H;
+        default: return DEFAULT_HATCH;
+      }
 
-      if(level == 1){
-        return LEVEL_1_H;
-      }
-      else if (level == 2){
-        return LEVEL_2_H;
-      }
-      else if (level == 3){
-        return LEVEL_3_H;
-      }
-      //this is only run if unintended by operator, its a safety
-      else if (level == 15){
-        return LEVEL_1_H;
-      }
-      else if (level == 0){
-        return DEFAULT_HATCH;
-      }
-      else{
-        return getAverageInch();
-      }
     }
   }
 
