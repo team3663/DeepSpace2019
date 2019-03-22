@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,10 +49,7 @@ public class SwerveModule  {
 
         driveMotor.setIdleMode(IdleMode.kBrake);
 
-        driveMotor.getPIDController().setP(15);
-        driveMotor.getPIDController().setI(.01);
-        driveMotor.getPIDController().setD(.1);
-        driveMotor.getPIDController().setFF(.2);
+
 
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
@@ -68,7 +66,7 @@ public class SwerveModule  {
 
     public void zeroDistance() {
         
-        driveMotor.getEncoder().getPosition();
+        driveMotor.getEncoder().setPosition(0);
     }
     
     public void resetMotor() {
@@ -223,15 +221,12 @@ public class SwerveModule  {
 //    	}
         if (driveInverted) distance = -distance;
 
-//        distance /= 2 * Math.PI * driveWheelRadius; // to wheel rotations
-//        distance *= driveGearRatio; // to encoder rotations
-//        distance *= 80; // to encoder ticks
+       distance /= 2 * Math.PI * driveWheelRadius; // to wheel rotations
+       distance *= driveGearRatio; // to rotations
 
         distance = inchesToEncoderTicks(distance);
 
-        SmartDashboard.putNumber("Module Ticks " + moduleNumber, distance);
-
-        driveMotor.set(distance);
+        driveMotor.getPIDController().setReference(distance, ControlType.kPosition);
     }
 
     public void setTargetSpeed(double speed) {

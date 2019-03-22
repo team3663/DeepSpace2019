@@ -199,7 +199,7 @@ public class Robot extends TimedRobot {
 		}
   }
 
-
+  
   
   @Override
   public void disabledPeriodic() {
@@ -213,15 +213,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    for (int i = 0; i < 4; i++){
-    ss_Swerve.getSwerveModule(i).zeroDistance();
+    for (SwerveModule i : ss_Swerve.getSwerveModules()){
+      i.zeroDistance();
     }
-    getVision().setLightMode(0);
     new C_StartOrchestra().start();
   }
 
   @Override
   public void autonomousInit() {
+    for (SwerveModule i : ss_Swerve.getSwerveModules()){
+      i.zeroDistance();
+    }
     teleopInit();
   }
 

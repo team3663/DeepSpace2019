@@ -11,7 +11,7 @@ public class C_HolonomicDrive extends Command {
 	private final SS_Swerve mDrivetrain;
 
 	//variables for snap to rotate
-	private static final double ANGLE_ERROR = 2.5;
+	private static final double ACCEPTABLE_ANGLE_ERROR = 2.5;
 
 	private PIDCont PIDCont;
   	private double kP = .004;
@@ -19,7 +19,7 @@ public class C_HolonomicDrive extends Command {
 	private double kD = .000;
 	private double maxPIDSpeed = 0.4;  
 
-	private double targetAngle = 0;
+	private double controllerSpeed = 0;
 
 	public C_HolonomicDrive() {
 		requires(Robot.getDrivetrain());
@@ -60,34 +60,35 @@ public class C_HolonomicDrive extends Command {
 			strafe = -strafe;
 		}
 		
+		//snap to angle
 		if(Robot.getOI().getPrimaryController().getLeftBumperButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
 			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
 				// targetAngle = getShortestPath(getSnappedRotation());
-				targetAngle = getShortestPathTwo(getSnappedJoystick());
+				controllerSpeed = getShortestPathTwo(getSnappedJoystick());
 			}
 
 			//if robot has not reached the target angle, set the power for that rotation that is being inputed to holonomic drive
 			// if(!reachedTargetAngle(targetAngle)) {
 			// 	rotation = PIDCont.get(getAngleError(targetAngle));
 			// }
-			rotation = PIDCont.get(getAngleError(targetAngle));
+			rotation = PIDCont.get(getAngleError(controllerSpeed));
 			
 		} else {
 			// set target angle to current angle so robot doesn't spin unexpectedly when left bumper is pressed and right joystick
 			// is not moved
-			targetAngle = mDrivetrain.getGyroAngle();
+			controllerSpeed = mDrivetrain.getGyroAngle();
 		}
 
 		SmartDashboard.putNumber("rotation", rotation);
-		SmartDashboard.putNumber("target angle ", targetAngle);
+		SmartDashboard.putNumber("target angle ", controllerSpeed);
 		SmartDashboard.putNumber("current angle", mDrivetrain.getNavX().getAngle());
 
 		mDrivetrain.holonomicDrive(forward, strafe, rotation);
 	}
 
 	private boolean reachedTargetAngle(double targetAngle) {
-		return Math.abs(getAngleError(targetAngle)) < ANGLE_ERROR;
+		return Math.abs(getAngleError(targetAngle)) < ACCEPTABLE_ANGLE_ERROR;
 	}
 
 	private double getAngleError(double targetAngle) {
@@ -155,27 +156,30 @@ public class C_HolonomicDrive extends Command {
 		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;
 		SmartDashboard.putNumber("joystick angle", rotation);
 
-		// if(rotation < 0){
-		// 	rotation *= -1;
-		// 	rotation += 180;
-		// }
-		SmartDashboard.putNumber("joystick angle", rotation);
-
-
-        if(rotation == 45) {
-            rotation = 30;
-        } else if(rotation == 135) {
-            rotation = 150;
-		} else if (rotation == -180){
-			rotation = Math.abs(rotation);
-		} else if (rotation == -45){
-			rotation = 330;
-		} else if (rotation == -135){
-			rotation = 210;
+		switch ((int)rotation){
+			case 45: rotation = 30;
+			case 135: rotation = 150;
+			case -180: rotation = 180;
+			case -45: rotation = 330;
+			case -135: rotation = 210;
+			case -90: rotation = 270;
+			default: rotation = 0;
 		}
-		else if (rotation == -90){
-			rotation = 270;
-		} 
+
+		// if(rotation == 45) {
+        //     rotation = 30;
+        // } else if(rotation == 135) {
+        //     rotation = 150;
+		// } else if (rotation == -180){
+		// 	rotation = Math.abs(rotation);
+		// } else if (rotation == -45){
+		// 	rotation = 330;
+		// } else if (rotation == -135){
+		// 	rotation = 210;
+		// }
+		// else if (rotation == -90){
+		// 	rotation = 270;
+		// } 
 		SmartDashboard.putNumber("joystick snap", rotation);
 
 		return rotation;
@@ -195,6 +199,7 @@ public class C_HolonomicDrive extends Command {
             targetAngle -= 360;
         }
 		targetAngle += currentAngle - currentAngleMod;
+		SmartDashboard.putNumber("shortest path", targetAngle);
 		return targetAngle;
 	}
 

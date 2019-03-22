@@ -75,23 +75,26 @@ public class C_VisionAlign extends Command {
   protected void execute() {
     
     // SmartDashboard.putNumber("Vangle power", PIDCont.get(angleToSnap));
-    drivetrain.holonomicDrive(-.2, PIDVision.get(vision.getXOffset()), 0); //make Drive forward proportional to target area
+    drivetrain.holonomicDrive(-.2, PIDVision.get(vision.getXOffset()), PIDCont.get(getAngleError(angleToSnap))); //TODO: make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || vision.getTargetArea() > 9 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
+    return !vision.validTarget() || vision.getTargetArea() < 9 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
     //TODO find the proper area for it to be hitting
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    vision.setLightMode(0);
+    vision.setLightMode(1);
     drivetrain.setFieldOriented(true);
     drivetrain.holonomicDrive(0, 0, 0);
   }
+  private double getAngleError(double targetAngle) {
+		return targetAngle - Robot.getDrivetrain().getGyroAngle();
+	}
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

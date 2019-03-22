@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.subsystems.SwerveModule;
 
 public class C_Climb extends Command {
   private double direction;
@@ -47,7 +48,9 @@ public class C_Climb extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
+    for (SwerveModule i : Robot.getDrivetrain().getSwerveModules()){
+      i.setTargetAngle(0);
+    }
   }
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -56,9 +59,7 @@ public class C_Climb extends Command {
     System.out.println("C CLIMB");
     double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
     double pitch = Robot.getDrivetrain().getPitch();
-    
-    System.out.println(joystickInput);
-    System.out.println(pitch);
+
 
     Robot.getRearClimber().setSpeed(joystickInput);
     if(pitch < 0){

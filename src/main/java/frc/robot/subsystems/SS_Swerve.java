@@ -248,6 +248,14 @@ public class SS_Swerve extends Subsystem {
         return mSwerveModules[i];
     }
 
+    public double getAverageDriveEncoder(){
+        double encoderTotal = 0;
+        for(SwerveModule i : getSwerveModules()){
+            encoderTotal += i.getDrivePos();
+        }
+        return encoderTotal/4;
+    }
+
     public void holonomicDrive(double forward, double strafe, double rotation) {
         // slows everything down
         forward *= getSpeedMultiplier();

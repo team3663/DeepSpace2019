@@ -41,7 +41,9 @@ public class SS_Vision extends Subsystem {
 
   }
 
-  //0 = LED mode set in current pipeline, 1 = off, 2 = blink, 3 = on
+  /**
+   * pipeline = 0, off = 1, blink = 2, on = 3 
+   */
   public void setLightMode(int mode) {
 		limelightNetworkTable.getEntry("ledMode").setNumber(mode);
   }
@@ -91,7 +93,7 @@ public class SS_Vision extends Subsystem {
   // called by C_InitCamera, sets basic camera settings defined in RobotMap
   private boolean init = false;
   public boolean initCamera(int cameraMode, int lightMode, int pipeline) {
-    if (!init) {
+    if (!init && x.getDouble(-1) != -1) {
       setCameraMode(cameraMode);
       setLightMode(lightMode);
       setPipeline(pipeline);
