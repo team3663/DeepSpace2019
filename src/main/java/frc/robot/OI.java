@@ -63,9 +63,12 @@ public class OI {
         secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
         secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
 
-        secondaryController.getStartButton().whileHeld(new C_Climb());
-        secondaryController.getBackButton().whenPressed(new C_CrabDrive());
 
+        secondaryController.getStartButton().whenPressed(new C_Climb(false));
+        secondaryController.getStartButton().whenReleased(new C_Climb(true));
+
+
+        secondaryController.getBackButton().whenPressed(new C_CrabDrive());
         
         //
         //testing controller: BE CAREFUL
@@ -75,8 +78,7 @@ public class OI {
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
-        testingController.getYButton().whenPressed(new C_VisionAlign());
-        testingController.getStartButton().whenPressed(new C_CrabDrive());        
+        testingController.getYButton().whenPressed(new C_VisionAlign());   
     }
     
     public IGamepad getTestController(){
