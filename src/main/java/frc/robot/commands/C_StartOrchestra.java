@@ -154,6 +154,10 @@ public class C_StartOrchestra extends Command {
       if(!Robot.getHatch().isPresent()){
         new C_ElevatorToInch(1).start();
       }
+      else{
+        new C_ElevatorHold().start();
+        new C_EndEffectorHold().start();
+      }
       new C_FrontClimber(0).start();
       new C_RearClimberToAngle(5).start();
     }

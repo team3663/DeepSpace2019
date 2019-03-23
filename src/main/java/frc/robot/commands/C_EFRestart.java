@@ -10,6 +10,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 
 public class C_EFRestart extends Command {
   /**
@@ -19,7 +20,13 @@ public class C_EFRestart extends Command {
 
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
+    requires(Robot.getFrontClimber());
     requires(Robot.getHatch());
+  }
+
+  @Override
+  protected void initialize() {
+    Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
   }
 
   @Override
@@ -36,7 +43,7 @@ public class C_EFRestart extends Command {
           Robot.getElevator().setInitialized(true);
         }
       }
-      else if(!Robot.getEndEffectorAngle().isInitialized()){
+      else if(!Robot.getEndEffectorAngle().isInitialized() && Robot.getFrontClimber().safeToFlip()){
         
         if(!Robot.getEndEffectorAngle().isReset()){
           Robot.getEndEffectorAngle().setAngleSpeed(-.6);
@@ -58,4 +65,12 @@ public class C_EFRestart extends Command {
     return Robot.getEndEffectorAngle().isInitialized() || Robot.getHatch().isPresent();
   }
 
+  @Override
+  protected void end() {
+    new C_SetHatchClosed(true);
+    new C_ElevatorToInch(1).start();
+    new C_EFToAngle(90).start();
+    new C_FrontClimber(0).start();
+
+  }
 }
