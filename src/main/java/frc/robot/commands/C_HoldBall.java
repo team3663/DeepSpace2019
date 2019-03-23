@@ -10,36 +10,32 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_EndEffectorHold extends Command {
-  private double holdPos;
-  /**
-   * grabs the current encoder position and sets the PID in an infinate loop until interrupted
-   */
-  public C_EndEffectorHold() {
-    requires(Robot.getEndEffectorAngle());
+public class C_HoldBall extends Command {
+  public C_HoldBall() {
+    requires(Robot.getBall());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    isInterruptible();
-    holdPos = Robot.getEndEffectorAngle().getRawEncoder();
-  }
-
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    Robot.getEndEffectorAngle().goToPos(holdPos);
+    Robot.getBall().setEFIntakeSpeed(-.05);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return !Robot.getBall().isPresent();
   }
 
+  // Called once after isFinished returns true
   @Override
-  public synchronized boolean isInterruptible() {
-    return true;
+  protected void end() {
+    Robot.getBall().setEFIntakeSpeed(0);
+  }
+
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
+  @Override
+  protected void interrupted() {
   }
 }

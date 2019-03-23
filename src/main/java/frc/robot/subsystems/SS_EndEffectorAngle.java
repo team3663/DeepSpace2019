@@ -24,6 +24,7 @@ import com.revrobotics.CANPIDController.AccelStrategy;
 public class SS_EndEffectorAngle extends Subsystem {
 
   private boolean initialized = false;
+  private boolean flipFailed = false;
 
   private CANSparkMax angleMotor;
   private DigitalInput angleResetSwitch;
@@ -57,8 +58,8 @@ public class SS_EndEffectorAngle extends Subsystem {
 
     PID.setP(2);
     PID.setI(.00003); //.00003
-    PID.setD(.00005);    //.04 
-    PID.setOutputRange(-.4, .4);
+    PID.setD(.0005);    //.04 
+    PID.setOutputRange(-.6, .6);
     
     
     
@@ -89,8 +90,20 @@ public class SS_EndEffectorAngle extends Subsystem {
     return BACK_ANGLE_LIMIT;
   }
 
+  public boolean getFlipFailed(){
+    return flipFailed;
+  }
+  public void setFlipFailed(boolean flipFailed){
+    this.flipFailed = flipFailed;
+  }
+
   public void goToDegree(double degree) {
     angleMotor.getPIDController().setReference(degree / 360 * (1 / GEAR_RATIO), 
+      ControlType.kPosition);
+  }
+
+  public void goToPos(double pos) {
+    angleMotor.getPIDController().setReference(pos, 
       ControlType.kPosition);
   }
 
@@ -119,7 +132,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     
   }
   public void resetEncoder(){
-    angleMotor.getEncoder().setPosition(39.1);
+    angleMotor.getEncoder().setPosition(38.3);
   }
 
   public void setAngleSpeed(double speed){

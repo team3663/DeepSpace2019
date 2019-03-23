@@ -111,13 +111,15 @@ public class C_StartOrchestra extends Command {
         /*
         elevator
         */
-        if(!elevator.getAtBottom()){
-          elevator.setElevatorSpeed(-.4);
-        }
-        else{
-          elevator.setElevatorSpeed(0);
-          elevator.resetEncoders();
-          elevator.setInitialized(true);
+        if(!Robot.getHatch().isPresent()){
+          if(!elevator.getAtBottom()){
+            elevator.setElevatorSpeed(-.4);
+          }
+          else{
+            elevator.setElevatorSpeed(0);
+            elevator.resetEncoders();
+            elevator.setInitialized(true);
+          }
         }
         
       }
@@ -129,7 +131,7 @@ public class C_StartOrchestra extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (elevator.isInitialized() && 
+    return ((elevator.isInitialized() || Robot.getHatch().isPresent()) && 
       frontClimber.isInitialized() && 
       rearClimber.isInitilized() && 
       (efAngle.isInitialized() || Robot.getHatch().isPresent())) ||
@@ -139,6 +141,8 @@ public class C_StartOrchestra extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+
+    //enter testing mode
     if(Robot.getOI().getTestController().getRightBumperButton().get()){
       Scheduler.getInstance().removeAll();
       new C_ElevatorDirect().start();
@@ -147,8 +151,11 @@ public class C_StartOrchestra extends Command {
       new C_RearClimberDirect().start();
     }
     else{
-      new C_ElevatorToInch(1).start();;
-      new C_FrontClimber(0).start();;
+      if(!Robot.getHatch().isPresent()){
+        new C_ElevatorToInch(1).start();
+      }
+      new C_FrontClimber(0).start();
+      new C_RearClimberToAngle(5).start();
     }
   }
 

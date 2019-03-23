@@ -41,7 +41,7 @@ public class C_EFRotateRelative extends Command {
   @Override
   protected void execute() {
 
-    if(Robot.getEndEffectorAngle().isFlipped(isFront)){
+    if(Robot.getEndEffectorAngle().isFlipped(isFront) && !Robot.getEndEffectorAngle().getFlipFailed()){
       Robot.getEndEffectorAngle().goToDegree(adjustment);
     }
   }
@@ -49,6 +49,6 @@ public class C_EFRotateRelative extends Command {
   @Override
   protected boolean isFinished() {
     System.out.println(" C EF ROTATE RELTAVITE IS RUNNING");
-    return Robot.getEndEffectorAngle().atTarget(adjustment) || !Robot.getEndEffectorAngle().isFlipped(isFront);
+    return Robot.getEndEffectorAngle().atTarget(adjustment) || !Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getEndEffectorAngle().getFlipFailed();
   }
 }

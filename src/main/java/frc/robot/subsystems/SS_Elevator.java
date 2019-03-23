@@ -47,7 +47,7 @@ public class SS_Elevator extends Subsystem {
 
   private boolean initialized = false;
 
-  private final double SAFE_FLIP_TOP = 12;
+  private final double SAFE_FLIP_TOP = 8.5;
   private final double SAFE_FLIP_BOT = .5;
 
   private final double DEFAULT_BALL = 1;
@@ -86,7 +86,7 @@ public class SS_Elevator extends Subsystem {
     masterMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
 
-
+    slaveMotor.setIdleMode(IdleMode.kBrake);
     slaveMotor.follow(masterMotor, true);
 
     //slaveMotor.setEncPosition(0);
@@ -142,60 +142,20 @@ public class SS_Elevator extends Subsystem {
 
   public double getLevelInch(int level, Mode mode){
     if(mode == Mode.kBall){
-      // switch (level){
-      //   case 1: return LEVEL_1_B;
-      //   case 2: return LEVEL_2_B;
-      //   case 3: return LEVEL_3_B;
-      //   case 15: return LEVEL_15_B;
-      //   default: return DEFAULT_BALL;
-      // }
-      
-      if(level == 1){
-        return LEVEL_1_B;
-      }
-      else if (level == 2){
-        return LEVEL_2_B;
-      }
-      else if (level == 3){
-        return LEVEL_3_B;
-      }
-      else if (level == 15){
-        return LEVEL_15_B;
-      }
-      else if (level == 0){
-        return DEFAULT_BALL;
-      }
-      else{
-        return getAverageInch();
+      switch (level){
+        case 1: return LEVEL_1_B;
+        case 2: return LEVEL_2_B;
+        case 3: return LEVEL_3_B;
+        case 15: return LEVEL_15_B;
+        default: return DEFAULT_BALL;
       }
     }
     else{
-
-      // switch (level){
-      //   case 1: return LEVEL_1_H;
-      //   case 2: return LEVEL_2_H;
-      //   case 3: return LEVEL_3_H;
-      //   default: return DEFAULT_HATCH;
-      // }
-
-      if(level == 1){
-        return LEVEL_1_H;
-      }
-      else if (level == 2){
-        return LEVEL_2_H;
-      }
-      else if (level == 3){
-        return LEVEL_3_H;
-      }
-      //this is only run if unintended by operator, its a safety
-      else if (level == 15){
-        return LEVEL_1_H;
-      }
-      else if (level == 0){
-        return DEFAULT_HATCH;
-      }
-      else{
-        return getAverageInch();
+      switch (level){
+        case 1: return LEVEL_1_H;
+        case 2: return LEVEL_2_H;
+        case 3: return LEVEL_3_H;
+        default: return DEFAULT_HATCH;
       }
     }
   }

@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.commands.*;
 import frc.robot.commands.command_groups.*;
+import frc.robot.commands.test_commands.C_RearClimberDirect;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
 import frc.robot.input.DPadButton.Direction;
@@ -32,7 +33,11 @@ public class OI {
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBackButton().whenPressed(new CG_CancelIntake());
 
+        primaryController.getBButton().whenPressed(new C_RearClimberToAngle(0));
+        primaryController.getBButton().whenReleased(new C_RearClimberToAngle(5));
         //primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
+
+        // primaryController.getBButton().whenPressed(new C_DefenseMode());
     
         
 

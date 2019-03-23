@@ -25,30 +25,37 @@ public class C_EFRestart extends Command {
   @Override
   protected void execute() {
     if(!Robot.getHatch().isPresent()){
-      if(!Robot.getEndEffectorAngle().isInitialized()){
 
-        if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop() && Robot.getFrontClimber().safeToFlip()){
-          if(!Robot.getEndEffectorAngle().isReset()){
-            Robot.getEndEffectorAngle().setAngleSpeed(-.6);
-          }
-          else{
-            Robot.getEndEffectorAngle().resetEncoder();
-            Robot.getEndEffectorAngle().setAngleSpeed(0);
-            Robot.getEndEffectorAngle().setInitialized(true);
-          }
+      if(!Robot.getElevator().isInitialized()){
+        if(!Robot.getElevator().getAtBottom()){
+          Robot.getElevator().setElevatorSpeed(-.4);
         }
         else{
-          Robot.getElevator().goToInch(1);
-          Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
+          Robot.getElevator().setElevatorSpeed(0);
+          Robot.getElevator().resetEncoders();
+          Robot.getElevator().setInitialized(true);
+        }
+      }
+      else if(!Robot.getEndEffectorAngle().isInitialized()){
+        
+        if(!Robot.getEndEffectorAngle().isReset()){
+          Robot.getEndEffectorAngle().setAngleSpeed(-.6);
+        }
+        else{
+          Robot.getEndEffectorAngle().resetEncoder();
+          Robot.getEndEffectorAngle().setAngleSpeed(0);
+          Robot.getEndEffectorAngle().setInitialized(true);
+        }
+
         }
       }
     }
 
-  }
+  
 
   @Override
   protected boolean isFinished() {
-    return Robot.getEndEffectorAngle().isReset() || Robot.getHatch().isPresent();
+    return Robot.getEndEffectorAngle().isInitialized() || Robot.getHatch().isPresent();
   }
 
 }

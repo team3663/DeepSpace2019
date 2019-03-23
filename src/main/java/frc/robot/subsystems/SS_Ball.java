@@ -45,11 +45,11 @@ public class SS_Ball extends Subsystem {
   @Override
   public void initDefaultCommand() {}
 
-  public void setIntakeSpeed(double speed) {
+  public void setEFIntakeSpeed(double speed) {
     EndEffectorIntakeMotor.set(speed);
   }
 
-  public void setCargoIntakeSpeed(double speed) {
+  public void setClimberIntakeSpeed(double speed) {
     climberIntakeMotor.set(speed);
   }
 

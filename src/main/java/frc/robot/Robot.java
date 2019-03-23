@@ -138,6 +138,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());//TODO 
 
     SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.getMode() == Mode.kHatch);
+    SmartDashboard.putBoolean("Front Side", ss_Elevator.getSelectedSide() == Side.kFront);
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    
@@ -159,7 +160,8 @@ public class Robot extends TimedRobot {
 
     
     //tests
-    
+    SmartDashboard.putBoolean("triggerbutton", getOI().getSecondaryController().getRightTriggerButton().get());    
+
    
   }
 

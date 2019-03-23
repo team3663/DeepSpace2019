@@ -36,6 +36,8 @@ public class SS_RearClimber extends Subsystem {
 
   private boolean initilized = false;
 
+  private boolean isDefence = false;
+
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
@@ -64,6 +66,14 @@ public class SS_RearClimber extends Subsystem {
     return initilized;
   }
   
+  public boolean getDefense(){
+    return isDefence;
+  }
+
+  public void setDefense(boolean isDefence){
+    this.isDefence = isDefence;
+  }
+
   public void setSpeed(double speed){
     if(isReset()){
       rearClimberMotor.set(0);
@@ -112,7 +122,7 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public boolean atTarget(double angle){
-    return getAngle() < angle + 1 && getAngle() > angle - 1;
+    return getAngle() < angle + 2 && getAngle() > angle - 2;
   }
   
   public void goToDegree(double degrees){

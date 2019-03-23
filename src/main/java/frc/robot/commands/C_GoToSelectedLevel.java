@@ -23,7 +23,8 @@ public class C_GoToSelectedLevel extends Command {
 
   @Override
   protected void execute() {
-    elevator.goToSelectedLevel();
+    if(!Robot.getEndEffectorAngle().getFlipFailed())
+      elevator.goToSelectedLevel();
 
   }
 
@@ -31,8 +32,10 @@ public class C_GoToSelectedLevel extends Command {
   protected boolean isFinished() {
     System.out.println("GO TO LEVEL RUNNING");
     //ends if current inch is within range of target level
-    return elevator.atTarget(elevator.getSelectedLevelInch());
+    return elevator.atTarget(elevator.getSelectedLevelInch()) || Robot.getEndEffectorAngle().getFlipFailed();
   }
+
+
 
 
 }

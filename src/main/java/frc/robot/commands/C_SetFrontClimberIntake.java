@@ -20,7 +20,7 @@ public class C_SetFrontClimberIntake extends Command {
 
   @Override
   protected void execute() {
-    Robot.getBall().setCargoIntakeSpeed(speed);
+    Robot.getBall().setClimberIntakeSpeed(speed);
   }
 
   @Override

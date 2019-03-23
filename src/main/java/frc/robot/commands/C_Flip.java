@@ -100,6 +100,9 @@ public class C_Flip extends Command {
   @Override
   protected boolean isFinished() {
     System.out.println("C FLIP IS GOING");
+
+    Robot.getEndEffectorAngle().setFlipFailed(isTimedOut());
+
     return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent()|| isTimedOut() || (!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()) || 
     //this is a temp fix for the PID controller
     (Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) + 3 > Robot.getEndEffectorAngle().getAngle() && Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) - 3 < Robot.getEndEffectorAngle().getAngle());

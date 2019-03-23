@@ -20,7 +20,7 @@ public class C_SetEFIntakeSpeed extends Command {
 
   @Override
   protected void execute() {
-    Robot.getBall().setIntakeSpeed(speed);
+    Robot.getBall().setEFIntakeSpeed(speed);
   }
 
   @Override
