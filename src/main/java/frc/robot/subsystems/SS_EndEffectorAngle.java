@@ -26,6 +26,9 @@ public class SS_EndEffectorAngle extends Subsystem {
   private boolean initialized = false;
   private boolean flipFailed = false;
 
+  private boolean isRestarted = false;
+
+
   private CANSparkMax angleMotor;
   private DigitalInput angleResetSwitch;
   private CANPIDController PID;
@@ -38,9 +41,9 @@ public class SS_EndEffectorAngle extends Subsystem {
   //TODO: double check these angles
   private double FRONT_ANGLE_LIMIT = 95; 
   private double VERTICAL_ANGLE = 0;
-  private double BACK_ANGLE_LIMIT = -80;
+  private double BACK_ANGLE_LIMIT = -95;
 
-  private double SAFE_FLIP_BACK_ANGLE = -85;
+  private double SAFE_FLIP_BACK_ANGLE = -90;
   private double SAFEFLIP_FRONT_ANGLE = 90;
 
   public SS_EndEffectorAngle() {
@@ -97,6 +100,15 @@ public class SS_EndEffectorAngle extends Subsystem {
     this.flipFailed = flipFailed;
   }
 
+  public boolean isHatchRestarted(){
+    return isRestarted;
+  }
+
+  public void setHatchRestarted(boolean isRestarted){
+    this.isRestarted = isRestarted;
+  }
+  
+
   public void goToDegree(double degree) {
     angleMotor.getPIDController().setReference(degree / 360 * (1 / GEAR_RATIO), 
       ControlType.kPosition);
@@ -133,6 +145,10 @@ public class SS_EndEffectorAngle extends Subsystem {
   }
   public void resetEncoder(){
     angleMotor.getEncoder().setPosition(38.3);
+  }
+
+  public void setEncoder(double pos){
+    angleMotor.getEncoder().setPosition(pos);
   }
 
   public void setAngleSpeed(double speed){

@@ -27,6 +27,7 @@ public class C_EFRestart extends Command {
   @Override
   protected void initialize() {
     Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
+    Robot.getHatch().setHatchClosed(true);
   }
 
   @Override
@@ -67,7 +68,6 @@ public class C_EFRestart extends Command {
 
   @Override
   protected void end() {
-    new C_SetHatchClosed(true);
     new C_ElevatorToInch(1).start();
     new C_EFToAngle(90).start();
     new C_FrontClimber(0).start();

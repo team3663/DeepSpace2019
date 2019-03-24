@@ -62,7 +62,7 @@ public class C_Climb extends Command {
     }
     else if (joystickInput < .1){
       if(Robot.getFrontClimber().getAngle() > 155){
-        Robot.getFrontClimber().goToDegree(170);
+        Robot.getFrontClimber().goToDegree(175);
       }
       else{
         Robot.getFrontClimber().setSpeed(-joystickInput);

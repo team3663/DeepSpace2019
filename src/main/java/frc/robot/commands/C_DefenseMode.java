@@ -41,7 +41,7 @@ public class C_DefenseMode extends Command {
       }
       else{
         climber.setDefense(isDefense);
-        climber.goToDegree(20);
+        climber.goToDegree(climber.getSafeAngle());
       }
       System.out.println("toggled");
     }
@@ -52,7 +52,7 @@ public class C_DefenseMode extends Command {
         climber.goToDegree(0);
       }
       else{
-        climber.goToDegree(5);
+        climber.goToDegree(climber.getSafeAngle());
       }
 
     }
@@ -61,7 +61,7 @@ public class C_DefenseMode extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    double targetDegree = 5;
+    double targetDegree = climber.getSafeAngle();
     if(isDefense) targetDegree = 0;
     return climber.atTarget(targetDegree);
   }

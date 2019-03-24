@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.input.DPadButton.Direction;
 import frc.robot.subsystems.SS_Elevator;
 
 public class C_GoToSelectedLevel extends Command {
@@ -32,7 +33,9 @@ public class C_GoToSelectedLevel extends Command {
   protected boolean isFinished() {
     System.out.println("GO TO LEVEL RUNNING");
     //ends if current inch is within range of target level
-    return elevator.atTarget(elevator.getSelectedLevelInch()) || Robot.getEndEffectorAngle().getFlipFailed();
+    return elevator.atTarget(elevator.getSelectedLevelInch()) || 
+      Robot.getEndEffectorAngle().getFlipFailed() || 
+      (Robot.getOI().getPrimaryController().getYButton().get() && Robot.getOI().getPrimaryController().getDPadButton(Direction.UP).get());
   }
 
 

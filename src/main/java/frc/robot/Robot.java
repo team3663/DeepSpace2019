@@ -160,7 +160,7 @@ public class Robot extends TimedRobot {
 
     
     //tests
-    SmartDashboard.putBoolean("triggerbutton", getOI().getSecondaryController().getRightTriggerButton().get());    
+    SmartDashboard.putBoolean("EF Restarted", Robot.getEndEffectorAngle().isHatchRestarted());    
 
    
   }
@@ -220,10 +220,12 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     for (int i = 0; i < 4; i++){
-    ss_Swerve.getSwerveModule(i).zeroDistance();
+      ss_Swerve.getSwerveModule(i).zeroDistance();
     }
     getVision().setLightMode(0);
-    new C_StartOrchestra().start();
+    if(!Robot.getEndEffectorAngle().isHatchRestarted()){
+      new C_StartOrchestra().start();
+    }
   }
 
   @Override

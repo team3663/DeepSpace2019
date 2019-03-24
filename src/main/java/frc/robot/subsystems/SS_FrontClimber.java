@@ -61,7 +61,7 @@ public class SS_FrontClimber extends Subsystem {
     PID.setP(6);    //.4  for music use commented pid values
     PID.setI(.00);  //.0001
     PID.setD(.004);     //10
-    PID.setOutputRange(-.75, .75);
+    PID.setOutputRange(-.9, .9);
     
     
     // //max RPM 5900

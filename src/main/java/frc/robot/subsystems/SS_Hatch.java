@@ -26,6 +26,8 @@ public class SS_Hatch extends Subsystem {
   private DigitalInput hatchOpticalSwitch;
   private DigitalInput hatchPressedSwitch;
 
+  private boolean hatchRestarted = false;
+
   private boolean hatchMode = false;
   private Mode mode = Mode.kBall;
 
@@ -62,7 +64,8 @@ public class SS_Hatch extends Subsystem {
   public DigitalInput getHatchSwitch() {
    return hatchSwitch;
   }
-  
+
+
   public boolean isPresent(){
     return isOpticalPresent(); //|| isOpticalPresent();
   }

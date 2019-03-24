@@ -33,7 +33,7 @@ public class SS_RearClimber extends Subsystem {
   private final double GEAR_RATIO = 1.0/208.0;
 
   private double ANGLE_LIMIT = 180;
-
+  private double SAFE_ANGLE = 22;
   private boolean initilized = false;
 
   private boolean isDefence = false;
@@ -72,6 +72,10 @@ public class SS_RearClimber extends Subsystem {
 
   public void setDefense(boolean isDefence){
     this.isDefence = isDefence;
+  }
+
+  public double getSafeAngle(){
+    return SAFE_ANGLE;
   }
 
   public void setSpeed(double speed){
@@ -126,7 +130,8 @@ public class SS_RearClimber extends Subsystem {
   }
   
   public void goToDegree(double degrees){
-    rearClimberMotor.getPIDController().setReference(gearMultiply(degrees) * 360, 
+    System.out.println("REAR REFRENCE POS" + (degreeToRotation(degrees)/ GEAR_RATIO));
+    rearClimberMotor.getPIDController().setReference((degreeToRotation(degrees)/ GEAR_RATIO), 
       ControlType.kPosition);
   }
 

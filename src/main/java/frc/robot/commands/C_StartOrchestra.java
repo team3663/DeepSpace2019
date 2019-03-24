@@ -43,6 +43,9 @@ public class C_StartOrchestra extends Command {
   protected void initialize() {
     Robot.getHatch().extendHatchPickup(false);
     Robot.getHatch().setHatchClosed(true);
+    if(Robot.getHatch().isPresent()){
+      Robot.getEndEffectorAngle().setEncoder(-16.5); 
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -64,9 +67,6 @@ public class C_StartOrchestra extends Command {
 
           rearClimber.setInitilized(true);
         }
-      }
-      else{
-        rearClimber.goToDegree(5);
       }
 
       if(!frontClimber.isInitialized()){
@@ -154,12 +154,11 @@ public class C_StartOrchestra extends Command {
       if(!Robot.getHatch().isPresent()){
         new C_ElevatorToInch(1).start();
       }
-      else{
-        new C_ElevatorHold().start();
-        new C_EndEffectorHold().start();
+      else if(!Robot.getEndEffectorAngle().isHatchRestarted()){
+        new C_EFStartHatch(Robot.getEndEffectorAngle().getSafeFlipAngle(false) + 10).start();
       }
       new C_FrontClimber(0).start();
-      new C_RearClimberToAngle(5).start();
+      new C_DefenseMode(false).start();
     }
   }
 
