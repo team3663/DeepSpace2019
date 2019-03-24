@@ -20,6 +20,7 @@ import frc.robot.commands.C_SetMode;
 import frc.robot.commands.C_WaitForBall;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.util.Mode;
+import frc.robot.util.Side;
 
 public class CG_BallIntake extends CommandGroup {
   /**
@@ -31,7 +32,7 @@ public class CG_BallIntake extends CommandGroup {
     addSequential(new C_SetMode(Mode.kBall));
     addSequential(new C_ExtendHatch(false));
     addSequential(new C_SetHatchClosed(true));
-    addSequential(new C_Flip(true));
+    addSequential(new C_Flip(Side.kFront));
     addParallel(new C_ElevatorToInch(.5));
 
     addSequential(new C_SetEFIntakeSpeed(-.4));  

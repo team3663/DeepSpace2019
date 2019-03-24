@@ -12,13 +12,14 @@ import frc.robot.commands.C_Flip;
 import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_SetEFIntakeSpeed;
 import frc.robot.commands.C_SetFrontClimberIntake;
+import frc.robot.util.Side;
 
 public class CG_CancelIntake extends CommandGroup {
   /**
    * stops all intake wheels
    */
   public CG_CancelIntake() {
-    addSequential(new C_Flip(true));
+    addSequential(new C_Flip(Side.kFront));
     addSequential(new C_SetEFIntakeSpeed(0));
     addSequential(new C_SetFrontClimberIntake(0));
     addSequential(new C_FrontClimber(0));

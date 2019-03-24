@@ -17,6 +17,7 @@ import frc.robot.commands.C_FrontClimber;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.C_SetEFIntakeSpeed;
 import frc.robot.commands.C_SetFrontClimberIntake;
+import frc.robot.util.Side;
 
 public class CG_GoToSelectedLevelBack extends CommandGroup {
   /**
@@ -27,11 +28,11 @@ public class CG_GoToSelectedLevelBack extends CommandGroup {
 
     addSequential(new C_SetFrontClimberIntake(0));
     addSequential(new C_SetEFIntakeSpeed(0));
-    addSequential(new C_Flip(false));
+    addSequential(new C_Flip(Side.kBack));
     //addParallel(new C_EndEffectorHold());
     addParallel(new C_FrontClimber(0));
     addSequential(new C_GoToSelectedLevel());
-    addSequential(new C_EFRotateRelative(false, 5));
+    addSequential(new C_EFRotateRelative(Side.kBack, 5));
     //addParallel(new C_ElevatorHold());
   }
 }

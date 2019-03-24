@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.util.Mode;
-import frc.robot.util.Side;
 
 /**
  * Add your docs here.

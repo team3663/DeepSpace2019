@@ -19,6 +19,7 @@ import frc.robot.subsystems.SS_Elevator;
 import frc.robot.subsystems.SS_EndEffectorAngle;
 import frc.robot.subsystems.SS_FrontClimber;
 import frc.robot.subsystems.SS_RearClimber;
+import frc.robot.util.Side;
 
 public class C_StartOrchestra extends Command {
   SS_FrontClimber frontClimber;
@@ -155,7 +156,7 @@ public class C_StartOrchestra extends Command {
         new C_ElevatorToInch(1).start();
       }
       else if(!Robot.getEndEffectorAngle().isHatchRestarted()){
-        new C_EFStartHatch(Robot.getEndEffectorAngle().getSafeFlipAngle(false) + 10).start();
+        new C_EFStartHatch(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10).start();
       }
       new C_FrontClimber(0).start();
       new C_DefenseMode(false).start();

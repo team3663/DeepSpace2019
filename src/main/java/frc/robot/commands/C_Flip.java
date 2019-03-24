@@ -10,9 +10,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.util.Mode;
+import frc.robot.util.Side;
 
 public class C_Flip extends Command {
-  private boolean isFront;
+  private Side side;
   private double elevatorEnd;
   private double defaultElevatorEndTop = Robot.getElevator().getSafeFlipTop() - 1;
   private double defaultElevatorEndBot = Robot.getElevator().getSafeFlipBot() + .5;
@@ -20,9 +21,9 @@ public class C_Flip extends Command {
 /**
  * cooridinates the end effector with the elevator to make sure it flips saefly
  * 
- * @param isFront which side the end effector is being flipped to 
+ * @param side which side the end effector is being flipped to 
  */
-  public C_Flip(boolean isFront) {
+  public C_Flip(Side side) {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
@@ -32,17 +33,17 @@ public class C_Flip extends Command {
       new C_EFRestart().start();
     }
 
-    this.isFront = isFront;
+    this.side = side;
     this.elevatorEnd = defaultElevatorEndTop;
   }
 
   /**
    * cooridinates the end effector with the elevator to make sure it flips saefly
    * 
-   * @param isFront which side the end effector is being flipped to 
+   * @param side which side the end effector is being flipped to 
    * @param elevatorEnd the height the elevator will end at
    */
-  C_Flip(boolean isFront, double elevatorEnd) {
+  C_Flip(Side side, double elevatorEnd) {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
@@ -60,7 +61,7 @@ public class C_Flip extends Command {
       elevatorEnd = defaultElevatorEndBot;
     }
 
-    this.isFront = isFront;
+    this.side = side;
     this.elevatorEnd = elevatorEnd;
   }
   // Called just before this Command runs the first time
@@ -72,13 +73,13 @@ public class C_Flip extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(!Robot.getEndEffectorAngle().isFlipped(isFront) && !Robot.getHatch().isPresent()){
+    if(!Robot.getEndEffectorAngle().isFlipped(side) && !Robot.getHatch().isPresent()){
 
       if(Robot.getFrontClimber().safeToFlip()){
         Robot.getElevator().goToInch(elevatorEnd);
 
         if(Robot.getElevator().getAverageInch() > Robot.getElevator().getSafeFlipBot() && Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop()){
-          Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(isFront));
+          Robot.getEndEffectorAngle().goToDegree(Robot.getEndEffectorAngle().getSafeFlipAngle(side));
         }
         
       }
@@ -103,9 +104,9 @@ public class C_Flip extends Command {
 
     Robot.getEndEffectorAngle().setFlipFailed(isTimedOut());
 
-    return Robot.getEndEffectorAngle().isFlipped(isFront) || Robot.getHatch().isPresent()|| isTimedOut() || (!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()) || 
+    return Robot.getEndEffectorAngle().isFlipped(side) || Robot.getHatch().isPresent()|| isTimedOut() || (!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()) || 
     //this is a temp fix for the PID controller
-    (Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) + 3 > Robot.getEndEffectorAngle().getAngle() && Robot.getEndEffectorAngle().getSafeFlipAngle(isFront) - 3 < Robot.getEndEffectorAngle().getAngle());
+    (Robot.getEndEffectorAngle().getSafeFlipAngle(side) + 3 > Robot.getEndEffectorAngle().getAngle() && Robot.getEndEffectorAngle().getSafeFlipAngle(side) - 3 < Robot.getEndEffectorAngle().getAngle());
   }
 
   // Called once after isFinished returns true

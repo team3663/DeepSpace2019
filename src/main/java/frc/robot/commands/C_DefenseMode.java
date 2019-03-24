@@ -32,21 +32,18 @@ public class C_DefenseMode extends Command {
   @Override
   protected void execute() {
     if(toggle){
-
       if(isDefense){
         climber.goToDegree(0);
-        climber.setDefense(!isDefense);
+        climber.setDefense(false);
         System.out.println("is defence");
-
       }
       else{
-        climber.setDefense(isDefense);
+        climber.setDefense(true);
         climber.goToDegree(climber.getSafeAngle());
       }
       System.out.println("toggled");
     }
     else{
-
       climber.setDefense(isDefense);
       if(isDefense){
         climber.goToDegree(0);
@@ -54,26 +51,12 @@ public class C_DefenseMode extends Command {
       else{
         climber.goToDegree(climber.getSafeAngle());
       }
-
     }
   }
-
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     double targetDegree = climber.getSafeAngle();
     if(isDefense) targetDegree = 0;
     return climber.atTarget(targetDegree);
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-  }
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
   }
 }

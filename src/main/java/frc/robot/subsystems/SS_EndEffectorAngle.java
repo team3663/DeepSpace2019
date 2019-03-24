@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.*;
+import frc.robot.util.Side;
 import frc.robot.*;
 
 import com.revrobotics.CANPIDController;
@@ -18,7 +19,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANPIDController.AccelStrategy;
-
 
 
 public class SS_EndEffectorAngle extends Subsystem {
@@ -75,9 +75,9 @@ public class SS_EndEffectorAngle extends Subsystem {
     // setDefaultCommand(new C_EndEffectorHold());
   }
 
-  public double getSafeFlipAngle(boolean isFront){
+  public double getSafeFlipAngle(Side side){
 
-    if(isFront){
+    if(side == Side.kFront){
       return SAFEFLIP_FRONT_ANGLE;
     }
     else{
@@ -134,8 +134,8 @@ public class SS_EndEffectorAngle extends Subsystem {
     return getAngle() < angle + 3 && getAngle() > angle - 3;
   }
 
-  public boolean isFlipped(boolean toFront){
-    if(toFront){
+  public boolean isFlipped(Side side){
+    if(side == Side.kFront){
       return getAngle() > 85;
     }
     else{

@@ -33,7 +33,7 @@ public class SS_RearClimber extends Subsystem {
   private final double GEAR_RATIO = 1.0/208.0;
 
   private double ANGLE_LIMIT = 180;
-  private double SAFE_ANGLE = 22;
+  private double SAFE_ANGLE = 15;
   private boolean initilized = false;
 
   private boolean isDefence = false;

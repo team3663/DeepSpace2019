@@ -23,8 +23,8 @@ import frc.robot.commands.C_ElevatorHold;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.test_commands.C_ElevatorDirect;
 import frc.robot.util.Mode;
-import frc.robot.util.PIDCont;
 import frc.robot.util.Side;
+import frc.robot.util.PIDCont;
 
 /**
  * Add your docs here.
