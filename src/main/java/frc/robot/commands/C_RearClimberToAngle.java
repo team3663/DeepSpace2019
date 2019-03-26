@@ -25,6 +25,11 @@ public class C_RearClimberToAngle extends Command {
     limit = Robot.getRearClimber().getAngleLimit();
   }
 
+  @Override
+  protected void initialize() {
+    setTimeout(4);
+  }
+
 
   @Override
   protected void execute() {
@@ -41,7 +46,12 @@ public class C_RearClimberToAngle extends Command {
    */
   @Override
   protected boolean isFinished() {
-    return Robot.getRearClimber().atTarget(angle);
+    return Robot.getRearClimber().atTarget(angle) || isTimedOut();
+  }
+
+  @Override
+  public synchronized boolean isInterruptible() {
+    return true;
   }
 
 

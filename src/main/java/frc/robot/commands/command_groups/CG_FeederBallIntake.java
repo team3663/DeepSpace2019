@@ -23,9 +23,8 @@ public class CG_FeederBallIntake extends CommandGroup {
    */
   public CG_FeederBallIntake() {
     addSequential(new C_Flip(Side.kFront));
-    addSequential(new C_ElevatorToInch(5));
+    addSequential(new C_ElevatorToInch(12));
     addSequential(new C_FrontClimber(45));
     addSequential(new C_EFToAngle(45));
-    addSequential(new C_FrontClimber(0));
   }
 }

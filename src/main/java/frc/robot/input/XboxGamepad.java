@@ -126,4 +126,8 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 	public Button getDPadButton(DPadButton.Direction direction) {
 		return mDPadButtons[direction.ordinal()];
 	}
+
+	// public Button getShiftButton(Button button, Button shift, boolean inverse){
+	// 	return 
+	// }
 }

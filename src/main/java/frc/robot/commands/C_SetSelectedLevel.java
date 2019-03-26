@@ -19,7 +19,7 @@ public class C_SetSelectedLevel extends Command {
   }
   @Override
   protected void execute() {
-    if(Robot.getOI().getSecondaryController().getRightTriggerButton().get()){
+    if(Robot.getOI().getSecondaryController().getLeftTriggerButton().get()){
       Robot.getElevator().setSelectedSide(Side.kFront);
     }
     else{

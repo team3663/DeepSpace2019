@@ -79,13 +79,7 @@ public class SS_RearClimber extends Subsystem {
   }
 
   public void setSpeed(double speed){
-    if(isReset()){
-      rearClimberMotor.set(0);
-    }
-    else{
-      rearClimberMotor.set( -speed * speedMultiplier);
-    }
- 
+    rearClimberMotor.set( -speed * speedMultiplier);
   }
 
   public void setSpeedMultiplier(double speedMultiplier){
@@ -123,6 +117,10 @@ public class SS_RearClimber extends Subsystem {
   public double getAngle(){
     double position = rotationToDegrees(getEncoder());
     return position;
+  }
+
+  public CANSparkMax getRearClimber(){
+    return rearClimberMotor;
   }
 
   public boolean atTarget(double angle){

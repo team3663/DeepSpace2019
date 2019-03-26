@@ -151,6 +151,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("rclimb init", ss_RearClimber.isInitilized());   
     
     SmartDashboard.putNumber("Rear Angle", ss_RearClimber.getAngle());
+    SmartDashboard.putBoolean("Rear Switch", ss_RearClimber.isReset());   
     SmartDashboard.putNumber("Front Angle", ss_FrontClimber.getAngle());
     SmartDashboard.putNumber("Front Encoder", ss_FrontClimber.getRawEncoder());
 

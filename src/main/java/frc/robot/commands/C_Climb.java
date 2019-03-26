@@ -47,7 +47,7 @@ public class C_Climb extends Command {
   @Override
   protected void initialize() {
 
-  }
+    }
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
@@ -83,7 +83,7 @@ public class C_Climb extends Command {
     }
 
 
-
+    System.out.println(pitch);
 /*
     //balanceed climb
     if (Math.abs(pitch) <= ABSOLUTE_PITCH_LIMIT) {

@@ -33,12 +33,13 @@ public class OI {
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBackButton().whenPressed(new CG_CancelIntake());
 
-        primaryController.getBButton().whenPressed(new C_RearClimberToAngle(0));
-        primaryController.getBButton().whenReleased(new C_RearClimberToAngle(5));
+        // primaryController.getBButton().whenPressed(new C_RearClimberToAngle(0));
+        // primaryController.getBButton().whenReleased(new C_RearClimberToAngle(5));
         //primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
 
-        // primaryController.getBButton().whenPressed(new C_DefenseMode());
-    
+        // primaryController.getBButton().whenPressed(new C_DefenseMode(true));
+        // primaryController.getBButton().whenReleased(new C_DefenseMode(false));
+
         
 
         //
@@ -51,8 +52,8 @@ public class OI {
         secondaryController.getDPadButton(Direction.RIGHT).whenPressed(new C_SetSelectedLevel(15));
 
 
-        secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevelBack());
-        // secondaryController.getLeftBumperButton().whenPressed(new C_SelectUp());
+        // secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevelBack());
+        secondaryController.getLeftBumperButton().whenPressed(new C_SelectUp());
 
         secondaryController.getRightBumperButton().whenPressed(new C_SelectDown());
 
@@ -86,6 +87,7 @@ public class OI {
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
         testingController.getYButton().whenPressed(new C_VisionAlign());
+        
     }
     
     public IGamepad getTestController(){

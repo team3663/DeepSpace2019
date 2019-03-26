@@ -13,14 +13,13 @@ import frc.robot.subsystems.SS_RearClimber;
 
 public class C_DefenseMode extends Command {
   private SS_RearClimber climber;
-  private boolean toggle = false;
   private boolean isDefense;
+  private double targetDegree;
 
   public C_DefenseMode() {
     requires(Robot.getRearClimber());
     climber = Robot.getRearClimber();
-    toggle = true;
-    this.isDefense = climber.getDefense();
+    this.isDefense = !climber.getDefense();
   }
 
   public C_DefenseMode(boolean isDefense) {
@@ -30,33 +29,31 @@ public class C_DefenseMode extends Command {
   }
 
   @Override
-  protected void execute() {
-    if(toggle){
-      if(isDefense){
-        climber.goToDegree(0);
-        climber.setDefense(false);
-        System.out.println("is defence");
-      }
-      else{
-        climber.setDefense(true);
-        climber.goToDegree(climber.getSafeAngle());
-      }
-      System.out.println("toggled");
-    }
-    else{
-      climber.setDefense(isDefense);
-      if(isDefense){
-        climber.goToDegree(0);
-      }
-      else{
-        climber.goToDegree(climber.getSafeAngle());
-      }
-    }
+  protected void initialize() {
+    targetDegree = climber.getSafeAngle();
+    if(isDefense) targetDegree = 0;
   }
+  
+  @Override
+  protected void execute() {
+    climber.goToDegree(targetDegree);
+    
+  }
+  
   @Override
   protected boolean isFinished() {
-    double targetDegree = climber.getSafeAngle();
-    if(isDefense) targetDegree = 0;
+    System.out.println("CURRENT DEGREE  :  " + targetDegree + " :=: " + isDefense);
     return climber.atTarget(targetDegree);
+  }
+
+  @Override
+  protected void end() {
+    climber.setDefense(isDefense);
+
+  }
+
+  @Override
+  public synchronized boolean isInterruptible() {
+    return true;
   }
 }

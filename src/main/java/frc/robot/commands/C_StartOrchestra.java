@@ -49,7 +49,6 @@ public class C_StartOrchestra extends Command {
     }
   }
 
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     if(!Robot.getOI().getTestController().getRightBumperButton().get()){
@@ -110,7 +109,7 @@ public class C_StartOrchestra extends Command {
       }
       if(!elevator.isInitialized() && frontClimber.isInitialized()){
         /*
-        elevator
+        * elevator
         */
         if(!Robot.getHatch().isPresent()){
           if(!elevator.getAtBottom()){
@@ -159,7 +158,7 @@ public class C_StartOrchestra extends Command {
         new C_EFStartHatch(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10).start();
       }
       new C_FrontClimber(0).start();
-      new C_DefenseMode(false).start();
+      new C_RearClimberToAngle(Robot.getRearClimber().getSafeAngle()).start();
     }
   }
 
