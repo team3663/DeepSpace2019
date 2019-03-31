@@ -38,7 +38,7 @@ public class SS_FrontClimber extends Subsystem {
   private final double SAFE_FLIP_BOT = 115;
 
   private final double MAX_RPM = 5900;
-  private final double GEAR_RATIO = 1.0/245.0;
+  private final double GEAR_RATIO = 1.0/252.0;
   private final double TICKS_PER_DEGREE = 1.0/360.0;
   private double fakeEncoder = 0;
 
@@ -50,7 +50,7 @@ public class SS_FrontClimber extends Subsystem {
     frontClimberMotor = new CANSparkMax(RobotMap.CLIMBER_FRONT_MOTOR, MotorType.kBrushless);
 
     frontClimberMotor.setIdleMode(IdleMode.kBrake);
-    frontClimberMotor.setInverted(false);
+    frontClimberMotor.setInverted(true);
 
 
 

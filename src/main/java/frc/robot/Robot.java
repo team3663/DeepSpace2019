@@ -132,10 +132,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Average Inch", ss_Elevator.getAverageInch());
     SmartDashboard.putBoolean("At Bottom", ss_Elevator.getAtBottom());
 
-    SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure());
-
-    SmartDashboard.putNumber("slave Volt", ss_Elevator.getSVoltage());
-    SmartDashboard.putNumber("master Volt", ss_Elevator.getMVoltage());//TODO 
+    SmartDashboard.putNumber("Air Pressure", ss_PressureSensor.getPressure()); 
 
     SmartDashboard.putBoolean("Hatch Mode", ss_Hatch.getMode() == Mode.kHatch);
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
@@ -153,7 +150,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("End Effector Angle", ss_EndEffectorAngle.getAngle());
     SmartDashboard.putNumber("End Effector Encoder", ss_EndEffectorAngle.getRawEncoder());
 
-    
+    //vision
+    SmartDashboard.putNumber("Vision x", ss_Vision.getXOffset());
+    SmartDashboard.putBoolean("Valid target", ss_Vision.validTarget());
+
     //tests
     
    
