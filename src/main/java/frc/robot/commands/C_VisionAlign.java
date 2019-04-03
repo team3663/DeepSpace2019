@@ -36,6 +36,16 @@ public class C_VisionAlign extends Command {
     angleToSnap = bestSnapAngle(drivetrain.getGyroAngle());
   }
 
+  /**
+   * Finds the closest 45 degree angle given the parameter angle
+   * @return
+   * Returns the angle that the robot is targeting, 
+   * e.g. Right-Rocket-Center, Cargoship-Right, Load-Station
+   * 
+   * @param
+   * The angle the robot is facing which is typically retrieved from RoboRIO's gyro
+   * 
+   */
   private double bestSnapAngle(double pAngle){
     // all directions are based on driver's perspective
     final double CARGOSHIP_CENTER = 0.;
