@@ -128,7 +128,6 @@ public class SS_FrontClimber extends Subsystem {
     double position = getRawEncoder() * GEAR_RATIO * 360;
     if(position > 360 || position < -360) {
       position %= 360;
-      position *= 360;
     }
     return position;
   }
