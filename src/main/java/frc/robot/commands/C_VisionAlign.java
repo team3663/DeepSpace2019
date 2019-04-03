@@ -33,19 +33,54 @@ public class C_VisionAlign extends Command {
     vision.setLightMode(3);
     drivetrain.setFieldOriented(false);
     
-    double angle = drivetrain.getGyroAngle();
-    angleToSnap = (int)(angle) / 45 * 45;
-    if(angleToSnap == 45){
-      angleToSnap = 30;
+    angleToSnap = bestSnapAngle(drivetrain.getGyroAngle());
+  }
+
+  private double bestSnapAngle(double pAngle){
+    // all directions are based on driver's perspective
+    final double CARGOSHIP_CENTER = 0.;
+    final double CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER = 270.;
+    final double CARGOSHIP_LEFT_AND_R_ROCKET_CENTER = 90.;
+    final double R_ROCKET_NEAR = 29.;
+    final double R_ROCKET_FAR = 151.;
+    final double L_ROCKET_NEAR = 331.;
+    final double L_ROCKET_FAR = 209.;
+    final double LOAD_STATION = 180.;
+    final int NORTH = 0;
+    final int NE = 1;
+    final int EAST = 2;
+    final int SE = 3;
+    final int SOUTH = 4;
+    final int SW = 5;
+    final int WEST = 6;
+    final int NW = 7;
+
+    // find the closes 45 degree angle
+    // near 0 degree (pointing away from driver)
+    int best45 = (int) (pAngle + 22.5) % 360 / 45;    
+    if(best45 == NORTH){        // nearest to 0 degree
+      return CARGOSHIP_CENTER;
     }
-    else if(angleToSnap == 135){
-      angleToSnap = 150;
+    else if(best45 == NE){      // nearest to 45 degrees
+      return R_ROCKET_NEAR;
     }
-    else if(angleToSnap == 225){
-      angleToSnap = 240;
+    else if(best45 == EAST){    // nearest to 90 degrees
+      return CARGOSHIP_LEFT_AND_R_ROCKET_CENTER;
     }
-    else if(angleToSnap == 315){
-      angleToSnap = 330;
+    else if(best45 == SE){      // nearest to 135 degrees
+      return R_ROCKET_FAR;
+    }                           
+    else if(best45 == SOUTH){   // nearest to 180 degrees
+      return LOAD_STATION;
+    }                       
+    else if(best45 == SW){      // nearest to 225 degrees
+      return L_ROCKET_FAR;
+    }
+    else if(best45 == WEST){    // nearest to 270 degrees
+      return CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER;
+    }
+    else{         // NW direction, nearest to 315 degrees
+      return L_ROCKET_NEAR;
     }
   }
 
