@@ -57,26 +57,26 @@ public class C_VisionAlign extends Command {
 
     // find the closes 45 degree angle
     // near 0 degree (pointing away from driver)
-    int best45 = (int) (pAngle + 22.5) % 360 / 45;    
-    if(best45 == NORTH){        // nearest to 0 degree
+    int closest45 = (int) (pAngle + 22.5) % 360 / 45;    
+    if(closest45 == NORTH){        // nearest to 0 degree
       return CARGOSHIP_CENTER;
     }
-    else if(best45 == NE){      // nearest to 45 degrees
+    else if(closest45 == NE){      // nearest to 45 degrees
       return R_ROCKET_NEAR;
     }
-    else if(best45 == EAST){    // nearest to 90 degrees
+    else if(closest45 == EAST){    // nearest to 90 degrees
       return CARGOSHIP_LEFT_AND_R_ROCKET_CENTER;
     }
-    else if(best45 == SE){      // nearest to 135 degrees
+    else if(closest45 == SE){      // nearest to 135 degrees
       return R_ROCKET_FAR;
     }                           
-    else if(best45 == SOUTH){   // nearest to 180 degrees
+    else if(closest45 == SOUTH){   // nearest to 180 degrees
       return LOAD_STATION;
     }                       
-    else if(best45 == SW){      // nearest to 225 degrees
+    else if(closest45 == SW){      // nearest to 225 degrees
       return L_ROCKET_FAR;
     }
-    else if(best45 == WEST){    // nearest to 270 degrees
+    else if(closest45 == WEST){    // nearest to 270 degrees
       return CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER;
     }
     else{         // NW direction, nearest to 315 degrees
