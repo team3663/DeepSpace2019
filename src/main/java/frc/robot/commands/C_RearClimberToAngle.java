@@ -28,11 +28,6 @@ public class C_RearClimberToAngle extends Command {
   @Override
   protected void initialize() {
     setTimeout(4);
-  }
-
-
-  @Override
-  protected void execute() {
     if(angle < 0) {
       Robot.getRearClimber().goToDegree(0);
     } else if (angle > limit) {
@@ -41,6 +36,8 @@ public class C_RearClimberToAngle extends Command {
       Robot.getRearClimber().goToDegree(angle);
     }
   }
+
+
   /**
    * limit = 180 degrees
    */
