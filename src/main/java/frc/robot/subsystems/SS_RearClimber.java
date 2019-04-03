@@ -94,13 +94,6 @@ public class SS_RearClimber extends Subsystem {
     return degree/360;
   }
 
-  /**
-   * convert number of rotations to degrees
-   * @param
-   * 
-   * @return
-   * 
-   */
   public double rotationToDegrees(double rotations){
     return rotations*360;
   }
@@ -121,49 +114,24 @@ public class SS_RearClimber extends Subsystem {
     return ANGLE_LIMIT;
   }
 
-  /**
-   * 
-   * @return
-   * 
-   * 
-   */
   public double getAngle(){
     double position = rotationToDegrees(getEncoder());
     return position;
   }
 
-  /**
-   * 
-   */
   public CANSparkMax getRearClimber(){
     return rearClimberMotor;
   }
 
-  /**
-   * blah blah blah blah blah blah blah blah blah blah 
-   * blah blah blah blah blah blah blah blah 
-   * blah blah blah blah blah blah blah blah 
-   * @param
-   * 
-   * @return
-   * etc. etc. etc. etc. etc. etc. etc. etc. etc. 
-   * 
-   * {@code}
-   */
   public boolean atTarget(double angle){
     return getAngle() < angle + 2 && getAngle() > angle - 2;
   }
   
-  /**
-   * 
-   * @param degrees
-   */
   public void goToDegree(double degrees){
     System.out.println("REAR REFRENCE POS" + (degreeToRotation(degrees)/ GEAR_RATIO));
     rearClimberMotor.getPIDController().setReference((degreeToRotation(degrees)/ GEAR_RATIO), 
       ControlType.kPosition);
   }
-
 
   public void resetEncoder(){
     rearClimberMotor.getEncoder().setPosition(-1.3); 
