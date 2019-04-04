@@ -66,7 +66,7 @@ public class OI {
         secondaryController.getAButton().whenReleased(new C_SetEFIntakeSpeed(0));
 
         secondaryController.getBButton().whenPressed(new C_ExtendHatch(true));
-        secondaryController.getBButton().whenReleased(new CG_HatchDropManual());
+        secondaryController.getBButton().whenReleased(new CG_HatchDrop());
 
         // secondaryController.getYButton().whenPressed(new CG_HatchHold());
 

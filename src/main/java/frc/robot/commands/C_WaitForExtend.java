@@ -10,17 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_WaitForPress extends Command {
-  public C_WaitForPress() {
+public class C_WaitForExtend extends Command {
+  boolean isExtended;
+  public C_WaitForExtend(boolean isExtended) {
+    this.isExtended = isExtended;
     requires(Robot.getHatch());
   }
 
   @Override
   protected boolean isFinished() {
-    if(Robot.getOI().getSecondaryController().getLeftTriggerButton().get()){
-      return Robot.getHatch().isPressed();
-    }
-    return true;
+    return !Robot.getHatch().isPressed() == isExtended;
   }
-
 }

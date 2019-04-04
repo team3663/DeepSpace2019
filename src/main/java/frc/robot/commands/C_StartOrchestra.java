@@ -45,7 +45,7 @@ public class C_StartOrchestra extends Command {
     Robot.getHatch().extendHatchPickup(false);
     Robot.getHatch().setHatchClosed(true);
     if(Robot.getHatch().isPresent()){
-      Robot.getEndEffectorAngle().setEncoder(-16.5); 
+      Robot.getEndEffectorAngle().setEncoder(-16); 
     }
   }
 

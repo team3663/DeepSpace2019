@@ -11,12 +11,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.C_Wait;
+import frc.robot.commands.C_WaitForExtend;
+import frc.robot.commands.C_WaitForPress;
 
-public class CG_HatchDropManual extends CommandGroup {
+public class CG_HatchDrop extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_HatchDropManual() {
+  public CG_HatchDrop() {
+    addSequential(new C_WaitForExtend(true));
+    addSequential(new C_WaitForPress());
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_Wait(200));
     addSequential(new C_ExtendHatch(false));

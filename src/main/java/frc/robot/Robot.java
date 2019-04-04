@@ -71,6 +71,8 @@ public class Robot extends TimedRobot {
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
+
+    
    }
 
   public static OI getOI() {
@@ -122,6 +124,7 @@ public class Robot extends TimedRobot {
     for (int i = 0; i < 4; i++) {
       SmartDashboard.putNumber("Module Angle " + i, ss_Swerve.getSwerveModule(i).getCurrentAngle());
     }
+
     //Gyro
     SmartDashboard.putNumber("Gyro angle", ss_Swerve.getGyroAngle());
     SmartDashboard.putNumber("Gyro pitch", ss_Swerve.getNavX().getPitch());
@@ -143,7 +146,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Cargo Present", ss_Ball.isPresent());
     SmartDashboard.putBoolean("Angle Switch", ss_EndEffectorAngle.isReset());    
     SmartDashboard.putBoolean("Hatch Present", ss_Hatch.isPresent());    
-    SmartDashboard.putBoolean("Hatch Pressed", ss_Hatch.isPressed());    
+    SmartDashboard.putBoolean("Hatch Pressed", ss_Hatch.isPressed());   
+    SmartDashboard.putBoolean("Hatch Closed", ss_Hatch.getClosed()); 
 
     SmartDashboard.putBoolean("ef init", ss_EndEffectorAngle.isInitialized());
     SmartDashboard.putBoolean("ele init", ss_Elevator.isInitialized());    

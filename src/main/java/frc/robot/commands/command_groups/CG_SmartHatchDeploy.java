@@ -13,7 +13,7 @@ import frc.robot.commands.C_GoToRelativeLevel;
 import frc.robot.commands.C_GoToSelectedLevel;
 import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.C_Wait;
-import frc.robot.commands.C_WaitForExtended;
+import frc.robot.commands.C_WaitForExtend;
 
 public class CG_SmartHatchDeploy extends CommandGroup {
   /**
@@ -21,8 +21,8 @@ public class CG_SmartHatchDeploy extends CommandGroup {
    */
   public CG_SmartHatchDeploy() {
     addSequential(new C_ExtendHatch(true));
-    addSequential(new C_WaitForExtended(true));
-    addSequential(new C_WaitForExtended(false));
+    addSequential(new C_WaitForExtend(true));
+    addSequential(new C_WaitForExtend(false));
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_ExtendHatch(false));
     addSequential(new C_GoToRelativeLevel(-1));

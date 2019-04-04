@@ -40,10 +40,10 @@ public class SS_Swerve extends Subsystem {
         
         zeroGyro();
 
-        double FR = 10;
-        double FL = 7;
-        double BR = 39;
-        double BL = 18;
+        double FR = 9;
+        double FL = 8;
+        double BR = 41;
+        double BL = 27;
         SmartDashboard.putNumber("0 Offset", FR);
         SmartDashboard.putNumber("1 Offset", FL);
         SmartDashboard.putNumber("2 Offset", BR);

@@ -19,7 +19,7 @@ public class C_VisionAlign extends Command {
   private SS_Swerve drivetrain;
 
 	private PIDCont PIDCont;
-  private double kP = .01; //.002
+  private double kP = .005; //.002
 	private double kI = .00;
 	private double kD = .000;
   private double maxPIDSpeed = 0.4;  
@@ -32,6 +32,9 @@ public class C_VisionAlign extends Command {
 	private double maxPIDSpeedv = 0.9;  
 
   private double angleToSnap = 0;
+
+  private double maxTargetArea = 15;
+  private double arbitraryPValue = 40;
 
   public C_VisionAlign() {
     // Use requires() here to declare subsystem dependencies
@@ -74,16 +77,16 @@ public class C_VisionAlign extends Command {
   @Override
   protected void execute() {
     
-    double angleError = -PIDCont.get(vision.getXOffset());
+    double angleError = PIDCont.get(vision.getXOffset());
     SmartDashboard.putNumber("Vangle power", angleError);
     
-    drivetrain.holonomicDrive(-(15 - vision.getTargetArea())/40, PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
+    drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea())/arbitraryPValue, -PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getYButton().get();
+    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getLeftBumperButton().get();
     //TODO find the proper area for it to be hitting
   }
 

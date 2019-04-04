@@ -27,6 +27,7 @@ public class SS_Hatch extends Subsystem {
 
   private boolean hatchRestarted = false;
 
+  private boolean closed = true;
   private boolean hatchMode = false;
   private Mode mode = Mode.kBall;
 
@@ -44,8 +45,10 @@ public class SS_Hatch extends Subsystem {
   public void setHatchClosed(boolean state) {
     if(state){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
+      setClosed(true);
     }else{
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kForward);
+      setClosed(false);
     }
   }
 
@@ -62,6 +65,13 @@ public class SS_Hatch extends Subsystem {
    */
   public DigitalInput getHatchSwitch() {
    return hatchSwitch;
+  }
+
+  public boolean getClosed(){
+    return closed;
+  }
+  public void setClosed(boolean closed){
+    this.closed = closed;
   }
 
 

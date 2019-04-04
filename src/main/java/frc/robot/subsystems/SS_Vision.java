@@ -45,6 +45,11 @@ public class SS_Vision extends Subsystem {
   public void setLightMode(int mode) {
 		limelightNetworkTable.getEntry("ledMode").setNumber(mode);
   }
+
+  //0 = LED mode set in current pipeline, 1 = off, 2 = blink, 3 = on
+  public boolean getLightMode(int mode){
+    return limelightNetworkTable.getEntry("ledMode").getNumber(-1).intValue() == mode ;
+  }
   
 
   // 0 or 1, 0 = vision processing, 1 = driver camera, no vision processing

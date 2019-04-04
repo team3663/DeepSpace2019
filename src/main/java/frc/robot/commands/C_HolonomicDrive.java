@@ -60,7 +60,7 @@ public class C_HolonomicDrive extends Command {
 			strafe = -strafe;
 		}
 		
-		if(Robot.getOI().getPrimaryController().getLeftBumperButton().get()) {
+		if(Robot.getOI().getPrimaryController().getLeftTriggerButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
 			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
 				targetAngle = getShortestPath(getSnappedRotation());
