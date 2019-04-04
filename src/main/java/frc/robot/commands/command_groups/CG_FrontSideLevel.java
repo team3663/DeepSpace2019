@@ -17,14 +17,14 @@ import frc.robot.commands.C_SetFrontClimberIntake;
 import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.util.Side;
 
-public class CG_FeederBallIntake extends CommandGroup {
+public class CG_FrontSideLevel extends CommandGroup {
   /**
    * aligns to intake from feeder station
    */
-  public CG_FeederBallIntake() {
+  public CG_FrontSideLevel() {
     addSequential(new C_Flip(Side.kFront));
+    addSequential(new C_FrontClimber(40));
     addSequential(new C_ElevatorToInch(12));
-    addSequential(new C_FrontClimber(45));
     addSequential(new C_EFToAngle(45));
   }
 }

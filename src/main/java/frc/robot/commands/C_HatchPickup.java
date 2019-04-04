@@ -10,16 +10,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_SmartHatchClose extends Command {
+public class C_HatchPickup extends Command {
   private boolean close;
   private boolean wait;
-  public C_SmartHatchClose() {
+  public C_HatchPickup() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getHatch());
     wait = true;
   }
-  public C_SmartHatchClose(boolean close) {
+  public C_HatchPickup(boolean close) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getHatch());

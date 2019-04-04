@@ -33,6 +33,8 @@ public class OI {
         primaryController.getXButton().whenPressed(new CG_BallIntake()); 
         primaryController.getBackButton().whenPressed(new CG_CancelIntake());
 
+        primaryController.getLeftBumperButton().whenPressed(new C_VisionAlign());
+
         // primaryController.getBButton().whenPressed(new C_RearClimberToAngle(0));
         // primaryController.getBButton().whenReleased(new C_RearClimberToAngle(5));
         //primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
@@ -68,8 +70,8 @@ public class OI {
 
         // secondaryController.getYButton().whenPressed(new CG_HatchHold());
 
-        secondaryController.getYButton().whenPressed(new C_SmartHatchClose());
-        secondaryController.getYButton().whenReleased(new C_SmartHatchClose(true));
+        secondaryController.getYButton().whenPressed(new C_HatchPickup());
+        secondaryController.getYButton().whenReleased(new C_HatchPickup(true));
 
         secondaryController.getStartButton().whenPressed(new C_Climb(false));
         secondaryController.getStartButton().whenReleased(new C_Climb(true));
@@ -86,7 +88,7 @@ public class OI {
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
-        testingController.getYButton().whenPressed(new C_VisionAlign());
+
         
     }
     

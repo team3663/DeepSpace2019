@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.command_groups.CG_FeederBallIntake;
+import frc.robot.commands.command_groups.CG_FrontSideLevel;
 import frc.robot.commands.command_groups.CG_GoToSelectedLevelBack;
 import frc.robot.commands.command_groups.CG_GoToSelectedLevelFront;
 import frc.robot.util.Mode;
@@ -29,7 +29,7 @@ public class C_SelectUp extends Command {
   protected void execute() {
     //selected level check could be removed for more levels, but was told that was a bad idea by mech 
     if(Robot.getElevator().getSelectedSide() == Side.kFront && Robot.getHatch().getMode() == Mode.kBall && Robot.getElevator().getSelectedLevel() == 15){
-      new CG_FeederBallIntake().start();
+      new CG_FrontSideLevel().start();
     }else{
       new CG_GoToSelectedLevelBack().start();
     }

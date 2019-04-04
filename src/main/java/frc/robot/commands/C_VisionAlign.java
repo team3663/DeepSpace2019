@@ -8,13 +8,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_Swerve;
 import frc.robot.subsystems.SS_Vision;
+import frc.robot.util.PIDCont;
 
 public class C_VisionAlign extends Command {
   private SS_Vision vision;
   private SS_Swerve drivetrain;
+
+	private PIDCont PIDCont;
+  private double kP = .01; //.002
+	private double kI = .00;
+	private double kD = .000;
+  private double maxPIDSpeed = 0.4;  
+  
+
+  private PIDCont PIDVision;
+  private double kPv = .01;
+	private double kIv = 0;
+	private double kDv = 0;
+	private double maxPIDSpeedv = 0.9;  
 
   private double angleToSnap = 0;
 
@@ -25,6 +40,11 @@ public class C_VisionAlign extends Command {
     requires(Robot.getDrivetrain());
     vision = Robot.getVision();
     drivetrain = Robot.getDrivetrain();
+
+    PIDCont = new PIDCont(maxPIDSpeed, kP, kI, kD); //TODO kP, kI, and kD need tuning
+
+    PIDVision = new PIDCont(maxPIDSpeedv, kPv, kIv, kDv);
+
   }
 
   // Called just before this Command runs the first time
@@ -34,7 +54,7 @@ public class C_VisionAlign extends Command {
     drivetrain.setFieldOriented(false);
     
     double angle = drivetrain.getGyroAngle();
-    angleToSnap = (int)(angle) / 45 * 45;
+    angleToSnap = (int)(angle / 45) * 45;
     if(angleToSnap == 45){
       angleToSnap = 30;
     }
@@ -47,28 +67,36 @@ public class C_VisionAlign extends Command {
     else if(angleToSnap == 315){
       angleToSnap = 330;
     }
+    SmartDashboard.putNumber("Vangle Snap", angleToSnap);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     
-    drivetrain.holonomicDrive(.2, vision.getXOffset()/2, 0); //make Drive forward proportional to target area
+    double angleError = -PIDCont.get(vision.getXOffset());
+    SmartDashboard.putNumber("Vangle power", angleError);
+    
+    drivetrain.holonomicDrive(-(15 - vision.getTargetArea())/40, PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || vision.getTargetArea() > 30 || Robot.getOI().getPrimaryController().getRightBumperButton().get();
+    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getYButton().get();
     //TODO find the proper area for it to be hitting
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    vision.setLightMode(0);
+    vision.setLightMode(3);
     drivetrain.setFieldOriented(true);
+    drivetrain.holonomicDrive(0, 0, 0);
   }
+  private double getAngleError(double targetAngle) {
+		return targetAngle - Robot.getDrivetrain().getGyroAngle();
+	}
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
