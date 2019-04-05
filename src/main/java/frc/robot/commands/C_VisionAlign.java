@@ -80,7 +80,8 @@ public class C_VisionAlign extends Command {
     double angleError = PIDCont.get(vision.getXOffset());
     SmartDashboard.putNumber("Vangle power", angleError);
     
-    drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea())/arbitraryPValue, -PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
+    drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea()) / arbitraryPValue, 
+          - PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
