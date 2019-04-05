@@ -73,6 +73,43 @@ public class C_VisionAlign extends Command {
     SmartDashboard.putNumber("Vangle Snap", angleToSnap);
   }
 
+  // Called repeatedly when this Command is scheduled to run
+  @Override
+  protected void execute() {
+    
+    double angleError = PIDCont.get(vision.getXOffset());
+    SmartDashboard.putNumber("Vangle power", angleError);
+    
+    drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea()) / arbitraryPValue, 
+          - PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
+  }
+
+  // Make this return true when this Command no longer needs to run execute()
+  @Override
+  protected boolean isFinished() {
+    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getLeftBumperButton().get();
+    //TODO find the proper area for it to be hitting
+  }
+
+  // Called once after isFinished returns true
+  @Override
+  protected void end() {
+    vision.setLightMode(3);
+    drivetrain.setFieldOriented(true);
+    drivetrain.holonomicDrive(0, 0, 0);
+  }
+  private double getAngleError(double targetAngle) {
+		return targetAngle - Robot.getDrivetrain().getGyroAngle();
+	}
+
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
+  @Override
+  protected void interrupted() {
+    end();
+  }
+
+  
   /**
    * Finds the closest 45 degree angle given the parameter angle
    * @return
@@ -131,39 +168,4 @@ public class C_VisionAlign extends Command {
     }
   }
 
-  // Called repeatedly when this Command is scheduled to run
-  @Override
-  protected void execute() {
-    
-    double angleError = PIDCont.get(vision.getXOffset());
-    SmartDashboard.putNumber("Vangle power", angleError);
-    
-    drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea()) / arbitraryPValue, 
-          - PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
-  }
-
-  // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
-    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getLeftBumperButton().get();
-    //TODO find the proper area for it to be hitting
-  }
-
-  // Called once after isFinished returns true
-  @Override
-  protected void end() {
-    vision.setLightMode(3);
-    drivetrain.setFieldOriented(true);
-    drivetrain.holonomicDrive(0, 0, 0);
-  }
-  private double getAngleError(double targetAngle) {
-		return targetAngle - Robot.getDrivetrain().getGyroAngle();
-	}
-
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
-  @Override
-  protected void interrupted() {
-    end();
-  }
 }
