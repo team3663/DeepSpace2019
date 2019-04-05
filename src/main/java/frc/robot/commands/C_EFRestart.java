@@ -28,6 +28,8 @@ public class C_EFRestart extends Command {
   protected void initialize() {
     Robot.getFrontClimber().goToDegree(Robot.getFrontClimber().getSafeTop());
     Robot.getHatch().setHatchClosed(true);
+    Robot.getEndEffectorAngle().setSpeedMultiplier(1);
+
   }
 
   @Override
@@ -47,7 +49,8 @@ public class C_EFRestart extends Command {
       else if(!Robot.getEndEffectorAngle().isInitialized() && Robot.getFrontClimber().safeToFlip()){
         
         if(!Robot.getEndEffectorAngle().isReset()){
-          Robot.getEndEffectorAngle().setAngleSpeed(-.6);
+          Robot.getEndEffectorAngle().setAngleSpeed(-.7);
+
         }
         else{
           Robot.getEndEffectorAngle().resetEncoder();
@@ -71,6 +74,12 @@ public class C_EFRestart extends Command {
     new C_ElevatorToInch(1).start();
     new C_EFToAngle(90, false).start();
     new C_FrontClimber(0).start();
+    Robot.getEndEffectorAngle().setSpeedMultiplier(.5);
 
+  }
+
+  @Override
+  public synchronized boolean isInterruptible() {
+    return false;
   }
 }

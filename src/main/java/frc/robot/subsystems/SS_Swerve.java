@@ -42,8 +42,8 @@ public class SS_Swerve extends Subsystem {
 
         double FR = 9;
         double FL = 8;
-        double BR = 41;
-        double BL = 27;
+        double BR = 39;
+        double BL = 18;
         SmartDashboard.putNumber("0 Offset", FR);
         SmartDashboard.putNumber("1 Offset", FL);
         SmartDashboard.putNumber("2 Offset", BR);

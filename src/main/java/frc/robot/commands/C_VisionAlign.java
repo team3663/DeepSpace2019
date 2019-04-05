@@ -22,14 +22,14 @@ public class C_VisionAlign extends Command {
   private double kP = .005; //.002
 	private double kI = .00;
 	private double kD = .000;
-  private double maxPIDSpeed = 0.4;  
+  private double maxPIDSpeed = 0.3;  
   
 
   private PIDCont PIDVision;
-  private double kPv = .01;
+  private double kPv = .015;
 	private double kIv = 0;
 	private double kDv = 0;
-	private double maxPIDSpeedv = 0.9;  
+	private double maxPIDSpeedv = 0.5;  
 
   private double angleToSnap = 0;
 

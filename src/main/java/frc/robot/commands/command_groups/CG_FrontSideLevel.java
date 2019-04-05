@@ -24,7 +24,7 @@ public class CG_FrontSideLevel extends CommandGroup {
   public CG_FrontSideLevel() {
     addSequential(new C_Flip(Side.kFront));
     addSequential(new C_FrontClimber(20));
-    addSequential(new C_ElevatorToInch(16));
-    addSequential(new C_EFToAngle(55, true));
+    addParallel(new C_EFToAngle(60, true));
+    addSequential(new C_ElevatorToInch(17.5));
   }
 }
