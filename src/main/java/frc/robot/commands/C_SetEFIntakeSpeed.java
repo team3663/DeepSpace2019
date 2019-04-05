@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class C_SetEFIntakeSpeed extends Command {
+  // speed value between -1 and 1
   private double speed;
 
   public C_SetEFIntakeSpeed(double speed) {

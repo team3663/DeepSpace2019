@@ -53,16 +53,17 @@ public class OI {
 
 
         // secondaryController.getLeftBumperButton().whenPressed(new CG_GoToSelectedLevelBack());
-        secondaryController.getLeftBumperButton().whenPressed(new C_SelectUp());
-
-        secondaryController.getRightBumperButton().whenPressed(new C_SelectDown());
-
+        // LBumper elevator go to selected level
+        secondaryController.getLeftBumperButton().whenPressed(new C_SelectUp());        
+        // RBumper elevator go to bottom/feeder level
+        secondaryController.getRightBumperButton().whenPressed(new C_SelectDown());   
+        // X button toggle between hatch and cargo mode  
         secondaryController.getXButton().whenPressed(new C_SetMode());
         secondaryController.getXButton().whenReleased(new C_SelectMode());
-
+        // A button shoots cargo (pressed) stops shooter (released)
         secondaryController.getAButton().whenPressed(new C_SetEFIntakeSpeed(1));
         secondaryController.getAButton().whenReleased(new C_SetEFIntakeSpeed(0));
-
+        // B button extends hatch (pressed) 
         secondaryController.getBButton().whenPressed(new C_ExtendHatch(true));
         secondaryController.getBButton().whenReleased(new CG_HatchDropManual());
 

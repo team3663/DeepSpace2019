@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-
++
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -49,6 +49,13 @@ public class SS_Hatch extends Subsystem {
     }
   }
 
+  /**
+   * 
+   * @param state
+   * (true) ha
+   * tch fingers forward ready to receive/deploy hatch panel
+   * (false) hatch fingers tucked back to hold panel or stay tucked away
+   */
   public void extendHatchPickup(boolean state) {
     if(state){
       hatchExtendSolenoid.set(DoubleSolenoid.Value.kReverse);
@@ -64,11 +71,20 @@ public class SS_Hatch extends Subsystem {
    return hatchSwitch;
   }
 
-
+/**
+ * Robot has the hatch panel?
+ * @return
+ * true if hatch panel is present
+ */
   public boolean isPresent(){
-    return isOpticalPresent(); //|| isOpticalPresent();
+    return isOpticalPresent(); //|| isOpticalPresent();  
   }
 
+  /**
+   * hatch panel assembly fully depressed in?
+   * @return
+   * true if the hatch panel assembly is fully depressed during hatch panel deployment
+   */
   public boolean isPhysicalPresent(){
     return !hatchSwitch.get();
   }
