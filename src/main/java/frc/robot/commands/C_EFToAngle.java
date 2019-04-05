@@ -15,6 +15,7 @@ public class C_EFToAngle extends Command {
 
   private double forwardAngleLimit;
   private double backwardAngleLimit;
+  private boolean SafetyOverride;
 
   /**
    * 
@@ -23,19 +24,14 @@ public class C_EFToAngle extends Command {
    * @param angle target angle
    */
 
-  public  C_EFToAngle(double angle) {
+  public  C_EFToAngle(double angle, boolean SafetyOverride) {
     requires(Robot.getEndEffectorAngle());
     this.angle = angle;
-
+    this.SafetyOverride = SafetyOverride;
 
     forwardAngleLimit = Robot.getEndEffectorAngle().getFrontAngleLimit();
     backwardAngleLimit = Robot.getEndEffectorAngle().getBackAngleLimit();
-    if(angle > forwardAngleLimit){
-      angle = forwardAngleLimit;
-    }
-    if(angle < backwardAngleLimit){
-      angle = backwardAngleLimit;
-    }
+
 
   }
 
@@ -44,12 +40,20 @@ public class C_EFToAngle extends Command {
     if(!Robot.getEndEffectorAngle().isInitialized() && !Robot.getHatch().isPresent()){
       new C_EFRestart().start();
     }
+
+    if(angle > forwardAngleLimit){
+      angle = forwardAngleLimit;
+    }
+    if(angle < backwardAngleLimit){
+      angle = backwardAngleLimit;
+    }
+
     setTimeout(3);
   }
 
   protected void execute() {
     if(Robot.getEndEffectorAngle().isInitialized()){
-      if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop()){
+      if(Robot.getElevator().getAverageInch() < Robot.getElevator().getSafeFlipTop() || SafetyOverride){
         Robot.getEndEffectorAngle().goToDegree(angle);
       }
     }
@@ -59,7 +63,7 @@ public class C_EFToAngle extends Command {
     System.out.println("C END EFFECOT ANGLE");
     return Robot.getEndEffectorAngle().atTarget(angle) || !Robot.getEndEffectorAngle().isInitialized() || isTimedOut() ||
     //this is a temp fix for the PID controller
-    (angle + 3 > Robot.getEndEffectorAngle().getAngle() && angle - 3 < Robot.getEndEffectorAngle().getAngle()); 
+    (angle + 1 > Robot.getEndEffectorAngle().getAngle() && angle - 1 < Robot.getEndEffectorAngle().getAngle()); 
   }
 
 

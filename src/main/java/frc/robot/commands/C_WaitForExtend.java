@@ -19,6 +19,9 @@ public class C_WaitForExtend extends Command {
 
   @Override
   protected boolean isFinished() {
+    if(!Robot.getOI().getSecondaryController().getLeftTriggerButton().get()){
+      return true;
+    }
     return !Robot.getHatch().isPressed() == isExtended;
   }
 }

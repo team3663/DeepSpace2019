@@ -24,7 +24,7 @@ public class CG_HatchMode extends CommandGroup {
    */
   public CG_HatchMode() {
     addSequential(new C_Flip(Side.kBack));
-    addParallel(new C_EFToAngle(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10));
+    addParallel(new C_EFToAngle(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10, false));
     addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(1, Mode.kHatch)));
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_FrontClimber(0));

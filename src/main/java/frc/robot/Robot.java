@@ -13,6 +13,7 @@ import edu.wpi.cscore.HttpCamera;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -64,24 +65,24 @@ public class Robot extends TimedRobot {
     driver = Shuffleboard.getTab("driver");
 
     //show cameras on the driver tab of shuffleboard
-    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-    camera.setResolution(320, 240);
-    camera.setPixelFormat(PixelFormat.kMJPEG);
+    // UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    // camera.setResolution(320, 240);
+    // camera.setPixelFormat(PixelFormat.kMJPEG);
     
-    driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "HALF")); //NONE
+    // driver.add(camera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Rotation", "HALF")); //NONE
 
     HttpCamera limelightCamera = new HttpCamera("limelight", "http://10.36.63.11:5800" );
     driver.add(limelightCamera).withWidget(BuiltInWidgets.kCameraStream).withProperties(Map.of("Show controls", false)); 
 
-    driver.add("Hatch", -1).withWidget("Hatch Grabber")
-      .withProperties(Map.of("Has Hatch Key", "Hatch Present"))
-      .withProperties(Map.of("Hatch Pressed Key", "Hatch Pressed"))
-      .withProperties(Map.of("Closed Key", "Hatch Closed"));
-    driver.add("Elevator", -1).withWidget("TestWidget")
-    .withProperties(Map.of("Angle", "End Effector Angle"))
-    .withProperties(Map.of("Height", "Average Inch"))
-    .withProperties(Map.of("Has Cargo", "Cargo Present"))
-    .withProperties(Map.of("Has Hatch", "Hatch Present"));
+    // driver.add("Hatch", -1 ).withWidget("Hatch Grabber")
+    //   .withProperties(Map.of("Has Hatch Key", "Hatch Present"))
+    //   .withProperties(Map.of("Hatch Pressed Key", "Hatch Pressed"))
+    //   .withProperties(Map.of("Closed Key", "Hatch Closed"));
+    // driver.add("Elevator", -1).withWidget("TestWidget")
+    // .withProperties(Map.of("Angle", "End Effector Angle"))
+    // .withProperties(Map.of("Height", "Average Inch"))
+    // .withProperties(Map.of("Has Cargo", "Cargo Present"))
+    // .withProperties(Map.of("Has Hatch", "Hatch Present")); //.buildsinto
 
    }
 

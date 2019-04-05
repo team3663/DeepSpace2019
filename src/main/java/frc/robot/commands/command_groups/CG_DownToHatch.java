@@ -23,7 +23,7 @@ public class CG_DownToHatch extends CommandGroup {
     setInterruptible(false);
     
     addSequential(new C_Flip(Side.kBack));
-    addParallel(new C_EFToAngle(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10));
+    addParallel(new C_EFToAngle(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10 , false));
     addParallel(new C_ElevatorToInch(Robot.getElevator().getLevelInch(0, Mode.kHatch)));
   
   }
