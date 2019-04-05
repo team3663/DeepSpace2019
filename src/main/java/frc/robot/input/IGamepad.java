@@ -165,5 +165,13 @@ public interface IGamepad {
 	 */
 	Button getDPadButton(DPadButton.Direction direction);
 
+	Button getShiftButton(String name);
+
+	Button getAntiShiftButton(String name);
+
+	void addShiftButton(String name, Button button, Button shift);
+
+	void addAntiShiftButton(String name, Button button, Button shift);
+
 
 }

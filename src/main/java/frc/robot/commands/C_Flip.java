@@ -43,7 +43,7 @@ public class C_Flip extends Command {
    * @param side which side the end effector is being flipped to 
    * @param elevatorEnd the height the elevator will end at
    */
-  C_Flip(Side side, double elevatorEnd) {
+  public C_Flip(Side side, double elevatorEnd) {
     requires(Robot.getEndEffectorAngle());
     requires(Robot.getElevator());
     requires(Robot.getFrontClimber());
@@ -67,6 +67,9 @@ public class C_Flip extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.getHatch().extendHatchPickup(false);
+    Robot.getHatch().setClosed(true);
+
     setTimeout(4);
   }
 

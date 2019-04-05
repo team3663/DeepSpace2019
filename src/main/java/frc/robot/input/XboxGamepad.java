@@ -1,5 +1,8 @@
 package frc.robot.input;
 
+import java.util.HashMap;
+
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,12 +17,14 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * </ul>
  * </p>
  *
- * @author Jacob Bublitz
+ * @author Jacob Bublitz : edited by Mark Riise
  * @since 1.0
  */
 
 public final class XboxGamepad extends Joystick implements IGamepad {
 	
+	private HashMap<String, ShiftButton> shiftList = new HashMap<String, ShiftButton>();
+	private HashMap<String, ShiftButton> antiShiftList = new HashMap<String, ShiftButton>();
 	
 	private final Button[] mButtons = {
 			new JoystickButton(this, 1), // A Button
@@ -32,8 +37,8 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 			new JoystickButton(this, 8), // Start Button
 			new JoystickButton(this, 9), // Left Stick Button
 			new JoystickButton(this, 10), // Right Stick Button
-			new AxisButton(this, 2,0.75), // Left Trigger Button
-			new AxisButton(this, 3,0.75), // Right Trigger Button
+			new AxisButton(this, 2, 0.75), // Left Trigger Button
+			new AxisButton(this, 3, 0.75), // Right Trigger Button			
 	};
 
 	private final DPadButton[] mDPadButtons;
@@ -49,6 +54,16 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 		for (DPadButton.Direction dir : DPadButton.Direction.values()) {
 			mDPadButtons[dir.ordinal()] = new DPadButton(this, dir);
 		}
+	}
+
+	public void addShiftButton(String name, Button button, Button shift){
+		shiftList.put(name, new ShiftButton(button, shift));
+		
+	}
+
+	public void addAntiShiftButton(String name, Button button, Button shift){
+		antiShiftList.put(name, new ShiftButton(button, shift, true));
+		
 	}
 
 	public double getLeftTriggerValue() {
@@ -127,7 +142,10 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 		return mDPadButtons[direction.ordinal()];
 	}
 
-	// public Button getShiftButton(Button button, Button shift, boolean inverse){
-	// 	return 
-	// }
+	public Button getShiftButton(String name){
+		return shiftList.get(name);
+	}
+	public Button getAntiShiftButton(String name){
+		return antiShiftList.get(name);
+	}
 }

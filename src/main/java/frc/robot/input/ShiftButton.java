@@ -29,7 +29,6 @@ public class ShiftButton extends Button {
 
 	@Override
 	public boolean get() {
-		if(inverse) return button.get();
-		return button.get() == shift.get();
+		return button.get() == !inverse && shift.get() == true;
 	}
 }

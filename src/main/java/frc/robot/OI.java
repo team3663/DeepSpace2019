@@ -78,13 +78,17 @@ public class OI {
 
 
         secondaryController.getBackButton().whenPressed(new C_CrabDrive());
+        
+        secondaryController.addShiftButton("restartEF", secondaryController.getLeftTriggerButton(), secondaryController.getRightTriggerButton());
+        secondaryController.getShiftButton("restartEF").whenPressed(new CG_AdjustAngleEncoder());
 
         
         //
         //testing controller: BE CAREFUL
         //
 
-        testingController.getAButton().whenPressed(new C_RearClimberToAngle(15));
+        
+
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
