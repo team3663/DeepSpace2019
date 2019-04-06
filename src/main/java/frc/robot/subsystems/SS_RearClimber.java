@@ -28,7 +28,7 @@ public class SS_RearClimber extends Subsystem {
   private DigitalInput rearClimberReset;
 
   private double fakeEncoder = 0;
-  private double speedMultiplier = 0.3;
+  private double speedMultiplier = 0.4;
 
   private final double GEAR_RATIO = 1.0/208.0;
 

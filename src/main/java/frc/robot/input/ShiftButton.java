@@ -32,3 +32,4 @@ public class ShiftButton extends Button {
 		return button.get() == !inverse && shift.get() == true;
 	}
 }
+ 

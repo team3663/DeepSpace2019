@@ -19,22 +19,22 @@ public class C_VisionAlign extends Command {
   private SS_Swerve drivetrain;
 
 	private PIDCont PIDCont;
-  private double kP = .005; //.002
+  private double kP = .002; //.002
 	private double kI = .00;
 	private double kD = .000;
-  private double maxPIDSpeed = 0.3;  
+  private double maxPIDSpeed = 0.5;  
   
 
   private PIDCont PIDVision;
   private double kPv = .015;
 	private double kIv = 0;
 	private double kDv = 0;
-	private double maxPIDSpeedv = 0.5;  
+	private double maxPIDSpeedv = 1;  
 
   private double angleToSnap = 0;
 
   private double maxTargetArea = 15;
-  private double arbitraryPValue = 40;
+  private double arbitraryPValue = 60;
 
   public C_VisionAlign() {
     // Use requires() here to declare subsystem dependencies
@@ -57,7 +57,7 @@ public class C_VisionAlign extends Command {
     drivetrain.setFieldOriented(false);
     
     double angle = drivetrain.getGyroAngle();
-    angleToSnap = (int)(angle / 45) * 45;
+    angleToSnap = (int)(angle + 22.5 ) / 45 * 45;
     if(angleToSnap == 45){
       angleToSnap = 30;
     }
@@ -70,6 +70,7 @@ public class C_VisionAlign extends Command {
     else if(angleToSnap == 315){
       angleToSnap = 330;
     }
+
     SmartDashboard.putNumber("Vangle Snap", angleToSnap);
   }
 
@@ -77,10 +78,23 @@ public class C_VisionAlign extends Command {
   @Override
   protected void execute() {
     
-    double angleError = PIDCont.get(vision.getXOffset());
-    SmartDashboard.putNumber("Vangle power", angleError);
+    double angleOut;
+    // double angleError = PIDCont.get(vision.getXOffset());
+    if(drivetrain.getGyroAngle() > 350){
+       angleOut = PIDCont.get(angleToSnap - 0);
+    }
+    else{
+       angleOut = -PIDCont.get(angleToSnap - drivetrain.getGyroAngle());
+    }
     
-    drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea())/arbitraryPValue, -PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
+    double forwardOut = 0;
+    if(Math.abs(vision.getXOffset()) < 10){
+      forwardOut = (maxTargetArea - vision.getTargetArea())/arbitraryPValue;
+    }
+    
+
+    drivetrain.holonomicDrive(forwardOut, -PIDVision.get(vision.getXOffset()), angleOut);
+    // drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea())/arbitraryPValue, -PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -106,5 +120,53 @@ public class C_VisionAlign extends Command {
   @Override
   protected void interrupted() {
     end();
+  }
+
+  private double bestSnapAngle(double pAngle){
+    // all directions are based on driver's perspective
+    final double CARGOSHIP_CENTER = 0.;
+    final double CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER = 270.;
+    final double CARGOSHIP_LEFT_AND_R_ROCKET_CENTER = 90.;
+    final double R_ROCKET_NEAR = 29.;
+    final double R_ROCKET_FAR = 151.;
+    final double L_ROCKET_NEAR = 331.;
+    final double L_ROCKET_FAR = 209.;
+    final double LOAD_STATION = 180.;
+    final int NORTH = 0;
+    final int NE = 1;
+    final int EAST = 2;
+    final int SE = 3;
+    final int SOUTH = 4;
+    final int SW = 5;
+    final int WEST = 6;
+    final int NW = 7;
+
+    // find the closes 45 degree angle
+    // near 0 degree (pointing away from driver)
+    int closest45 = (int) (pAngle + 22.5) % 360 / 45;    
+    if(closest45 == NORTH){        // nearest to 0 degree
+      return CARGOSHIP_CENTER;
+    }
+    else if(closest45 == NE){      // nearest to 45 degrees
+      return R_ROCKET_NEAR;
+    }
+    else if(closest45 == EAST){    // nearest to 90 degrees
+      return CARGOSHIP_LEFT_AND_R_ROCKET_CENTER;
+    }
+    else if(closest45 == SE){      // nearest to 135 degrees
+      return R_ROCKET_FAR;
+    }                           
+    else if(closest45 == SOUTH){   // nearest to 180 degrees
+      return LOAD_STATION;
+    }                       
+    else if(closest45 == SW){      // nearest to 225 degrees
+      return L_ROCKET_FAR;
+    }
+    else if(closest45 == WEST){    // nearest to 270 degrees
+      return CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER;
+    }
+    else{         // NW direction, nearest to 315 degrees
+      return L_ROCKET_NEAR;
+    }
   }
 }
