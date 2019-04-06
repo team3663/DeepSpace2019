@@ -26,4 +26,5 @@ public class C_ElevatorToInch extends Command {
   protected boolean isFinished() {
     return Robot.getElevator().atTarget(inch);
   }
+  
 }

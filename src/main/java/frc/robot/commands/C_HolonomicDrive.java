@@ -149,7 +149,7 @@ public class C_HolonomicDrive extends Command {
 
 		rotation = -rotation / Math.PI * 180;
 
-		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;
+		rotation = (int)(rotation + 22.5) / 45 * 45;
 		SmartDashboard.putNumber("joystick angle", rotation);
 
 		switch ((int)rotation){

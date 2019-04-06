@@ -11,37 +11,40 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.commands.test_commands.C_ElevatorToInch;
 import frc.robot.subsystems.SS_Swerve;
 import frc.robot.subsystems.SS_Vision;
+import frc.robot.util.Mode;
 import frc.robot.util.PIDCont;
 
-public class C_VisionAlign extends Command {
+public class C_VisionAlignStrafe extends Command {
   private SS_Vision vision;
   private SS_Swerve drivetrain;
 
 	private PIDCont PIDCont;
-  private double kP = .01; //.004 gyro .01 vision
+  private double kP = .01; //.004 gyro .01 vision .004 new vision
 	private double kI = .000;
 	private double kD = .00; //.001 
   private double maxPIDSpeed = 0.6;  
   
 
   private PIDCont PIDVision;
-  private double kPv = .015;
+  private double kPv = .015;//.009 new
 	private double kIv = 0;
 	private double kDv = 0;
-	private double maxPIDSpeedv = .8;  
+	private double maxPIDSpeedv = 1; // 1 new
 
   private double angleToSnap = 0;
 
   private double maxTargetArea = 15;
-  private double arbitraryPValue = 40;
+  private double arbitraryPValue = 50; // 60 new
 
-  public C_VisionAlign() {
+  public C_VisionAlignStrafe() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.getVision());
     requires(Robot.getDrivetrain());
+    requires(Robot.getElevator());
     vision = Robot.getVision();
     drivetrain = Robot.getDrivetrain();
 
@@ -54,14 +57,16 @@ public class C_VisionAlign extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    vision.setLightMode(3);
+ 
     if(DriverStation.getInstance().isFMSAttached()){
       vision.setPipeline(0);
     }
     else{
       vision.setPipeline(1);
-    }    
+    }
+    vision.setLightMode(3);
     drivetrain.setFieldOriented(false);
+
     
     double angle = drivetrain.getGyroAngle();
     angleToSnap = (int)(angle + 22.5 ) / 45 * 45;
@@ -84,15 +89,26 @@ public class C_VisionAlign extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
+    if(Robot.getHatch().getMode() == Mode.kHatch && Robot.getElevator().getSelectedLevel() == 1){
+      if(vision.getTargetArea() < 6){
+        Robot.getElevator().goToInch(0);
+      }
+      else{
+        Robot.getElevator().goToInch(Robot.getElevator().getLevelInch(1, Mode.kHatch));
+      }
+    }
 
     double forwardOut = 0;
     double angleOut = 0;
 
-    // if(Math.abs(vision.getXOffset()) < 5){
+    if(Math.abs(vision.getXOffset()) < 6){
       forwardOut = (maxTargetArea - vision.getTargetArea())/arbitraryPValue;
       angleOut = PIDCont.get(vision.getXOffset());
-      // }
+    }
       double strafeOut =  -PIDVision.get(vision.getXOffset());
+
+
     // if(drivetrain.getGyroAngle() > 350){
     //    angleOut = PIDCont.get(angleToSnap - 0);
     // }
@@ -107,7 +123,7 @@ public class C_VisionAlign extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getLeftBumperButton().get();
+    return !vision.validTarget() || !Robot.getOI().getPrimaryController().getYButton().get();
   }
 
   // Called once after isFinished returns true
@@ -116,6 +132,11 @@ public class C_VisionAlign extends Command {
     vision.setLightMode(3);
     drivetrain.setFieldOriented(true);
     drivetrain.holonomicDrive(0, 0, 0);
+
+    if(Robot.getHatch().getMode() == Mode.kHatch && Robot.getElevator().getSelectedLevel() == 1){
+      new C_ElevatorToInch(Robot.getElevator().getLevelInch(1, Mode.kHatch)).start();
+    }
+
   }
   private double getAngleError(double targetAngle) {
 		return targetAngle - Robot.getDrivetrain().getGyroAngle();
@@ -128,51 +149,5 @@ public class C_VisionAlign extends Command {
     end();
   }
 
-  private double bestSnapAngle(double pAngle){
-    // all directions are based on driver's perspective
-    final double CARGOSHIP_CENTER = 0.;
-    final double CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER = 270.;
-    final double CARGOSHIP_LEFT_AND_R_ROCKET_CENTER = 90.;
-    final double R_ROCKET_NEAR = 29.;
-    final double R_ROCKET_FAR = 151.;
-    final double L_ROCKET_NEAR = 331.;
-    final double L_ROCKET_FAR = 209.;
-    final double LOAD_STATION = 180.;
-    final int NORTH = 0;
-    final int NE = 1;
-    final int EAST = 2;
-    final int SE = 3;
-    final int SOUTH = 4;
-    final int SW = 5;
-    final int WEST = 6;
-    final int NW = 7;
 
-    // find the closes 45 degree angle
-    // near 0 degree (pointing away from driver)
-    int closest45 = (int) (pAngle + 22.5) % 360 / 45;    
-    if(closest45 == NORTH){        // nearest to 0 degree
-      return CARGOSHIP_CENTER;
-    }
-    else if(closest45 == NE){      // nearest to 45 degrees
-      return R_ROCKET_NEAR;
-    }
-    else if(closest45 == EAST){    // nearest to 90 degrees
-      return CARGOSHIP_LEFT_AND_R_ROCKET_CENTER;
-    }
-    else if(closest45 == SE){      // nearest to 135 degrees
-      return R_ROCKET_FAR;
-    }                           
-    else if(closest45 == SOUTH){   // nearest to 180 degrees
-      return LOAD_STATION;
-    }                       
-    else if(closest45 == SW){      // nearest to 225 degrees
-      return L_ROCKET_FAR;
-    }
-    else if(closest45 == WEST){    // nearest to 270 degrees
-      return CARGOSHIP_RIGHT_AND_L_ROCKET_CENTER;
-    }
-    else{         // NW direction, nearest to 315 degrees
-      return L_ROCKET_NEAR;
-    }
-  }
 }

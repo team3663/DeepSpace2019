@@ -39,6 +39,8 @@ public class OI {
 
         primaryController.getLeftBumperButton().whenPressed(new C_VisionAlign());
 
+        primaryController.getYButton().whenPressed(new C_VisionAlignStrafe());
+
         // primaryController.getBButton().whenPressed(new C_RearClimberToAngle(0));
         // primaryController.getBButton().whenReleased(new C_RearClimberToAngle(5));
         //primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
@@ -96,22 +98,22 @@ public class OI {
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
-        testingController.addComboButton("test", 
-        new ArrayList<Button>(){
-            {
-                add(testingController.getAButton());
-                add(testingController.getBButton());
-            }
-        }, 
-        new ArrayList<Number>(){
-            {
-                add(100);
-                add(100);
-            }
-        }, 
-        500);
+        // testingController.addComboButton("test", 
+        // new ArrayList<Button>(){
+        //     {
+        //         add(testingController.getAButton());
+        //         add(testingController.getBButton());
+        //     }
+        // }, 
+        // new ArrayList<Number>(){
+        //     {
+        //         add(100);
+        //         add(100);
+        //     }
+        // }, 
+        // 500);
         
-        testingController.getComboButton("test").whenPressed(new CG_BallIntake());
+        // testingController.getComboButton("test").whenPressed(new CG_BallIntake());
 
     }
     
