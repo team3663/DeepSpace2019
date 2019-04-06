@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.ArrayList;
+
+import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.command_groups.*;
 import frc.robot.commands.test_commands.C_RearClimberDirect;
@@ -93,8 +96,23 @@ public class OI {
 
         //testingController.getBackButton().whileHeld(new C_Climb(10));
 
-
+        testingController.addComboButton("test", 
+        new ArrayList<Button>(){
+            {
+                add(testingController.getAButton());
+                add(testingController.getBButton());
+            }
+        }, 
+        new ArrayList<Number>(){
+            {
+                add(100);
+                add(100);
+            }
+        }, 
+        500);
         
+        testingController.getComboButton("test").whenPressed(new CG_BallIntake());
+
     }
     
     public IGamepad getTestController(){

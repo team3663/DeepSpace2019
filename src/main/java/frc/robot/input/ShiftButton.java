@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
- * A button for different directions on a directional-pad.
+ * A button with a shift argument
  *
- * @author Jacob Bublitz
- * @since 1.0
+ * @author Mark Riise
+ * @since 1.1
  */
 public class ShiftButton extends Button {
 

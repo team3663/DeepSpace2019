@@ -7,21 +7,23 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.util.Stopwatch;
 
 /**
- * A button for different directions on a directional-pad.
+ * A button pressed after a certian combination of buttons have been pressed in time.
  *
- * @author Jacob Bublitz
- * @since 1.0
+ * @author Mark Riise
+ * @since 1.1
  */
 public class ComboButton extends Button {
 
 
 	ArrayList<Button> buttons = new ArrayList<Button>();
+	ArrayList<Number> expiraions = new ArrayList<Number>();
 	private Button shift;
 	private int expiraionTime;
 	private Stopwatch stopwatch;
 	private ButtonTracker tracker;
-	public ComboButton(ArrayList<Button> buttons, int expiraionTime) {
+	public ComboButton(ArrayList<Button> buttons, ArrayList<Number> expiraions, int expiraionTime) {
 		this.buttons = buttons;
+		this.expiraions = expiraions;
 		tracker = new ButtonTracker(expiraionTime);
 		this.stopwatch = new Stopwatch();
 	}
@@ -30,8 +32,15 @@ public class ComboButton extends Button {
 	@Override
 	public boolean get() {
 		tracker.updateTimes(stopwatch.getMilliseconds());
+		for(int i = 0; i < buttons.size(); i++){
+			if(buttons.get(i).get()){
+				tracker.addButton(buttons.get(i), expiraions.get(i));
+			}
+		}
+		if(buttons.equals(tracker.get())){
+			return true;
+		}
 		
-		
-		return true;
+		return false;
 	}
 }

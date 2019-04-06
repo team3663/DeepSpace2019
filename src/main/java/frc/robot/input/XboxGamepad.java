@@ -1,5 +1,6 @@
 package frc.robot.input;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * </ul>
  * </p>
  *
- * @author Jacob Bublitz : edited by Mark Riise
+ * @author Jacob Bublitz, Mark Riise
  * @since 1.0
  */
 
@@ -25,6 +26,8 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 	
 	private HashMap<String, ShiftButton> shiftList = new HashMap<String, ShiftButton>();
 	private HashMap<String, ShiftButton> antiShiftList = new HashMap<String, ShiftButton>();
+	private HashMap<String, ComboButton> comboList = new HashMap<String, ComboButton>();
+
 	
 	private final Button[] mButtons = {
 			new JoystickButton(this, 1), // A Button
@@ -58,12 +61,14 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 
 	public void addShiftButton(String name, Button button, Button shift){
 		shiftList.put(name, new ShiftButton(button, shift));
-		
 	}
 
 	public void addAntiShiftButton(String name, Button button, Button shift){
 		antiShiftList.put(name, new ShiftButton(button, shift, true));
-		
+	}
+
+	public void addComboButton(String name, ArrayList<Button> buttons, ArrayList<Number> expiraions, int expiraionTime){
+		comboList.put(name, new ComboButton(buttons, expiraions, expiraionTime));
 	}
 
 	public double getLeftTriggerValue() {
@@ -145,7 +150,12 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 	public Button getShiftButton(String name){
 		return shiftList.get(name);
 	}
+
 	public Button getAntiShiftButton(String name){
 		return antiShiftList.get(name);
+	}
+
+	public Button getComboButton(String name){
+		return comboList.get(name);
 	}
 }

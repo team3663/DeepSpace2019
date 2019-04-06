@@ -1,5 +1,7 @@
 package frc.robot.input;
 
+import java.util.ArrayList;
+
 import edu.wpi.first.wpilibj.buttons.Button;
 
 /**
@@ -7,9 +9,9 @@ import edu.wpi.first.wpilibj.buttons.Button;
  *
  * @see XboxGamepad
  *
- * @author Jacob Bublitz
+ * @author Jacob Bublitz addition by Mark Riise
  *
- * @since 1.0
+ * @since 1.1
  */
 public interface IGamepad {
 	/**
@@ -168,6 +170,10 @@ public interface IGamepad {
 	Button getShiftButton(String name);
 
 	Button getAntiShiftButton(String name);
+
+	Button getComboButton(String name);
+
+	void addComboButton(String name, ArrayList<Button> buttons, ArrayList<Number> expiraions, int expiraionTime);
 
 	void addShiftButton(String name, Button button, Button shift);
 

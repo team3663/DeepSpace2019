@@ -14,8 +14,8 @@ public class C_HolonomicDrive extends Command {
 	private static final double ANGLE_ERROR = 2.5;
 
 	private PIDCont PIDCont;
-  	private double kP = 1;
-	private double kI = 0;
+  	private double kP = .005;
+	private double kI = .00;
 	private double kD = 0;
 	private double maxPIDSpeed = 0.4;  
 
@@ -63,7 +63,7 @@ public class C_HolonomicDrive extends Command {
 		if(Robot.getOI().getPrimaryController().getLeftTriggerButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
 			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
-				targetAngle = getShortestPath(getSnappedRotation());
+				targetAngle = getShortestPathTwo(getSnappedJoystick());
 			}
 
 			//if robot has not reached the target angle, set the power for that rotation that is being inputed to holonomic drive
@@ -137,6 +137,50 @@ public class C_HolonomicDrive extends Command {
 		if(Math.abs(path) > 180) {
 			return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
 		}
+		return targetAngle;
+	}
+
+	private double getSnappedJoystick(){
+		double x = Robot.getOI().getPrimaryController().getRightXValue();
+		double y = Robot.getOI().getPrimaryController().getRightYValue();
+
+		// find the angle of the joystick (x and y are flipped to make forwards be 0 degrees)
+		double rotation = Math.atan2(-x, -y);
+
+		rotation = -rotation / Math.PI * 180;
+
+		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;
+		SmartDashboard.putNumber("joystick angle", rotation);
+
+		switch ((int)rotation){
+			case 45: rotation = 30;
+			case 135: rotation = 150;
+			case -180: rotation = 180;
+			case -45: rotation = 330;
+			case -135: rotation = 210;
+			case -90: rotation = 270;
+			default: rotation = 0;
+		}
+		SmartDashboard.putNumber("joystick snap", rotation);
+
+		return rotation;
+
+	}
+
+	private double getShortestPathTwo(double targetAngle) {
+		double currentAngle = mDrivetrain.getGyroAngle();
+		double currentAngleMod = currentAngle % 360;
+        if (currentAngleMod < 0) currentAngleMod += 360;
+
+        double delta = currentAngleMod - targetAngle;
+
+        if (delta > 180) {
+            targetAngle += 360;
+        } else if (delta < -180) {
+            targetAngle -= 360;
+        }
+		targetAngle += currentAngle - currentAngleMod;
+		SmartDashboard.putNumber("shortest path", targetAngle);
 		return targetAngle;
 	}
 }

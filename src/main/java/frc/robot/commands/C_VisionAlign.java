@@ -19,14 +19,14 @@ public class C_VisionAlign extends Command {
   private SS_Swerve drivetrain;
 
 	private PIDCont PIDCont;
-  private double kP = .002; //.002
-	private double kI = .00;
-	private double kD = .000;
-  private double maxPIDSpeed = 0.5;  
+  private double kP = .004; //.004 gyro .01 vision
+	private double kI = .000;
+	private double kD = .00; //.001 
+  private double maxPIDSpeed = 0.6;  
   
 
   private PIDCont PIDVision;
-  private double kPv = .015;
+  private double kPv = .01;
 	private double kIv = 0;
 	private double kDv = 0;
 	private double maxPIDSpeedv = 1;  
@@ -77,23 +77,23 @@ public class C_VisionAlign extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-    double angleOut;
-    // double angleError = PIDCont.get(vision.getXOffset());
-    if(drivetrain.getGyroAngle() > 350){
-       angleOut = PIDCont.get(angleToSnap - 0);
-    }
-    else{
-       angleOut = -PIDCont.get(angleToSnap - drivetrain.getGyroAngle());
-    }
-    
-    double forwardOut = 0;
-    if(Math.abs(vision.getXOffset()) < 10){
-      forwardOut = (maxTargetArea - vision.getTargetArea())/arbitraryPValue;
-    }
-    
 
-    drivetrain.holonomicDrive(forwardOut, -PIDVision.get(vision.getXOffset()), angleOut);
+    double forwardOut = 0;
+    double angleOut = 0;
+
+    if(Math.abs(vision.getXOffset()) < 5){
+      forwardOut = (maxTargetArea - vision.getTargetArea())/arbitraryPValue;
+      angleOut = PIDCont.get(vision.getXOffset());
+      }
+      double strafeOut =  -PIDVision.get(vision.getXOffset());
+    // if(drivetrain.getGyroAngle() > 350){
+    //    angleOut = PIDCont.get(angleToSnap - 0);
+    // }
+    // else{
+    //    angleOut = -PIDCont.get(angleToSnap - drivetrain.getGyroAngle());
+    // }
+    
+    drivetrain.holonomicDrive(forwardOut, strafeOut, angleOut);
     // drivetrain.holonomicDrive((maxTargetArea - vision.getTargetArea())/arbitraryPValue, -PIDVision.get(vision.getXOffset()), angleError); //TODO: make Drive forward proportional to target area
   }
 
@@ -101,7 +101,6 @@ public class C_VisionAlign extends Command {
   @Override
   protected boolean isFinished() {
     return !vision.validTarget() || !Robot.getOI().getPrimaryController().getLeftBumperButton().get();
-    //TODO find the proper area for it to be hitting
   }
 
   // Called once after isFinished returns true
