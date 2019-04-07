@@ -1,5 +1,10 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -11,13 +16,13 @@ public class C_HolonomicDrive extends Command {
 	private final SS_Swerve mDrivetrain;
 
 	//variables for snap to rotate
-	private static final double ANGLE_ERROR = 2.5;
+	private static final double ANGLE_ERROR = 3;
 
 	private PIDCont PIDCont;
-  	private double kP = .005;
-	private double kI = .00;
-	private double kD = 0;
-	private double maxPIDSpeed = 0.4;  
+  	private double kP = .0005;
+	private double kI = .000;//15
+	private double kD = .0000;//5
+	private double maxPIDSpeed = 0.6;  
 
 	private double targetAngle = 0;
 
@@ -25,6 +30,9 @@ public class C_HolonomicDrive extends Command {
 		requires(Robot.getDrivetrain());
 		mDrivetrain = Robot.getDrivetrain();
 		PIDCont = new PIDCont(maxPIDSpeed, kP, kI, kD); //TODO kP, kI, and kD need tuning
+
+		
+		
 	}
 
 	private double deadband(double input) {
@@ -152,15 +160,29 @@ public class C_HolonomicDrive extends Command {
 		rotation = (int)(rotation + 22.5) / 45 * 45;
 		SmartDashboard.putNumber("joystick angle", rotation);
 
-		switch ((int)rotation){
-			case 45: rotation = 30;
-			case 135: rotation = 150;
-			case -180: rotation = 180;
-			case -45: rotation = 330;
-			case -135: rotation = 210;
-			case -90: rotation = 270;
-			default: rotation = 0;
+		// switch ((int)rotation){
+		// 	case 45: rotation = 30;
+		// 	case 135: rotation = 150;
+		// 	case -180: rotation = 180;
+		// 	case -45: rotation = 330;
+		// 	case -135: rotation = 210;
+		// 	case -90: rotation = 270;
+		// 	default: rotation = 0;
+		// }
+		if(rotation == 45) {
+            rotation = 30;
+        } else if(rotation == 135) {
+            rotation = 150;
+		} else if (rotation == -180){
+			rotation = Math.abs(rotation);
+		} else if (rotation == -45){
+			rotation = 330;
+		} else if (rotation == -135){
+			rotation = 210;
 		}
+		else if (rotation == -90){
+			rotation = 270;
+		} 	
 		SmartDashboard.putNumber("joystick snap", rotation);
 
 		return rotation;

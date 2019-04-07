@@ -69,6 +69,6 @@ public final class PIDCont {
         }
 
         // Clamp sum of all portions to maximum speed and return value
-        return clamp(error * kP + errSum * kI + slope * kD);
+        return clamp((error * kP) + (errSum * kI) + (slope * kD));
     }
 }
