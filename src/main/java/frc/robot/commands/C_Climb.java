@@ -15,6 +15,7 @@ public class C_Climb extends Command {
 
   private double direction;
   private double targetAngle = 0;
+  private double previousSpeedMultiplier;
   private static final double THRESHOLD_MIN = 100;
   private static final double THRESHOLD_MAX = 160;
   private double ANGLE_ERROR_AMOUNT = 3;
@@ -36,6 +37,7 @@ public class C_Climb extends Command {
     requires(Robot.getDrivetrain());
     //this.targetAngle = targetAngle;
 
+    previousSpeedMultiplier = Robot.getRearClimber().getSpeedMultiplier();
 
     direction = Math.signum(targetAngle - Robot.getFrontClimber().getAngle());
     Robot.getFrontClimber().setBrakeMode();
@@ -43,18 +45,19 @@ public class C_Climb extends Command {
     Robot.getBall().setBrakeMode();
   }
   
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-
-    }
-  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     
 
     double joystickInput = Robot.getOI().getSecondaryController().getLeftYValue();
     double pitch = Robot.getDrivetrain().getPitch();
+
+    if(Robot.getRearClimber().getAngle() < 90){
+      Robot.getRearClimber().setSpeedMultiplier(1);
+    }
+    else{
+      Robot.getRearClimber().setSpeedMultiplier(previousSpeedMultiplier);
+    }
     
     if(joystickInput > .8){
       Robot.getFrontClimber().goToDegree(5);

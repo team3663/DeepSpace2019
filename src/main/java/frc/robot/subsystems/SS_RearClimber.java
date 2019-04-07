@@ -50,7 +50,7 @@ public class SS_RearClimber extends Subsystem {
     PID.setP(1);
     PID.setI(0);
     PID.setD(0);
-    PID.setOutputRange(-.6, .6);
+    PID.setOutputRange(-.4, .4);
   }
 
   @Override
@@ -84,6 +84,10 @@ public class SS_RearClimber extends Subsystem {
 
   public void setSpeedMultiplier(double speedMultiplier){
     this.speedMultiplier = speedMultiplier;
+  }
+
+  public double getSpeedMultiplier(){
+    return speedMultiplier;
   }
   
   public void setBrakeMode(){
