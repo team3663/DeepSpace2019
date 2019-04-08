@@ -67,7 +67,7 @@ public class SS_Swerve extends Subsystem {
 
         for (SwerveModule module : mSwerveModules) {
             //module.setTargetAngle(0);
-            module.setDriveGearRatio(5.7777);
+            module.setDriveGearRatio(5.7777);       //PNWChamp: gears: 60:15-->30:14  old gears: 60:15-->26:18
             module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
         }
 

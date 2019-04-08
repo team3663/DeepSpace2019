@@ -38,18 +38,19 @@ public class C_HolonomicDrive extends Command {
 		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();
 		double rotation = Robot.getOI().getPrimaryController().getRightXValue();
 
-		forward *= Math.abs(forward);
-		strafe *= Math.abs(strafe);
-		rotation *= Math.abs(rotation);
+		forward *= Math.abs(forward);		//[FY] Squared Input yet signum preserved
+		strafe *= Math.abs(strafe);			//[FY] Squared Input yet signum preserved
+		rotation *= Math.abs(rotation);		//[FY] Squared Input yet signum preserved
 
-		forward = deadband(forward);
-		strafe = deadband(strafe);
-		rotation = deadband(rotation);
+		forward = deadband(forward);		// to exclude incidental bump on the joystick
+		strafe = deadband(strafe);			// to exclude incidental bump on the joystick
+		rotation = deadband(rotation);		// to excluse incidental bump on the joystick
 
 		SmartDashboard.putNumber("Forward", forward);
 		SmartDashboard.putNumber("Strafe", strafe);
 		SmartDashboard.putNumber("Rotation", rotation);
 
+		// Driver's right bumper toggles between field-oriented and robot-orientated driving
 		if(Robot.getOI().getPrimaryController().getRightBumperButton().get()){
 			mDrivetrain.setFieldOriented(false);
 			strafe = -strafe;
@@ -60,6 +61,7 @@ public class C_HolonomicDrive extends Command {
 			strafe = -strafe;
 		}
 		
+		// Driver's left trigger to snap to cargoShip or rocket deploy angle
 		if(Robot.getOI().getPrimaryController().getLeftTriggerButton().get()) {
 			// If the controller is out of the deadband, update the snapped rotation
 			if(Math.abs(deadband(Robot.getOI().getPrimaryController().getRightXValue())) > 0 || Math.abs(deadband(Robot.getOI().getPrimaryController().getRightYValue())) > 0) {
@@ -116,17 +118,18 @@ public class C_HolonomicDrive extends Command {
 
 		// find the angle of the joystick (x and y are flipped to make forwards be 0 degrees)
 		double rotation = Math.atan2(x, y);
-		// convert rotation to degrees
-		rotation = rotation / Math.PI * 180;
+		// [FY] convert rotation to degrees
+		rotation = rotation / Math.PI * 180;	// int degree = rotation / Math.PI * 180;
 		// snap to closest 45 degree interval
-		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;
+		rotation = (int)(rotation + 22.5 * Math.signum(rotation)) / 45 * 45;  
+		// [FY] degree = (int)(degree + 22.5 * Math.signum(degree)) / 45 * 45; 
 		//convert to correct angle for rockets
-        if(Math.abs(rotation) == 45) {
-            rotation = 30 * Math.signum(rotation);
-        } else if(Math.abs(rotation) == 135) {
-            rotation = 150 * Math.signum(rotation);
-        }
-		return (int)rotation;
+        if(Math.abs(rotation) == 45) {				// [FY] if(Math.abs(degree) == 45) {
+            rotation = 30 * Math.signum(rotation);	// [FY] 	degree = 30 * Math.signum(degree);
+        } else if(Math.abs(rotation) == 135) {		// [FY]	} else if(Math.abs(degree) == 135) {
+            rotation = 150 * Math.signum(rotation);	// [FY]     degree = 150 * Math.signum(degree);
+        }											// [FY] }
+		return (int)rotation;						// [FY] return (int)degree;
 	}
 
 	/**
@@ -135,7 +138,7 @@ public class C_HolonomicDrive extends Command {
 	private int getShortestPath(int targetAngle) {
 		int path = targetAngle - (int)mDrivetrain.getGyroAngle();
 		if(Math.abs(path) > 180) {
-			return (int)-Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
+			return (int) -Math.signum(targetAngle) * (360 - Math.abs(targetAngle));
 		}
 		return targetAngle;
 	}
