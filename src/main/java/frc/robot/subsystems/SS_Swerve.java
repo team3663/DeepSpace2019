@@ -27,8 +27,14 @@ public class SS_Swerve extends Subsystem {
 	private double mAdjustmentAngle = 0;
 	private boolean mFieldOriented = true;
 
-	private final double width = 14.5;
-	private final double length = 14.5;
+    private final double gearRatio = 5.777;
+
+    public static final double WHEELBASE = 21.56;  
+    public static final double TRACKWIDTH = 24.5; 
+  
+    public static final double WIDTH = 21; 
+    public static final double LENGTH = 21; 
+
     private double speedMultiplier = 1;
     PIDController displayPID;
     
@@ -49,10 +55,7 @@ public class SS_Swerve extends Subsystem {
         SmartDashboard.putNumber("2 Offset", BR);
         SmartDashboard.putNumber("3 Offset", BL);
 
-        
-        
-
-    
+     
         mSwerveModules = new SwerveModule[]  {
             new SwerveModule(0, new CANSparkMax(RobotMap.getDriveMotor(0), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(0)), FL),
             new SwerveModule(1, new CANSparkMax(RobotMap.getDriveMotor(1), MotorType.kBrushless), new TalonSRX(RobotMap.getAngleMotor(1)), FR),
@@ -67,19 +70,17 @@ public class SS_Swerve extends Subsystem {
 
         for (SwerveModule module : mSwerveModules) {
             //module.setTargetAngle(0);
-            module.setDriveGearRatio(5.7777);
-            module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
+            module.setDriveGearRatio(gearRatio);
+            // module.setDriveWheelRadius(radius);
         }
 
 
     }
-	public final double getWidth() {
-		return width;
-	}
 
-	public final double getLength() {
-		return length;
-	}
+    
+    public final double getGearRatio(){
+        return gearRatio;
+    }
 
 	public double getSpeedMultiplier() {
 		return speedMultiplier;
@@ -88,15 +89,6 @@ public class SS_Swerve extends Subsystem {
     public void setSpeedMultiplier( double speed){
         speedMultiplier = speed;
     }
-
-    public double getMaxAcceleration() {
-        return 5.5;
-    }
-
-    public double getMaxVelocity() {
-        return 10;
-    }
-
 
 	public double getAdjustmentAngle() {
 		return mAdjustmentAngle;
@@ -128,20 +120,14 @@ public class SS_Swerve extends Subsystem {
   /////////////////////////////////////////////////////
 
 
-
-
-
-
   /////////////////////////////////////////////////////
-  public static final double WHEELBASE = 21.56;  // Swerve bot: 14.5 Comp bot: 20.5
-  public static final double TRACKWIDTH = 24.5; // Swerve bot: 13.5 Comp bot: 25.5
 
-  public static final double WIDTH = 21;  // Swerve bot: 20 Comp bot: 37
-  public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32
 
     
 	/*
-	 *
+	 *  NOTE: this has since been proven wrong, i honestly have no idea what is front anymore,or what is life
+     *  just check if the things moves right, if not play with it till it does
+     *  
 	 * 0 is Front Right
 	 * 1 is Front Left
 	 * 2 is Back Left

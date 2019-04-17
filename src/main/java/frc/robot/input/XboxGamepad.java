@@ -59,6 +59,14 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 		}
 	}
 
+	public void setLeftRumble(double value){
+		this.setRumble(RumbleType.kLeftRumble, value);
+	}
+
+	public void setRightRumble(double value){
+		this.setRumble(RumbleType.kRightRumble, value);
+	}
+
 	public void addShiftButton(String name, Button button, Button shift){
 		shiftList.put(name, new ShiftButton(button, shift));
 	}

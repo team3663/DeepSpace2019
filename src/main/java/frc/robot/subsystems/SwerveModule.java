@@ -25,7 +25,7 @@ public class SwerveModule  {
 
     private boolean driveInverted = false;
     private double driveGearRatio = 1;
-    private double driveWheelRadius = 2;
+    private double driveWheelRadius = 2; //4in wheels
     private boolean angleMotorJam = false;
 
 
@@ -76,27 +76,16 @@ public class SwerveModule  {
     	stallTimeBegin = Long.MAX_VALUE;
     }
 
+    //both of these conversions are hard coded, sucks ik
     private double encoderTicksToInches(double ticks) {
-        // if (Robot.PRACTICE_BOT) {
-        //     return ticks / 36.65;
-        // } else {
-        //     return ticks / 35.6;
-        // }
-
-        //TODO
-        return 0;
+        //gear ratio * wheel radius
+        return ticks * 5.777 * 2;
     }
 
-    private int inchesToEncoderTicks(double inches) {
-        // if (Robot.PRACTICE_BOT) {
-        //     return (int) Math.round(inches * 36.65);
-        // } else {
-        //     return (int) Math.round(inches * 35.6);
-        // }
-        
+    private double inchesToEncoderTicks(double inches) {
 
-        //TODO 
-        return 0;
+        return inches/ (5.777 * 2) ;
+
     }
 
     

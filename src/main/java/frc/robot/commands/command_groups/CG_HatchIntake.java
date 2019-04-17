@@ -12,20 +12,20 @@ import frc.robot.commands.C_ExtendHatch;
 import frc.robot.commands.C_Rumble;
 import frc.robot.commands.C_SetHatchClosed;
 import frc.robot.commands.C_Wait;
-import frc.robot.commands.C_WaitForExtend;
-import frc.robot.commands.C_WaitForPress;
+import frc.robot.commands.C_WaitForHatch;
 import frc.robot.util.RumbleSide;
 import frc.robot.util.RumbleType;
 
-public class CG_HatchDrop extends CommandGroup {
+public class CG_HatchIntake extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CG_HatchDrop() {
-    addSequential(new C_WaitForExtend(true));
-    addSequential(new C_WaitForPress());
-    addParallel(new C_Rumble(1, 200, 500, RumbleType.kPing, RumbleSide.kLeft, 1));
+  public CG_HatchIntake() {
+    addSequential(new C_ExtendHatch(true));
     addSequential(new C_SetHatchClosed(false));
+    addSequential(new C_WaitForHatch(true));
+    addParallel(new C_Rumble(1, 200, 500, RumbleType.kPing, RumbleSide.kLeft, 1));
+    addSequential(new C_SetHatchClosed(true));
     addSequential(new C_Wait(200));
     addSequential(new C_ExtendHatch(false));
   }

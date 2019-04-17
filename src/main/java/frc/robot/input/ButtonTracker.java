@@ -23,12 +23,16 @@ public class ButtonTracker {
     private ArrayList<Button> buttons = new ArrayList<Button>();
     private ArrayList<Number> expirationList = new ArrayList<Number>();
     private ArrayList<Number> timers = new ArrayList<Number>();
-    private long expirationTime; 
+    private long timeout; 
     private long timer = 0;
     
 
-    public ButtonTracker(int expirationTime){
-        this.expirationTime = expirationTime; 
+    /**
+     * 
+     * @param timeout the time limit before the all lists are cleared
+     */
+    public ButtonTracker(int timeout){
+        this.timeout = timeout; 
     }
 
     public void addButton(Button button, Number expiration){
@@ -43,7 +47,7 @@ public class ButtonTracker {
     }
 
     public void pruneButtons(){
-        if(timer < expirationTime){
+        if(timer < timeout){
             for(int i = 0; i < timers.size(); i++){
                 if(timers.get(i).doubleValue() > expirationList.get(i).doubleValue()){
                     removeButton(i);
@@ -62,10 +66,10 @@ public class ButtonTracker {
         timers.clear();
     }
 
-    public void updateTimes(long delta){
-        timer += delta;
+    public void updateTimes(long timeDelta){
+        timer += timeDelta;
         for(int i = 0; i < timers.size(); i++){
-            timers.set(i, timers.get(i).longValue() + delta);
+            timers.set(i, timers.get(i).longValue() + timeDelta);
         }
     }
 

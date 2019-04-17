@@ -17,8 +17,6 @@ public class ComboButton extends Button {
 
 	ArrayList<Button> buttons = new ArrayList<Button>();
 	ArrayList<Number> expiraions = new ArrayList<Number>();
-	private Button shift;
-	private int expiraionTime;
 	private Stopwatch stopwatch;
 	private ButtonTracker tracker;
 	public ComboButton(ArrayList<Button> buttons, ArrayList<Number> expiraions, int expiraionTime) {
@@ -36,11 +34,16 @@ public class ComboButton extends Button {
 			if(buttons.get(i).get()){
 				tracker.addButton(buttons.get(i), expiraions.get(i));
 			}
+			if(!buttons.get(i).equals(tracker.get().get(i))){
+				tracker.clear();
+			}
 		}
+
 		if(buttons.equals(tracker.get())){
 			return true;
 		}
-		
-		return false;
+		else{
+			return false;
+		}
 	}
 }

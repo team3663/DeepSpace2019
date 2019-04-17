@@ -14,8 +14,7 @@ public class C_HatchPickup extends Command {
   private boolean close;
   private boolean wait;
   public C_HatchPickup() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+ 
     requires(Robot.getHatch());
     wait = true;
   }

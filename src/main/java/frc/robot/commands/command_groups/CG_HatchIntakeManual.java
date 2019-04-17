@@ -5,24 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.command_groups;
 
-import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.C_ExtendHatch;
+import frc.robot.commands.C_SetHatchClosed;
+import frc.robot.commands.C_Wait;
 
-public class C_WaitForHatch extends Command {
-  private boolean isIntaking;
-  public C_WaitForHatch(boolean isIntaking) {
-    requires(Robot.getHatch());
-    this.isIntaking = isIntaking;
+public class CG_HatchIntakeManual extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public CG_HatchIntakeManual() {
+    addSequential(new C_SetHatchClosed(true));
+    addSequential(new C_Wait(200));
+    addSequential(new C_ExtendHatch(false));
   }
- 
-  @Override
-  protected boolean isFinished() {
-    if(isIntaking){
-      return Robot.getHatch().isPresent();
-    }
-    return !Robot.getHatch().isPresent();
-  }
-
 }

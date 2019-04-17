@@ -78,6 +78,9 @@ public class OI {
 
         secondaryController.getYButton().whenPressed(new C_HatchPickup());
         secondaryController.getYButton().whenReleased(new C_HatchPickup(true));
+        
+        // secondaryController.getYButton().whenPressed(new CG_HatchIntake());
+        // secondaryController.getYButton().whenReleased(new CG_HatchIntakeManual());
 
         secondaryController.getStartButton().whenPressed(new C_Climb(false));
         secondaryController.getStartButton().whenReleased(new C_Climb(true));
@@ -94,24 +97,17 @@ public class OI {
         //
 
         
+        //NOTE: order of buttons and expirations DO MATTER make sure they are on the same index
+        // ArrayList<Button> test_Buttons = new ArrayList<Button>();    
+        // test_Buttons.add(testingController.getAButton());
+        // test_Buttons.add(testingController.getBButton());
+        
+        // ArrayList<Number> test_expirations = new ArrayList<Number>();
+        // test_Buttons.add(testingController.getAButton());
+        // test_Buttons.add(testingController.getBButton());
 
 
-        //testingController.getBackButton().whileHeld(new C_Climb(10));
-
-        // testingController.addComboButton("test", 
-        // new ArrayList<Button>(){
-        //     {
-        //         add(testingController.getAButton());
-        //         add(testingController.getBButton());
-        //     }
-        // }, 
-        // new ArrayList<Number>(){
-        //     {
-        //         add(100);
-        //         add(100);
-        //     }
-        // }, 
-        // 500);
+        // testingController.addComboButton("test", test_Buttons, test_expirations, 500);
         
         // testingController.getComboButton("test").whenPressed(new CG_BallIntake());
 

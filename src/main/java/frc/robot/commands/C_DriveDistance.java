@@ -15,31 +15,20 @@ public class C_DriveDistance extends Command {
 
   private PIDCont PIDController;
 
-  private final double INCHES_PER_REVOLUTION = 4 * Math.PI;
-  private double destination;
-
   private double maxSpeed;
-  private double kP = 0;
-  private double kI = 0;
-  private double kD = 0;
+  private double distance;
 
-  public C_DriveDistance(double distanceInInches, double maxSpeed) {
+  public C_DriveDistance(double distance, double maxSpeed) {
 
     this.maxSpeed = maxSpeed;
+    this.distance = distance;
     requires(Robot.getDrivetrain());
-    PIDController = new PIDCont(maxSpeed, kP, kI, kD);
 
-    destination = distanceInInches * INCHES_PER_REVOLUTION;
-  }
-
-
-  private double getDistanceDifference() {
-    return destination;
   }
 
   @Override
   protected void execute() {
-    //TODO: this
+
   }
 
   @Override
