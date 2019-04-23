@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -77,14 +78,14 @@ public class SwerveModule  {
     }
 
     //both of these conversions are hard coded, sucks ik
-    private double encoderTicksToInches(double ticks) {
+    public double encoderTicksToInches(double ticks) {
         //gear ratio * wheel radius
-        return ticks * 5.777 * 2;
+        return ticks * 5.7778 * 2;
     }
 
-    private double inchesToEncoderTicks(double inches) {
+    public double inchesToEncoderTicks(double inches) {
 
-        return inches/ (5.777 * 2) ;
+        return inches/ (5.7778 * 2) ;
 
     }
 
@@ -117,6 +118,9 @@ public class SwerveModule  {
         if(driveInverted)
             ticks = -ticks;
         return ticks;
+    }
+    public double getDriveInch() {
+        return encoderTicksToInches(getDrivePos());
     }
 
     public CANSparkMax getDriveMotor() {
@@ -205,22 +209,10 @@ public class SwerveModule  {
         driveInverted = inverted;
     }
 
-    public void setTargetDistance(double distance) {
-//    	if(angleMotorJam) {
-//    		mDriveMotor.set(ControlMode.Disabled, 0);
-//    		return;
-//    	}
-        if (driveInverted) distance = -distance;
+    public void setTargetDistance(double inch) {
 
-//        distance /= 2 * Math.PI * driveWheelRadius; // to wheel rotations
-//        distance *= driveGearRatio; // to encoder rotations
-//        distance *= 80; // to encoder ticks
-
-        distance = inchesToEncoderTicks(distance);
-
-        SmartDashboard.putNumber("Module Ticks " + moduleNumber, distance);
-
-        driveMotor.set(distance);
+        if (driveInverted) inch = -inch;
+        driveMotor.getPIDController().setReference(inchesToEncoderTicks(inch), ControlType.kPosition);
     }
 
     public void setTargetSpeed(double speed) {

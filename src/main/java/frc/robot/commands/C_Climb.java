@@ -61,6 +61,7 @@ public class C_Climb extends Command {
     
     if(joystickInput > .8){
       Robot.getFrontClimber().goToDegree(5);
+      Robot.getRearClimber().getPIDController().setOutputRange(-.8, .8);
       Robot.getRearClimber().goToDegree(0);
     }
     else if (joystickInput < .1){

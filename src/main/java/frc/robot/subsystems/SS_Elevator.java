@@ -46,6 +46,7 @@ public class SS_Elevator extends Subsystem {
   private Side selectSide = Side.kFront;
 
   private boolean initialized = false;
+  private double lastEncoder = 0;
 
   private final double SAFE_FLIP_TOP = 8.5;
   private final double SAFE_FLIP_BOT = .5;
@@ -58,7 +59,7 @@ public class SS_Elevator extends Subsystem {
   private final double LEVEL_3_B = 65;
   private final double LEVEL_15_B = 20;
 
-  private final double LEVEL_1_H = 6;
+  private final double LEVEL_1_H = 7;
   private final double LEVEL_2_H = 37.5;
   private final double LEVEL_3_H = 65;
 
@@ -82,10 +83,10 @@ public class SS_Elevator extends Subsystem {
     PID.setP(.06);
     PID.setI(.0);
     PID.setD(1);
-    PID.setOutputRange(-.8, .8);
+    PID.setOutputRange(-1, 1);
     masterMotor.getPIDController().setSmartMotionAccelStrategy(AccelStrategy.kTrapezoidal, 0);
 
-
+    
     slaveMotor.setIdleMode(IdleMode.kBrake);
     slaveMotor.follow(masterMotor, true);
 

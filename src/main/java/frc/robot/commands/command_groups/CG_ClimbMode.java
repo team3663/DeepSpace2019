@@ -16,7 +16,7 @@ public class CG_ClimbMode extends CommandGroup {
    * readies climbers to climb
    */
   public CG_ClimbMode() {
-    addParallel(new C_RearClimberToAngle(100));
+    addParallel(new C_RearClimberToAngle(100, .9));
     addParallel(new C_FrontClimber(60));
   }
 }

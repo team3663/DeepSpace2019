@@ -62,7 +62,7 @@ public class SS_EndEffectorAngle extends Subsystem {
     PID.setP(2);
     PID.setI(.00003); //.00003
     PID.setD(.0005);    //.04 
-    PID.setOutputRange(-.6, .6);
+    PID.setOutputRange(-.95, .95);
     
     
     

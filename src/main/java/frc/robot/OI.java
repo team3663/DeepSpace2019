@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.buttons.Button;
 import frc.robot.commands.*;
 import frc.robot.commands.command_groups.*;
+import frc.robot.commands.test_commands.C_EndEffectorDirect;
+import frc.robot.commands.test_commands.C_FrontClimberDirect;
 import frc.robot.commands.test_commands.C_RearClimberDirect;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
@@ -41,6 +43,13 @@ public class OI {
 
         primaryController.getYButton().whenPressed(new C_VisionAlignStrafe());
 
+        primaryController.addShiftButton("kickstand extend", primaryController.getAButton(), primaryController.getRightTriggerButton());
+
+        primaryController.getShiftButton("kickstand extend").whenPressed(new C_ExtendKickstand(true));
+
+        primaryController.addShiftButton("kickstand retract", primaryController.getBButton(), primaryController.getRightTriggerButton());
+
+        primaryController.getShiftButton("kickstand retract").whenPressed(new C_ExtendKickstand(false));
         // primaryController.getBButton().whenPressed(new C_RearClimberToAngle(0));
         // primaryController.getBButton().whenReleased(new C_RearClimberToAngle(5));
         //primaryController.getYButton().whenPressed(new CG_FeederBallIntake());
@@ -76,8 +85,8 @@ public class OI {
 
         // secondaryController.getYButton().whenPressed(new CG_HatchHold());
 
-        secondaryController.getYButton().whenPressed(new C_HatchPickup());
-        secondaryController.getYButton().whenReleased(new C_HatchPickup(true));
+        secondaryController.getYButton().whenPressed(new CG_HatchIntake());
+        secondaryController.getYButton().whenReleased(new CG_HatchIntakeManual());
         
         // secondaryController.getYButton().whenPressed(new CG_HatchIntake());
         // secondaryController.getYButton().whenReleased(new CG_HatchIntakeManual());
@@ -86,11 +95,16 @@ public class OI {
         secondaryController.getStartButton().whenReleased(new C_Climb(true));
 
 
-        secondaryController.getBackButton().whenPressed(new C_CrabDrive());
+        secondaryController.getBackButton().whenPressed(new C_CrabDrive(.6));
         
         secondaryController.addShiftButton("restartEF", secondaryController.getLeftTriggerButton(), secondaryController.getRightTriggerButton());
         secondaryController.getShiftButton("restartEF").whenPressed(new CG_AdjustAngleEncoder());
 
+        secondaryController.addShiftButton("fclimbman", secondaryController.getBackButton(), secondaryController.getLeftTriggerButton());
+        secondaryController.getShiftButton("fclimbman").whenPressed(new C_FrontClimberDirect());
+
+        secondaryController.addAntiShiftButton("fclimb crab", secondaryController.getBackButton(), secondaryController.getLeftTriggerButton());
+        secondaryController.getAntiShiftButton("fclimb crab").whenPressed(new C_CrabDrive(.6));
         
         //
         //testing controller: BE CAREFUL
@@ -103,11 +117,11 @@ public class OI {
         // test_Buttons.add(testingController.getBButton());
         
         // ArrayList<Number> test_expirations = new ArrayList<Number>();
-        // test_Buttons.add(testingController.getAButton());
-        // test_Buttons.add(testingController.getBButton());
+        // test_expirations.add(500);
+        // test_expirations.add(500);
 
 
-        // testingController.addComboButton("test", test_Buttons, test_expirations, 500);
+        // testingController.addComboButton("test", test_Buttons, test_expirations, 1000);
         
         // testingController.getComboButton("test").whenPressed(new CG_BallIntake());
 

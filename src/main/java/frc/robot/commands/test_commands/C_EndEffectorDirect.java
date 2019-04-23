@@ -30,7 +30,7 @@ public class C_EndEffectorDirect extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double speed = Robot.getOI().getTestController().getRightXValue();
+    double speed = Robot.getOI().getSecondaryController().getRightYValue();
     if(Robot.getEndEffectorAngle().isReset()){
       if(speed < 0){
         speed = 0;

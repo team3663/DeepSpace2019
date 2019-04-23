@@ -38,7 +38,7 @@ public class C_ClimbPlusDown extends Command {
 
   @Override
   protected void initialize() {
-    new C_CrabDrive().start();
+    new C_CrabDrive(.6).start();
 
     Robot.getDrivetrain().softReset();
     Robot.getFrontClimber().setBrakeMode();

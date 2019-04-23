@@ -24,7 +24,7 @@ public class CG_HatchIntake extends CommandGroup {
     addSequential(new C_ExtendHatch(true));
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_WaitForHatch(true));
-    addParallel(new C_Rumble(1, 200, 500, RumbleType.kPing, RumbleSide.kLeft, 1));
+    addParallel(new C_Rumble(1, 200, 500, RumbleType.kPing, RumbleSide.kBoth, 1));
     addSequential(new C_SetHatchClosed(true));
     addSequential(new C_Wait(200));
     addSequential(new C_ExtendHatch(false));

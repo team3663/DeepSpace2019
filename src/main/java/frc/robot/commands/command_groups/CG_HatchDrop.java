@@ -24,7 +24,6 @@ public class CG_HatchDrop extends CommandGroup {
   public CG_HatchDrop() {
     addSequential(new C_WaitForExtend(true));
     addSequential(new C_WaitForPress());
-    addParallel(new C_Rumble(1, 200, 500, RumbleType.kPing, RumbleSide.kLeft, 1));
     addSequential(new C_SetHatchClosed(false));
     addSequential(new C_Wait(200));
     addSequential(new C_ExtendHatch(false));

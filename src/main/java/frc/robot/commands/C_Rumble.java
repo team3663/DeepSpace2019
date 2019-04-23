@@ -37,6 +37,7 @@ public class C_Rumble extends Command {
     runningTimer = new Stopwatch();
     timeOn = new Stopwatch();
     oi = Robot.getOI();
+
   }
 
   public C_Rumble(int joystick, long intervalOn, long intervalOff, RumbleType type, RumbleSide side, int iterations) {
@@ -54,6 +55,7 @@ public class C_Rumble extends Command {
   protected void initialize() {
     timeOff.reset();
     timeOn.reset();
+    runningTimer.reset();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -69,12 +71,13 @@ public class C_Rumble extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return currentIteration >= iterations || duration < runningTimer.getMilliseconds() ;
+    return currentIteration >= iterations;
   }
 
   @Override
   protected void end() {
     setBoth(0);
+    currentIteration = 0;
   }
   @Override
   protected void interrupted() {
@@ -150,7 +153,7 @@ public class C_Rumble extends Command {
       }
     }
     else if (timeOff.getMilliseconds() < intervalOff){
-      
+
       if(side == RumbleSide.kBoth){
         setBoth(0);
       }
@@ -162,7 +165,7 @@ public class C_Rumble extends Command {
       }
       
     }
-    else if (timeOff.getMilliseconds() >= intervalOff){
+    else if (timeOff.getMilliseconds() > intervalOff){
       timeOn.reset();
       currentIteration++;
     }

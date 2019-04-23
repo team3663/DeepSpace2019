@@ -47,6 +47,8 @@ public class C_StartOrchestra extends Command {
     if(Robot.getHatch().isPresent()){
       Robot.getEndEffectorAngle().setEncoder(-16); 
     }
+
+    setTimeout(8);
   }
 
   @Override
@@ -93,7 +95,7 @@ public class C_StartOrchestra extends Command {
         if(!Robot.getHatch().isPresent()){
 
           if(elevator.getAverageInch() < elevator.getSafeFlipTop()){
-            if(!efAngle.isReset()){
+            if(!efAngle.isReset() && !isTimedOut()){
               efAngle.setAngleSpeed(-.6);
             }
             else{
@@ -112,7 +114,7 @@ public class C_StartOrchestra extends Command {
         * elevator
         */
         if(!Robot.getHatch().isPresent()){
-          if(!elevator.getAtBottom()){
+          if(!elevator.getAtBottom() && !isTimedOut()){
             elevator.setElevatorSpeed(-.4);
           }
           else{
@@ -158,7 +160,7 @@ public class C_StartOrchestra extends Command {
         new C_EFStartHatch(Robot.getEndEffectorAngle().getSafeFlipAngle(Side.kBack) + 10).start();
       }
       new C_FrontClimber(0).start();
-      new C_RearClimberToAngle(Robot.getRearClimber().getSafeAngle()).start();
+      new C_RearClimberToAngle(Robot.getRearClimber().getSafeAngle(), .4).start();
     }
   }
  

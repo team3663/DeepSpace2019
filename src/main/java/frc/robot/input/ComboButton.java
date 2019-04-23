@@ -34,8 +34,10 @@ public class ComboButton extends Button {
 			if(buttons.get(i).get()){
 				tracker.addButton(buttons.get(i), expiraions.get(i));
 			}
-			if(!buttons.get(i).equals(tracker.get().get(i))){
-				tracker.clear();
+			if(!tracker.equals(null)){
+				// if(!buttons.get(i).equals(tracker.get().get(i))){
+				// 	tracker.clear();
+				// }  
 			}
 		}
 

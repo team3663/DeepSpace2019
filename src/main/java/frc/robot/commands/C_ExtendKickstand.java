@@ -10,25 +10,25 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class C_CrabDrive extends Command {
-  private double multiplier;
-  /**
-   * starts trigger controll of fclimb intake for climbing
-   * 
-   */
-  public C_CrabDrive(double multiplier) {
-    this.multiplier = multiplier;
-    requires(Robot.getBall());
+public class C_ExtendKickstand extends Command {
+  private boolean extendKickstand;
+  public C_ExtendKickstand(boolean extendKickstand) {
+    this.extendKickstand = extendKickstand;
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.getRearClimber());
   }
 
+
+  // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.getBall().setClimberIntakeSpeed(-Robot.getOI().getSecondaryController().getRightTriggerValue() * multiplier);
+    Robot.getRearClimber().extendKickstand(extendKickstand);
   }
 
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
 }

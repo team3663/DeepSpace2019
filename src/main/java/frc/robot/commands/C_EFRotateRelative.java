@@ -22,7 +22,7 @@ public class C_EFRotateRelative extends Command {
    * @param side check wether it thinks it is before running
    * @param absAdjustmentAngle angle to adjust to
    */
-  public C_EFRotateRelative(Side sdie, double absAdjustmentAngle) {
+  public C_EFRotateRelative(Side side, double absAdjustmentAngle) {
    requires(Robot.getEndEffectorAngle());
    this.side = side;
    this.absAdjustmentAngle = Math.abs(absAdjustmentAngle);
@@ -36,7 +36,6 @@ public class C_EFRotateRelative extends Command {
     }
     else{
       this.adjustment = Robot.getEndEffectorAngle().getSafeFlipAngle(side) + absAdjustmentAngle;
-
     }
   }
   @Override

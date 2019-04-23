@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import com.revrobotics.CANPIDController;
@@ -38,11 +39,15 @@ public class SS_RearClimber extends Subsystem {
 
   private boolean isDefence = false;
 
+  private DoubleSolenoid kickstand;
 
   public SS_RearClimber() {
     rearClimberMotor = new CANSparkMax(RobotMap.CLIMBER_REAR_MOTOR, MotorType.kBrushless);
 
     rearClimberReset = new DigitalInput(RobotMap.REAR_CLIMBER_LIMIT_SWITCH);
+
+    kickstand = new DoubleSolenoid(RobotMap.KICKSTAND_SOLENOID_FORWARD, RobotMap.KICKSTAND_SOLENOID_REVERSE);
+
 
     rearClimberMotor.setIdleMode(IdleMode.kBrake);
 
@@ -64,6 +69,18 @@ public class SS_RearClimber extends Subsystem {
 
   public boolean isInitilized(){
     return initilized;
+  }
+
+  public void extendKickstand(boolean state) {
+    if(state){
+      kickstand.set(DoubleSolenoid.Value.kForward);
+    } else {
+      kickstand.set(DoubleSolenoid.Value.kReverse);
+    }
+  }
+
+  public CANPIDController getPIDController(){
+    return rearClimberMotor.getPIDController();
   }
   
   public boolean getDefense(){
