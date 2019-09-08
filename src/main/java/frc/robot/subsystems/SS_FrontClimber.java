@@ -144,8 +144,6 @@ public class SS_FrontClimber extends Subsystem {
 
   }
 
-
-
   public double getTopAngleLimit() {
     return TOP_ANGLE_LIMIT;
   }

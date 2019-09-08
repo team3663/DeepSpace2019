@@ -92,6 +92,7 @@ public class SS_Elevator extends Subsystem {
 
     //slaveMotor.setEncPosition(0);
   }
+
   @Override
   public void initDefaultCommand() {
      setDefaultCommand(new C_ElevatorHold());

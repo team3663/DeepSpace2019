@@ -41,7 +41,6 @@ public class SS_Hatch extends Subsystem {
     hatchOpticalSwitch = new DigitalInput(RobotMap.HATCH_OPTICAL_SWITCH);
   }
 
-  
   public void setHatchClosed(boolean state) {
     if(state){
       hatchPickupSolenoid.set(DoubleSolenoid.Value.kReverse);
@@ -74,7 +73,6 @@ public class SS_Hatch extends Subsystem {
     this.closed = closed;
   }
 
-
   public boolean isPresent(){
     return isOpticalPresent(); //|| isOpticalPresent();
   }
@@ -99,7 +97,6 @@ public class SS_Hatch extends Subsystem {
     return !hatchPressedSwitch.get();
   }
 
-  
   public Mode getMode(){
     return mode;
   }
