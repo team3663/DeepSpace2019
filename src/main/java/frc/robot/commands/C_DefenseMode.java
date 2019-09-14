@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_RearClimber;
 
@@ -43,17 +44,25 @@ public class C_DefenseMode extends Command {
   @Override
   protected boolean isFinished() {
     System.out.println("CURRENT DEGREE  :  " + targetDegree + " :=: " + isDefense);
+    if(!climber.atTarget(targetDegree)) {
+      System.out.println("C_DEFENSEMODE IS RUNNING");
+    }
     return climber.atTarget(targetDegree);
   }
 
   @Override
   protected void end() {
     climber.setDefense(isDefense);
-
+    System.out.println("C_DEFENSEMODE END");
   }
 
   @Override
   public synchronized boolean isInterruptible() {
     return true;
+  }
+
+  @Override
+  protected void interrupted() {
+    end();
   }
 }

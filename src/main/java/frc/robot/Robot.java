@@ -177,6 +177,7 @@ public class Robot extends TimedRobot {
     
     //tests
     SmartDashboard.putBoolean("EF Restarted", Robot.getEndEffectorAngle().isHatchRestarted());    
+    SmartDashboard.putBoolean("Defense Mode", ss_RearClimber.getDefense());
 
    
   }

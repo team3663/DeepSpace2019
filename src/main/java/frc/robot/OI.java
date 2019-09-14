@@ -58,6 +58,7 @@ public class OI {
 
         // primaryController.getBButton().whenPressed(new C_DefenseMode(true));
         // primaryController.getBButton().whenReleased(new C_DefenseMode(false));
+        primaryController.getBButton().whenPressed(new C_DefenseMode());
 
         
 
