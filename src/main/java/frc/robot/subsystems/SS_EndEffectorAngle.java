@@ -36,7 +36,7 @@ public class SS_EndEffectorAngle extends Subsystem {
 
   private double GEAR_RATIO = 1.0/147.0;
   private double TICKS_PER_DEGREE = 1.0/360.0;
-  private double speedMultiplier = .5;
+  private double speedMultiplier = .8;
 
   //TODO: double check these angles
   private double FRONT_ANGLE_LIMIT = 95; 

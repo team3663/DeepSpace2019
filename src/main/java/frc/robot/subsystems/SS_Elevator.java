@@ -36,7 +36,7 @@ public class SS_Elevator extends Subsystem {
   private DigitalInput bottomLimitSwitch;
   private DigitalInput topLimitSwitch;
 
-  public double speedMultiplier = .3  ;
+  public double speedMultiplier = .6;
   private double TICKS_PER_INCH = 1.6;
   private double GEAR_RATIO = 1.0/10.0;
 
